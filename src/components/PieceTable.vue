@@ -1,13 +1,7 @@
 <script setup>
 defineProps({
-  pieces: {
-    type: Array,
-    required: true,
-  },
-  currentPiece: {
-    type: Object,
-    default: null,
-  },
+  pieces: Array,
+  currentPiece: Object,
   subtitleColumn: {
     type: String,
     default: 'Tempo',
@@ -17,15 +11,8 @@ defineProps({
 const emit = defineEmits(['select-piece'])
 
 function hasMidi(piece) {
-  if (!piece.midi) {
-    return false
-  }
-
-  if (typeof piece.midi === 'string') {
-    return Boolean(piece.midi)
-  }
-
-  return Boolean(piece.midi.full)
+  console.log(piece.title, piece.midi)
+  return true
 }
 
 function hasMp3(piece) {
@@ -51,16 +38,11 @@ function hasMp3(piece) {
           v-for="piece in pieces"
           :key="piece.id"
           :class="{
-            'text-muted': !hasMidi(piece),
             'table-primary': currentPiece?.id === piece.id,
           }"
         >
           <td>
             <strong>{{ piece.title }}</strong>
-
-            <span v-if="currentPiece?.id === piece.id" class="badge bg-primary ms-2">
-              Now Playing
-            </span>
           </td>
 
           <td>{{ piece.subtitle }}</td>
@@ -68,15 +50,9 @@ function hasMp3(piece) {
           <td>{{ piece.duration }}</td>
 
           <td>
-            <button
-              v-if="hasMidi(piece)"
-              class="btn btn-sm btn-primary"
-              @click="emit('select-piece', piece)"
-            >
+            <button class="btn btn-sm btn-primary" @click="emit('select-piece', piece)">
               Play
             </button>
-
-            <span v-else class="small text-muted"> Non disponibile </span>
           </td>
 
           <td>
@@ -85,7 +61,6 @@ function hasMp3(piece) {
               class="btn btn-sm btn-outline-secondary"
               :href="piece.mp3"
               download
-              title="Scarica MP3"
             >
               ⬇
             </a>
