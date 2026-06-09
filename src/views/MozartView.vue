@@ -12,7 +12,7 @@ defineProps({
 const emit = defineEmits(['select-piece'])
 
 function availableCount(section) {
-  return section.pieces.filter((piece) => piece.available).length
+  return section.pieces.filter((piece) => piece.midi?.full).length
 }
 </script>
 
