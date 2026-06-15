@@ -20,8 +20,6 @@ const currentTime = ref(0)
 const totalDuration = ref(0)
 
 const tempoPercent = ref(100)
-const humanizationEnabled = ref(true)
-const handMode = ref('full')
 
 let piano = null
 let pianoLoading = null
@@ -31,21 +29,11 @@ let animationFrame = null
 let loadedMidiKey = null
 
 function getMidiUrl(piece) {
-  if (!piece?.midi) return ''
-
-  if (handMode.value === 'right') {
-    return piece.midi.right || piece.midi.full || ''
-  }
-
-  if (handMode.value === 'left') {
-    return piece.midi.left || piece.midi.full || ''
-  }
-
-  return piece.midi.full || ''
+  return piece?.midi?.full || ''
 }
 
 function getMidiKey(piece) {
-  return `${piece?.id || 'none'}-${handMode.value}`
+  return piece?.id || 'none'
 }
 
 function createPiano() {
@@ -119,13 +107,6 @@ async function ensurePianoLoaded() {
 }
 
 function humanizeNote(note, time) {
-  if (!humanizationEnabled.value) {
-    return {
-      time,
-      velocity: note.velocity,
-    }
-  }
-
   const timingVariation = (Math.random() - 0.5) * 0.02
   const velocityVariation = note.velocity + (Math.random() - 0.5) * 0.12
   const humanVelocity = Math.max(0.2, Math.min(1, velocityVariation))
@@ -287,13 +268,6 @@ watch(
   },
 )
 
-watch(handMode, async () => {
-  if (!props.currentPiece) return
-  if (!getMidiUrl(props.currentPiece)) return
-
-  await play()
-})
-
 onMounted(async () => {
   try {
     await ensurePianoLoaded()
@@ -350,22 +324,6 @@ onUnmounted(() => {
 
     <div class="player-controls">
       <label class="tempo-label">
-        MIDI
-
-        <select
-          v-model="handMode"
-          class="form-select form-select-sm hand-select"
-          :disabled="!currentPiece"
-        >
-          <option value="full">Entrambe</option>
-
-          <option value="right">Mano destra</option>
-
-          <option value="left">Mano sinistra</option>
-        </select>
-      </label>
-
-      <label class="tempo-label">
         Tempo
 
         <input
@@ -378,12 +336,6 @@ onUnmounted(() => {
         />
 
         {{ tempoPercent }}%
-      </label>
-
-      <label class="tempo-label">
-        <input type="checkbox" v-model="humanizationEnabled" />
-
-        Human
       </label>
 
       <button
