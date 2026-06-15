@@ -41,32 +41,4 @@ export const mozartSections = [
       },
     ],
   },
-  {
-    id: 'mozart-k331',
-    title: 'Sonata K331',
-    pieces: [
-      {
-        id: 'mozart-k331-1',
-        title: 'K331 — I movimento',
-        subtitle: 'Tema con variazioni',
-        duration: '—',
-        midi: {
-          full: '',
-          right: '',
-          left: '',
-        },
-      },
-      {
-        id: 'mozart-k331-3',
-        title: 'K331 — III movimento',
-        subtitle: 'Alla Turca',
-        duration: '—',
-        midi: {
-          full: '',
-          right: '',
-          left: '',
-        },
-      },
-    ],
-  },
 ]
