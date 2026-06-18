@@ -1,3 +1,5 @@
+const BASE_URL = import.meta.env.BASE_URL
+
 export const burgmullerSections = [
   {
     id: 'burgmuller-op100',
@@ -6,9 +8,14 @@ export const burgmullerSections = [
       {
         id: 'op100-1',
         title: 'Op. 100 n. 1',
-        subtitle: 'La sincerità',
+        subtitle: 'Candore',
         duration: '—',
-        midi: { full: '', right: '', left: '' },
+        midi: {
+          full: `${BASE_URL}midi/Candore_01_Burgmuller.mid`,
+          right: '',
+          left: '',
+        },
+        mp3: `${BASE_URL}mp3/Candore_01_Burgmuller.mp3`,
       },
       {
         id: 'op100-2',
