@@ -50,14 +50,24 @@ export const burgmullerSections = [
         title: 'Op. 100 n. 6',
         subtitle: 'Progresso',
         duration: '—',
-        midi: { full: '', right: '', left: '' },
+        midi: {
+          full: `${BASE_URL}midi/Progresso_06_Burgmuller.mid`,
+          right: '',
+          left: '',
+        },
+        mp3: `${BASE_URL}mp3/Progresso_06_Burgmuller.mp3`,
       },
       {
         id: 'op100-7',
         title: 'Op. 100 n. 7',
         subtitle: 'Ruscello limpido',
         duration: '—',
-        midi: { full: '', right: '', left: '' },
+        midi: {
+          full: `${BASE_URL}midi/Limpido_Ruscello_07_Burgmuller.mid`,
+          right: '',
+          left: '',
+        },
+        mp3: `${BASE_URL}mp3/Limpido_Ruscello_07_Burgmuller.mp3`,
       },
       {
         id: 'op100-8',
