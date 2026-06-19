@@ -7,7 +7,7 @@
 
       <RouterLink to="/mozart"> Musica classica </RouterLink>
 
-      <a href="#"> Musica jazz </a>
+      <!-- <a href="#"> Musica jazz </a> -->
     </nav>
   </header>
 </template>
