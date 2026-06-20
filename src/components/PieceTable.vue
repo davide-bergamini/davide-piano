@@ -31,9 +31,11 @@ function hasMp3(piece) {
       <thead>
         <tr>
           <th>Brano</th>
-          <th v-if="subtitleColumn">{{ subtitleColumn }}</th>
 
-          <!-- Su mobile questa colonna viene nascosta via CSS -->
+          <th v-if="subtitleColumn">
+            {{ subtitleColumn }}
+          </th>
+
           <th class="duration-column">Durata</th>
 
           <th>MIDI</th>
@@ -67,7 +69,6 @@ function hasMp3(piece) {
             {{ piece.subtitle }}
           </td>
 
-          <!-- Su mobile questa colonna viene nascosta via CSS -->
           <td class="duration-column">
             {{ piece.duration }}
           </td>
@@ -80,23 +81,30 @@ function hasMp3(piece) {
                 tabindex="0"
                 title="Ascolta MIDI"
                 @click="emit('select-piece', piece)"
-                @keydown.enter="emit('select-piece', piece)"
-                @keydown.space.prevent="emit('select-piece', piece)"
               >
                 ▶
               </span>
 
-              <a
-                class="round-action download-button"
-                :href="piece.midi.full"
-                download
-                title="Scarica MIDI"
-              >
-                ⬇
+              <a class="download-button" :href="piece.midi.full" download title="Scarica MIDI">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 3v12m0 0l4-4m-4 4l-4-4M5 21h14"
+                  />
+                </svg>
               </a>
             </div>
 
-            <span v-else class="small text-muted">—</span>
+            <span v-else class="small text-muted"> — </span>
           </td>
 
           <td>
@@ -107,23 +115,30 @@ function hasMp3(piece) {
                 tabindex="0"
                 title="Ascolta MP3"
                 @click="emit('select-mp3', piece)"
-                @keydown.enter="emit('select-mp3', piece)"
-                @keydown.space.prevent="emit('select-mp3', piece)"
               >
                 ▶
               </span>
 
-              <a
-                class="round-action download-button"
-                :href="piece.mp3"
-                download
-                title="Scarica MP3"
-              >
-                ⬇
+              <a class="download-button" :href="piece.mp3" download title="Scarica MP3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 3v12m0 0l4-4m-4 4l-4-4M5 21h14"
+                  />
+                </svg>
               </a>
             </div>
 
-            <span v-else class="small text-muted">—</span>
+            <span v-else class="small text-muted"> — </span>
           </td>
         </tr>
       </tbody>
@@ -153,23 +168,17 @@ function hasMp3(piece) {
 .round-action {
   width: 32px;
   height: 32px;
-  border: 0;
+
   border-radius: 50%;
+
   color: white;
   font-size: 0.88rem;
-  line-height: 1;
-  cursor: pointer;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  padding: 0;
-  margin: 0;
-  text-decoration: none;
-
-  appearance: none;
-  -webkit-appearance: none;
+  cursor: pointer;
   user-select: none;
 }
 
@@ -190,12 +199,19 @@ function hasMp3(piece) {
 }
 
 .download-button {
-  background: #64748b;
+  width: 28px;
+  height: 28px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #64748b;
+  text-decoration: none;
 }
 
 .download-button:hover {
-  background: #475569;
-  color: white;
+  color: #334155;
 }
 
 @media (max-width: 768px) {
