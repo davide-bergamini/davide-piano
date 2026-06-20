@@ -9,9 +9,13 @@ const props = defineProps({
     type: Object,
     default: null,
   },
+  currentMp3: {
+    type: Object,
+    default: null,
+  },
 })
 
-const emit = defineEmits(['stop'])
+const emit = defineEmits(['stop', 'stop-mp3'])
 
 const isPlaying = ref(false)
 const status = ref('Nessun brano selezionato')
@@ -247,6 +251,10 @@ function stop() {
   emit('stop')
 }
 
+function stopMp3() {
+  emit('stop-mp3')
+}
+
 function seek(event) {
   const value = Number(event.target.value)
 
@@ -268,13 +276,19 @@ watch(
   },
 )
 
-onMounted(async () => {
-  try {
-    await ensurePianoLoaded()
-  } catch (err) {
-    console.error(err)
-    status.value = 'Errore caricamento pianoforte'
-  }
+watch(
+  () => props.currentMp3,
+  (newMp3) => {
+    if (newMp3) {
+      stopAudio()
+      loadedMidiKey = null
+      status.value = 'Riproduzione MP3'
+    }
+  },
+)
+
+onMounted(() => {
+  status.value = 'Nessun brano selezionato'
 })
 
 onUnmounted(() => {
@@ -299,14 +313,21 @@ onUnmounted(() => {
         {{ currentPiece.title }}
       </strong>
 
+      <strong v-else-if="currentMp3">
+        {{ currentMp3.title }}
+      </strong>
+
       <span v-else> Nessun brano selezionato </span>
 
       <small class="d-block">
-        {{ status }}
+        <span v-if="currentMp3">Registrazione MP3</span>
+        <span v-else>{{ status }}</span>
       </small>
     </div>
 
-    <div class="progress-wrapper">
+    <audio v-if="currentMp3" :src="currentMp3.mp3" controls autoplay class="mp3-audio"></audio>
+
+    <div v-if="!currentMp3" class="progress-wrapper">
       <span>{{ formattedCurrentTime }}</span>
 
       <input
@@ -322,7 +343,7 @@ onUnmounted(() => {
       <span>{{ formattedTotalDuration }}</span>
     </div>
 
-    <div class="player-controls">
+    <div v-if="!currentMp3" class="player-controls">
       <label class="tempo-label">
         Tempo
 
@@ -347,6 +368,10 @@ onUnmounted(() => {
       </button>
 
       <button class="btn btn-sm btn-light" :disabled="!currentPiece" @click="stop">■</button>
+    </div>
+
+    <div v-if="currentMp3" class="player-controls">
+      <button class="btn btn-sm btn-light" @click="stopMp3">■</button>
     </div>
   </div>
 </template>

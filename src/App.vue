@@ -6,13 +6,24 @@ import Sidebar from './components/Sidebar.vue'
 import MidiPlayer from './components/MidiPlayer.vue'
 
 const currentPiece = ref(null)
+const currentMp3 = ref(null)
 
 function setCurrentPiece(piece) {
   currentPiece.value = piece
+  currentMp3.value = null
+}
+
+function setCurrentMp3(piece) {
+  currentMp3.value = piece
+  currentPiece.value = null
 }
 
 function stopPiece() {
   currentPiece.value = null
+}
+
+function stopMp3() {
+  currentMp3.value = null
 }
 </script>
 
@@ -23,9 +34,18 @@ function stopPiece() {
     <Sidebar />
 
     <main class="content">
-      <RouterView :current-piece="currentPiece" @select-piece="setCurrentPiece" />
+      <RouterView
+        :current-piece="currentPiece"
+        @select-piece="setCurrentPiece"
+        @select-mp3="setCurrentMp3"
+      />
     </main>
   </div>
 
-  <MidiPlayer :current-piece="currentPiece" @stop="stopPiece" />
+  <MidiPlayer
+    :current-piece="currentPiece"
+    :current-mp3="currentMp3"
+    @stop="stopPiece"
+    @stop-mp3="stopMp3"
+  />
 </template>

@@ -12,7 +12,7 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['select-piece'])
+const emit = defineEmits(['select-piece', 'select-mp3'])
 
 const mozartSections = ref(
   originalMozartSections.map((section) => ({
@@ -78,6 +78,7 @@ onMounted(async () => {
         :current-piece="currentPiece"
         subtitle-column="Tempo"
         @select-piece="emit('select-piece', $event)"
+        @select-mp3="emit('select-mp3', $event)"
       />
     </div>
   </section>

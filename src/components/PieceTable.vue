@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue'
-
 defineProps({
   pieces: {
     type: Array,
@@ -16,9 +14,7 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['select-piece'])
-
-const currentMp3 = ref(null)
+const emit = defineEmits(['select-piece', 'select-mp3'])
 
 function hasMidi(piece) {
   return Boolean(piece.midi?.full)
@@ -26,10 +22,6 @@ function hasMidi(piece) {
 
 function hasMp3(piece) {
   return Boolean(piece.mp3)
-}
-
-function playMp3(piece) {
-  currentMp3.value = piece
 }
 </script>
 
@@ -84,7 +76,7 @@ function playMp3(piece) {
                 class="btn btn-sm btn-success"
                 type="button"
                 title="Ascolta MP3"
-                @click="playMp3(piece)"
+                @click="emit('select-mp3', piece)"
               >
                 ▶
               </button>
@@ -104,13 +96,5 @@ function playMp3(piece) {
         </tr>
       </tbody>
     </table>
-
-    <div v-if="currentMp3" class="card mt-3">
-      <div class="card-header">MP3 in ascolto: {{ currentMp3.title }}</div>
-
-      <div class="card-body">
-        <audio :src="currentMp3.mp3" controls autoplay class="w-100"></audio>
-      </div>
-    </div>
   </div>
 </template>

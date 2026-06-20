@@ -334,3 +334,29 @@ body {
     border-radius: 18px;
   }
 }
+
+.mp3-player {
+  position: fixed;
+  left: 18px;
+  right: 18px;
+  bottom: 140px;
+  min-height: 86px;
+  background: rgba(37, 99, 235, 0.96);
+  color: white;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 16px 22px;
+  z-index: 1001;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.25);
+}
+
+.mp3-player .player-info {
+  min-width: 250px;
+}
+
+.mp3-audio {
+  flex: 1;
+  min-width: 260px;
+}
