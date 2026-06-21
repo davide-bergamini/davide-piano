@@ -23,6 +23,10 @@ function hasMidi(piece) {
 function hasMp3(piece) {
   return Boolean(piece.mp3)
 }
+
+function isComingSoon(piece) {
+  return !hasMidi(piece) && !hasMp3(piece)
+}
 </script>
 
 <template>
@@ -63,6 +67,8 @@ function hasMp3(piece) {
             <div v-if="!subtitleColumn && piece.subtitle" class="piece-subtitle">
               {{ piece.subtitle }}
             </div>
+
+            <div v-if="isComingSoon(piece)" class="coming-soon">⏳ Coming Soon</div>
           </td>
 
           <td v-if="subtitleColumn">
@@ -81,6 +87,8 @@ function hasMp3(piece) {
                 tabindex="0"
                 title="Ascolta MIDI"
                 @click="emit('select-piece', piece)"
+                @keydown.enter="emit('select-piece', piece)"
+                @keydown.space.prevent="emit('select-piece', piece)"
               >
                 ▶
               </span>
@@ -115,6 +123,8 @@ function hasMp3(piece) {
                 tabindex="0"
                 title="Ascolta MP3"
                 @click="emit('select-mp3', piece)"
+                @keydown.enter="emit('select-mp3', piece)"
+                @keydown.space.prevent="emit('select-mp3', piece)"
               >
                 ▶
               </span>
@@ -156,6 +166,13 @@ function hasMp3(piece) {
   font-size: 1rem;
   font-weight: 600;
   color: #6c757d;
+}
+
+.coming-soon {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #f59e0b;
+  font-weight: 700;
 }
 
 .action-buttons {
