@@ -115,11 +115,6 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="catalog-section-title">
-      <h3>Tracklist</h3>
-      <p>Elenco delle sonate e dei movimenti disponibili.</p>
-    </div>
-
     <div v-for="section in mozartSections" :key="section.id" class="card mb-4 catalog-card">
       <div class="card-header d-flex justify-content-between align-items-center">
         <span>{{ section.title }}</span>

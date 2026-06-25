@@ -43,19 +43,19 @@ function formatDate(dateString) {
       v-for="piece in pieces"
       :key="piece.id"
       class="discogs-row"
-      :class="{
-        'is-playing': currentPiece?.id === piece.id,
-      }"
+      :class="{ 'is-playing': currentPiece?.id === piece.id }"
     >
       <div class="piece-main">
-        <div class="piece-title">
-          {{ piece.title }}
+        <div class="piece-title-line">
+          <span class="piece-title">
+            {{ piece.title }}
+          </span>
+
+          <span v-if="piece.subtitle" class="piece-subtitle">
+            {{ piece.subtitle }}
+          </span>
 
           <span v-if="currentPiece?.id === piece.id" class="playing-label"> Now Playing </span>
-        </div>
-
-        <div v-if="piece.subtitle" class="piece-subtitle">
-          {{ piece.subtitle }}
         </div>
       </div>
 
@@ -97,7 +97,7 @@ function formatDate(dateString) {
           </a>
         </template>
 
-        <span v-else class="muted"> — </span>
+        <span v-else class="muted">—</span>
       </div>
 
       <div class="media-actions">
@@ -130,16 +130,8 @@ function formatDate(dateString) {
           </a>
         </template>
 
-        <span v-else class="muted"> — </span>
+        <span v-else class="muted">—</span>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.coming-soon-date {
-  color: #888;
-  font-style: italic;
-  font-size: 0.88rem;
-}
-</style>
