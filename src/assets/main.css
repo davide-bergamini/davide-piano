@@ -30,19 +30,36 @@ body {
 .top-nav {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 8px;
 }
 
 .top-nav a {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 7px 14px;
+
   color: #ddd;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+
+  border-radius: 999px;
+
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
 }
 
-.top-nav a:hover,
+.top-nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
 .top-nav a.router-link-active {
-  color: white;
-  text-decoration: underline;
+  background: #ffffff;
+  color: #222;
+  font-weight: 600;
 }
 
 .page-layout {
@@ -53,17 +70,18 @@ body {
 .sidebar {
   width: 240px;
   flex-shrink: 0;
-  background: #f5f5f5;
+  background: #f7f7f7;
   border-right: 1px solid #ddd;
   padding: 24px 18px;
 }
 
 .sidebar h6 {
   color: #666;
+  font-size: 0.78rem;
   font-weight: 700;
-  margin-bottom: 16px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  margin-bottom: 18px;
 }
 
 .sidebar-nav {
@@ -73,15 +91,34 @@ body {
 }
 
 .sidebar-nav a {
-  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
   text-decoration: none;
-  padding: 7px 4px;
-  font-weight: 500;
+  padding: 9px 12px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
 }
 
-.sidebar-nav a:hover,
+.sidebar-nav a:hover {
+  background: #efefef;
+}
+
 .sidebar-nav a.router-link-active {
-  text-decoration: underline;
+  background: #e7e7e7;
+  font-weight: 600;
+}
+
+.sidebar-arrow {
+  width: 14px;
+  color: #777;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.sidebar-nav a.router-link-active .sidebar-arrow {
+  color: #0d6efd;
 }
 
 .content {
@@ -216,27 +253,6 @@ body {
   color: #222;
   font-weight: 700;
 }
-
-/* Vecchio titolo Tracklist: tenuto commentato se vorrai riattivarlo */
-
-/*
-.catalog-section-title {
-  margin: 26px 0 12px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 8px;
-}
-
-.catalog-section-title h3 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.catalog-section-title p {
-  color: #666;
-  margin: 4px 0 0;
-}
-*/
 
 /* Player MIDI / MP3 */
 
@@ -541,4 +557,21 @@ body {
   .visual-timeline-card {
     padding: 17px 18px;
   }
+}
+
+.catalog-cover {
+  width: 210px;
+  min-height: 210px;
+  background: #e5e5e5;
+  border: 1px solid #ccc;
+  padding: 0;
+  overflow: hidden;
+}
+
+.composer-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  object-fit: cover;
+  display: block;
 }

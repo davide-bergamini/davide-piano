@@ -21,10 +21,6 @@ const burgmullerSections = ref(
   })),
 )
 
-function availableCount(section) {
-  return section.pieces.filter((piece) => piece.midi?.full).length
-}
-
 function formatDuration(seconds) {
   const minutes = Math.floor(seconds / 60)
   const secs = Math.round(seconds % 60)
@@ -62,15 +58,28 @@ onMounted(async () => {
   <section>
     <h6 class="text-muted mb-4">Compositori classica</h6>
 
-    <h2 class="mb-1">Friedrich Burgmüller</h2>
+    <div class="catalog-hero">
+      <div class="catalog-cover">
+        <img
+          src="/img/composers/Burgmuller.png"
+          alt="Friedrich Burgmüller"
+          class="composer-photo"
+        />
+      </div>
 
-    <p class="text-muted mb-4">25 studi facili e progressivi per pianoforte</p>
+      <div class="catalog-info">
+        <h2 class="mb-2">Friedrich Burgmüller</h2>
+
+        <p class="catalog-description">
+          I 25 studi facili e progressivi Op. 100 sono una raccolta didattica molto amata dai
+          pianisti, pensata per sviluppare tecnica, musicalità ed espressività in modo graduale.
+        </p>
+      </div>
+    </div>
 
     <div v-for="section in burgmullerSections" :key="section.id" class="card mb-4">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <span>{{ section.title }}</span>
-
-        <span class="badge bg-secondary"> {{ availableCount(section) }} MIDI </span>
+      <div class="card-header">
+        {{ section.title }}
       </div>
 
       <PieceTable

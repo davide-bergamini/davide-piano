@@ -70,10 +70,7 @@ onMounted(async () => {
   <section>
     <div class="catalog-hero">
       <div class="catalog-cover">
-        <div class="catalog-cover-icon">M</div>
-        <div class="catalog-cover-keys">
-          <span v-for="n in 8" :key="n"></span>
-        </div>
+        <img src="/img/composers/Mozart.png" alt="Wolfgang Amadeus Mozart" class="composer-photo" />
       </div>
 
       <div class="catalog-info">
@@ -85,41 +82,12 @@ onMounted(async () => {
           Sonate per pianoforte, registrazioni MIDI e versioni MP3 pubblicate nel catalogo personale
           Davide Piano.
         </p>
-
-        <dl class="catalog-meta">
-          <div>
-            <dt>Formato</dt>
-            <dd>MIDI / MP3</dd>
-          </div>
-
-          <div>
-            <dt>Repertorio</dt>
-            <dd>Sonate per pianoforte</dd>
-          </div>
-
-          <div>
-            <dt>Brani pubblicati</dt>
-            <dd>{{ publishedCount }}</dd>
-          </div>
-
-          <div>
-            <dt>MIDI disponibili</dt>
-            <dd>{{ midiCount }}</dd>
-          </div>
-
-          <div>
-            <dt>MP3 disponibili</dt>
-            <dd>{{ mp3Count }}</dd>
-          </div>
-        </dl>
       </div>
     </div>
 
     <div v-for="section in mozartSections" :key="section.id" class="card mb-4 catalog-card">
       <div class="card-header d-flex justify-content-between align-items-center">
         <span>{{ section.title }}</span>
-
-        <span class="badge bg-secondary"> {{ availableCount(section) }} MIDI </span>
       </div>
 
       <PieceTable
