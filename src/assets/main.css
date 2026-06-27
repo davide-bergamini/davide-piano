@@ -301,53 +301,71 @@ body {
   min-width: 260px;
 }
 
-.timeline-dot {
-  position: absolute;
-  top: 3px;
-  left: -26px;
-  width: 14px;
-  height: 14px;
-  background: #222;
-  border: 3px solid white;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px #222;
-  z-index: 2;
+/* Timeline Gantt desktop */
+
+.gantt-svg-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 12px;
 }
 
-.timeline-date {
-  font-size: 0.82rem;
-  color: #666;
-  margin-bottom: 3px;
+.gantt-svg {
+  min-width: 980px;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.timeline-title {
+.gantt-year {
+  font-size: 34px;
+  font-weight: 800;
+  fill: #111;
+}
+
+.gantt-axis {
+  stroke: #222;
+  stroke-width: 2;
+}
+
+.gantt-tick {
+  stroke: #999;
+  stroke-width: 1;
+}
+
+.gantt-month {
+  font-size: 12px;
+  fill: #777;
+}
+
+.gantt-guide {
+  stroke: #999;
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+
+.gantt-bar {
+  fill: #f8b4c8;
+}
+
+.gantt-dot {
+  fill: #ff2b1f;
+}
+
+.gantt-composer {
+  font-size: 15px;
   font-weight: 700;
-  color: #222;
+  fill: #222;
 }
 
-.timeline-subtitle {
-  color: #666;
-  font-size: 0.9rem;
+.gantt-title-small {
+  font-size: 12px;
+  fill: #666;
 }
 
-.timeline-composer {
-  margin-top: 3px;
-  color: #555;
-  font-size: 0.85rem;
-}
+/* Timeline mobile grafica */
 
-.timeline-formats {
-  display: flex;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.timeline-formats span {
-  font-size: 0.7rem;
-  font-weight: 700;
-  border: 1px solid #ccc;
-  padding: 2px 5px;
-  color: #555;
+.mobile-gantt {
+  display: none;
 }
 
 /* Responsive */
@@ -446,69 +464,80 @@ body {
     right: 10px;
     bottom: 10px;
   }
-}
 
-.gantt-svg-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  padding-bottom: 12px;
-}
+  .gantt-svg-wrapper {
+    display: none;
+  }
 
-.gantt-svg {
-  min-width: 980px;
-  width: 100%;
-  height: auto;
-  display: block;
-}
+  .mobile-gantt {
+    display: block;
+    position: relative;
+    border-top: 1px solid #ddd;
+    padding: 14px 0 0;
+  }
 
-.gantt-year {
-  font-size: 34px;
-  font-weight: 800;
-  fill: #111;
-}
+  .mobile-gantt::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    bottom: 0;
+    left: 8px;
+    width: 2px;
+    background: #d7d7d7;
+  }
 
-.gantt-axis {
-  stroke: #222;
-  stroke-width: 2;
-}
+  .mobile-gantt-item {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 10px;
+    position: relative;
+    padding-bottom: 18px;
+  }
 
-.gantt-tick {
-  stroke: #999;
-  stroke-width: 1;
-}
+  .mobile-gantt-marker {
+    position: relative;
+  }
 
-.gantt-month {
-  font-size: 12px;
-  fill: #777;
-}
+  .mobile-gantt-dot {
+    position: absolute;
+    top: 6px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: #ff2b1f;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #222;
+    z-index: 2;
+  }
 
-.gantt-guide {
-  stroke: #999;
-  stroke-width: 1.5;
-  stroke-dasharray: 5 5;
-}
+  .mobile-gantt-content {
+    min-width: 0;
+  }
 
-.gantt-bar {
-  fill: #f8b4c8;
-}
+  .mobile-gantt-date {
+    font-size: 0.78rem;
+    color: #666;
+    margin-bottom: 5px;
+  }
 
-.gantt-dot {
-  fill: #ff2b1f;
-}
+  .mobile-gantt-bar {
+    width: 54%;
+    height: 12px;
+    background: #f8b4c8;
+    border-radius: 999px;
+    margin-bottom: 7px;
+  }
 
-.gantt-composer {
-  font-size: 15px;
-  font-weight: 700;
-  fill: #222;
-}
+  .mobile-gantt-composer {
+    font-weight: 700;
+    color: #222;
+    font-size: 0.95rem;
+  }
 
-.gantt-title-small {
-  font-size: 12px;
-  fill: #666;
-}
-
-@media (max-width: 768px) {
-  .gantt-svg {
-    min-width: 900px;
+  .mobile-gantt-title {
+    color: #666;
+    font-size: 0.88rem;
+    line-height: 1.3;
   }
 }

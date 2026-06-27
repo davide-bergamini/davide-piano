@@ -5,6 +5,7 @@ import { mozartSections } from '../data/mozart'
 import { burgmullerSections } from '../data/burgmuller'
 
 const YEAR = 2026
+
 const MONTHS = [
   'Gennaio',
   'Febbraio',
@@ -30,6 +31,7 @@ const BAR_HEIGHT = 22
 function getAutoStartDate(publishedAt) {
   const date = new Date(publishedAt)
   date.setDate(date.getDate() - 14)
+
   return date.toISOString().slice(0, 10)
 }
 
@@ -58,22 +60,29 @@ const chartHeight = computed(() => TOP_PAD + pieces.value.length * ROW_HEIGHT + 
 function dayOfYear(dateString) {
   const date = new Date(dateString)
   const start = new Date(`${YEAR}-01-01`)
+
   return Math.max(0, Math.round((date - start) / 86400000))
 }
 
 function xFromDate(dateString) {
   const totalDays = 365
   const usableWidth = CHART_WIDTH - LEFT_PAD - RIGHT_PAD
+
   return LEFT_PAD + (dayOfYear(dateString) / totalDays) * usableWidth
 }
 
 function monthX(index) {
   const date = new Date(YEAR, index, 1)
+
   return xFromDate(date.toISOString().slice(0, 10))
 }
 
 function rowY(index) {
   return TOP_PAD + index * ROW_HEIGHT
+}
+
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString('it-IT')
 }
 
 function shortTitle(piece) {
@@ -162,6 +171,34 @@ function shortTitle(piece) {
           </text>
         </g>
       </svg>
+    </div>
+
+    <div class="mobile-gantt">
+      <div
+        v-for="piece in pieces"
+        :key="`mobile-${piece.composer}-${piece.id}`"
+        class="mobile-gantt-item"
+      >
+        <div class="mobile-gantt-marker">
+          <span class="mobile-gantt-dot"></span>
+        </div>
+
+        <div class="mobile-gantt-content">
+          <div class="mobile-gantt-date">
+            {{ formatDate(piece.publishedAt) }}
+          </div>
+
+          <div class="mobile-gantt-bar"></div>
+
+          <div class="mobile-gantt-composer">
+            {{ piece.composer }}
+          </div>
+
+          <div class="mobile-gantt-title">
+            {{ shortTitle(piece) }}
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
