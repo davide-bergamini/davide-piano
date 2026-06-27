@@ -74,15 +74,14 @@ onMounted(async () => {
       </div>
 
       <div class="catalog-info">
-        <h6 class="text-muted mb-2">Compositore classico</h6>
-
         <h2 class="mb-2">Wolfgang Amadeus Mozart</h2>
+        <p class="text-muted mb-2">1756–1791 · Classicismo</p>
 
         <p class="catalog-description">
-          <strong>Wolfgang Amadeus Mozart (1756–1791)</strong> è uno dei più grandi compositori
-          della storia della musica. In questa sezione sono raccolte le mie registrazioni di sonate
-          e sonatine per pianoforte. Il repertorio verrà ampliato progressivamente con nuove
-          pubblicazioni.
+          Tra i più grandi compositori della storia della musica, fu uno dei principali esponenti
+          del Classicismo viennese. La sua straordinaria produzione comprende opere, sinfonie,
+          concerti e musica da camera, oltre a numerose composizioni per pianoforte che
+          rappresentano ancora oggi un punto di riferimento del repertorio pianistico.
         </p>
       </div>
     </div>

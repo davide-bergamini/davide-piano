@@ -5,9 +5,9 @@ export const tchaikovskySections = [
     pieces: [
       {
         id: 'op39-1',
-        number: '1',
-        title: 'Preghiera del mattino',
-        subtitle: '',
+        number: '6',
+        title: 'Op. 39 n. 6',
+        subtitle: 'La bambola malata',
         publishedAt: '',
         midi: {
           full: '',
@@ -16,20 +16,9 @@ export const tchaikovskySections = [
       },
       {
         id: 'op39-2',
-        number: '2',
-        title: 'Mattino d’inverno',
-        subtitle: '',
-        publishedAt: '',
-        midi: {
-          full: '',
-        },
-        mp3: '',
-      },
-      {
-        id: 'op39-3',
-        number: '3',
-        title: 'Il cavallino di legno',
-        subtitle: '',
+        number: '9',
+        title: 'Op. 39 n. 9',
+        subtitle: 'La nuova bambola',
         publishedAt: '',
         midi: {
           full: '',

@@ -66,13 +66,15 @@ onMounted(async () => {
       </div>
 
       <div class="catalog-info">
-        <h6 class="text-muted mb-2">Compositore classico</h6>
-
         <h2 class="mb-2">Friedrich Burgmüller</h2>
 
+        <p class="text-muted mb-2">1806–1874 · Romanticismo</p>
+
         <p class="catalog-description">
-          I 25 studi facili e progressivi Op. 100 sono una raccolta didattica molto amata dai
-          pianisti, pensata per sviluppare tecnica, musicalità ed espressività in modo graduale.
+          Compositore e pianista tedesco del periodo romantico, trascorse gran parte della sua
+          carriera a Parigi. È ricordato soprattutto per le sue opere didattiche, ancora oggi tra le
+          più studiate dagli allievi di pianoforte per la loro capacità di coniugare valore musicale
+          e finalità educative.
         </p>
       </div>
     </div>

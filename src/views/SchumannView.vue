@@ -33,9 +33,12 @@ const schumannSections = ref(
       <div class="catalog-info">
         <h2 class="mb-2">Robert Schumann</h2>
 
+        <p class="text-muted mb-2">1810–1856 · Romanticismo</p>
+
         <p class="catalog-description">
-          Brani tratti dall’Album per la gioventù Op. 68, una raccolta poetica e didattica che
-          accompagna lo studio del pianoforte con piccoli quadri musicali.
+          Tra i maggiori compositori del Romanticismo, dedicò una parte fondamentale della sua
+          produzione al pianoforte. Le sue opere, caratterizzate da grande intensità espressiva e
+          ricchezza poetica, occupano un posto centrale nel repertorio pianistico.
         </p>
       </div>
     </div>

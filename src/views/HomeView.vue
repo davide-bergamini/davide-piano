@@ -1,11 +1,10 @@
 <template>
   <section class="home-animation">
     <div class="pianist">
-      <div class="head"></div>
-
-      <div class="body">
-        <div class="arm arm-left"></div>
-        <div class="arm arm-right"></div>
+      <div class="notes">
+        <span>♪</span>
+        <span>♫</span>
+        <span>♪</span>
       </div>
 
       <div class="piano">
@@ -50,52 +49,35 @@
 .pianist {
   position: relative;
   width: 320px;
-  height: 240px;
+  height: 190px;
 }
 
-.head {
+.notes {
   position: absolute;
-  top: 20px;
-  left: 135px;
-  width: 54px;
-  height: 54px;
-  background: #f0c7a7;
-  border-radius: 50%;
+  top: 15px;
+  left: 55px;
+  width: 210px;
+  display: flex;
+  justify-content: space-around;
 }
 
-.body {
-  position: absolute;
-  top: 78px;
-  left: 120px;
-  width: 80px;
-  height: 90px;
-  background: #212529;
-  border-radius: 18px 18px 8px 8px;
+.notes span {
+  font-size: 2rem;
+  color: #495057;
+  animation: floatNote 2.5s ease-in-out infinite;
 }
 
-.arm {
-  position: absolute;
-  top: 34px;
-  width: 92px;
-  height: 14px;
-  background: #212529;
-  border-radius: 20px;
-  transform-origin: top left;
+.notes span:nth-child(2) {
+  animation-delay: 0.4s;
 }
 
-.arm-left {
-  left: -70px;
-  animation: play-left 0.6s infinite alternate;
-}
-
-.arm-right {
-  left: 58px;
-  animation: play-right 0.55s infinite alternate;
+.notes span:nth-child(3) {
+  animation-delay: 0.8s;
 }
 
 .piano {
   position: absolute;
-  bottom: 20px;
+  top: 95px;
   left: 35px;
   width: 250px;
   height: 70px;
@@ -146,13 +128,6 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.55);
 }
 
-/*
-  Larghezza tastiera bianca interna: 226px
-  14 tasti bianchi = circa 16.14px ciascuno.
-  I tasti neri stanno tra:
-  C-D, D-E, F-G, G-A, A-B
-*/
-
 /* prima ottava */
 .key-cs {
   left: 11px;
@@ -195,23 +170,16 @@
   left: 204px;
 }
 
-@keyframes play-left {
-  from {
-    transform: rotate(12deg);
+@keyframes floatNote {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
   }
 
-  to {
-    transform: rotate(-8deg);
-  }
-}
-
-@keyframes play-right {
-  from {
-    transform: rotate(-10deg);
-  }
-
-  to {
-    transform: rotate(10deg);
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
   }
 }
 

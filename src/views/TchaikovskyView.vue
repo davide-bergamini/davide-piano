@@ -37,9 +37,12 @@ const tchaikovskySections = ref(
       <div class="catalog-info">
         <h2 class="mb-2">Pyotr Ilyich Tchaikovsky</h2>
 
+        <p class="text-muted mb-2">1840–1893 · Romanticismo</p>
+
         <p class="catalog-description">
-          Brani tratti dall’Album per la gioventù Op. 39, una raccolta di piccoli pezzi pianistici
-          pensati per sviluppare musicalità, carattere ed espressività.
+          Compositore russo del periodo romantico, è celebre per i suoi balletti, le sinfonie e i
+          concerti. La sua produzione pianistica comprende numerose pagine di grande fascino, tra
+          cui il celebre Album per la gioventù op. 39, destinato ai giovani pianisti.
         </p>
       </div>
     </div>
