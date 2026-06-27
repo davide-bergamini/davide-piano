@@ -79,8 +79,10 @@ onMounted(async () => {
         <h2 class="mb-2">Wolfgang Amadeus Mozart</h2>
 
         <p class="catalog-description">
-          Sonate per pianoforte, registrazioni MIDI e versioni MP3 pubblicate nel catalogo personale
-          Davide Piano.
+          <strong>Wolfgang Amadeus Mozart (1756–1791)</strong> è uno dei più grandi compositori
+          della storia della musica. In questa sezione sono raccolte le mie registrazioni di sonate
+          e sonatine per pianoforte. Il repertorio verrà ampliato progressivamente con nuove
+          pubblicazioni.
         </p>
       </div>
     </div>
