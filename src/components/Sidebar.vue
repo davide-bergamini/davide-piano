@@ -12,6 +12,16 @@
         <span class="sidebar-arrow">▸</span>
         Burgmüller
       </RouterLink>
+
+      <RouterLink to="/tchaikovsky">
+        <span class="sidebar-arrow">›</span>
+        Tchaikovsky
+      </RouterLink>
+
+      <RouterLink to="/schumann">
+        <span class="sidebar-arrow">›</span>
+        Schumann
+      </RouterLink>
     </nav>
   </aside>
 </template>
