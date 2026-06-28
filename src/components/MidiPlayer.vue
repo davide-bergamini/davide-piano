@@ -22,7 +22,9 @@ const currentTime = ref(0)
 const totalDuration = ref(0)
 const tempoPercent = ref(100)
 
-let synth = null
+let piano = null
+let pianoLoading = null
+let reverb = null
 let parts = []
 let animationFrame = null
 let loadedMidiKey = null
@@ -35,8 +37,52 @@ function getMidiKey(piece) {
   return piece?.id || 'none'
 }
 
-function createSynth() {
-  return new Tone.PolySynth(Tone.Synth).toDestination()
+function createPiano() {
+  reverb = new Tone.Reverb({
+    decay: 3.5,
+    wet: 0.35,
+  }).toDestination()
+
+  const sampler = new Tone.Sampler({
+    urls: {
+      A0: 'A0.mp3',
+      C1: 'C1.mp3',
+      'D#1': 'Ds1.mp3',
+      'F#1': 'Fs1.mp3',
+      A1: 'A1.mp3',
+      C2: 'C2.mp3',
+      'D#2': 'Ds2.mp3',
+      'F#2': 'Fs2.mp3',
+      A2: 'A2.mp3',
+      C3: 'C3.mp3',
+      'D#3': 'Ds3.mp3',
+      'F#3': 'Fs3.mp3',
+      A3: 'A3.mp3',
+      C4: 'C4.mp3',
+      'D#4': 'Ds4.mp3',
+      'F#4': 'Fs4.mp3',
+      A4: 'A4.mp3',
+      C5: 'C5.mp3',
+      'D#5': 'Ds5.mp3',
+      'F#5': 'Fs5.mp3',
+      A5: 'A5.mp3',
+      C6: 'C6.mp3',
+      'D#6': 'Ds6.mp3',
+      'F#6': 'Fs6.mp3',
+      A6: 'A6.mp3',
+      C7: 'C7.mp3',
+      'D#7': 'Ds7.mp3',
+      'F#7': 'Fs7.mp3',
+      A7: 'A7.mp3',
+      C8: 'C8.mp3',
+    },
+    release: 1,
+    baseUrl: 'https://tonejs.github.io/audio/salamander/',
+  })
+
+  sampler.connect(reverb)
+
+  return sampler
 }
 
 async function unlockAudio() {
@@ -51,25 +97,32 @@ async function unlockAudio() {
   console.log('Audio context:', context.state)
 }
 
-async function ensureSynth() {
-  if (synth) return
+async function ensurePianoLoaded() {
+  if (piano) return
 
-  synth = createSynth()
+  if (pianoLoading) {
+    await pianoLoading
+    return
+  }
+
+  status.value = 'Carico pianoforte...'
+
+  pianoLoading = (async () => {
+    piano = createPiano()
+    await Tone.loaded()
+  })()
+
+  await pianoLoading
 }
 
-async function testAudio() {
-  try {
-    status.value = 'Test audio...'
+function humanizeNote(note, time) {
+  const timingVariation = (Math.random() - 0.5) * 0.02
+  const velocityVariation = note.velocity + (Math.random() - 0.5) * 0.12
+  const humanVelocity = Math.max(0.2, Math.min(1, velocityVariation))
 
-    await unlockAudio()
-    await ensureSynth()
-
-    synth.triggerAttackRelease('C4', '8n')
-
-    status.value = 'Test audio eseguito'
-  } catch (err) {
-    console.error(err)
-    status.value = 'Test audio fallito'
+  return {
+    time: time + timingVariation,
+    velocity: humanVelocity,
   }
 }
 
@@ -135,7 +188,9 @@ async function loadMidi(piece) {
     .filter((track) => track.notes.length)
     .map((track) => {
       const part = new Tone.Part((time, note) => {
-        synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)
+        const humanNote = humanizeNote(note, time)
+
+        piano.triggerAttackRelease(note.name, note.duration, humanNote.time, humanNote.velocity)
       }, track.notes).start(0)
 
       return part
@@ -151,10 +206,9 @@ async function play() {
     status.value = 'Avvio audio...'
 
     await unlockAudio()
-    await ensureSynth()
-
-    status.value = 'Carico MIDI...'
+    await ensurePianoLoaded()
     await loadMidi(props.currentPiece)
+    await Tone.loaded()
 
     Tone.Transport.stop()
     Tone.Transport.position = 0
@@ -268,9 +322,14 @@ onMounted(() => {
 onUnmounted(() => {
   stopAudio()
 
-  if (synth) {
-    synth.dispose()
-    synth = null
+  if (piano) {
+    piano.dispose()
+    piano = null
+  }
+
+  if (reverb) {
+    reverb.dispose()
+    reverb = null
   }
 })
 </script>
@@ -327,8 +386,6 @@ onUnmounted(() => {
 
         {{ tempoPercent }}%
       </label>
-
-      <button class="btn btn-sm btn-warning" @click="testAudio">Test audio</button>
 
       <button class="btn btn-sm btn-light" :disabled="!hasPlayableMidi" @click="playButtonClick">
         {{ isPlaying ? '⏸' : '▶︎' }}
