@@ -1,5 +1,8 @@
 <script setup>
-defineProps({
+import { ref, onMounted, watch } from 'vue'
+import { fetchLikes, incrementLike } from '../services/likes'
+
+const props = defineProps({
   pieces: {
     type: Array,
     required: true,
@@ -16,6 +19,13 @@ defineProps({
 
 const emit = defineEmits(['select-piece', 'select-mp3'])
 
+const likes = ref({})
+const likedPieces = ref({})
+
+function localLikeKey(pieceId) {
+  return `liked_${pieceId}`
+}
+
 function hasMidi(piece) {
   return Boolean(piece.midi?.full)
 }
@@ -24,10 +34,76 @@ function hasMp3(piece) {
   return Boolean(piece.mp3)
 }
 
+function hasLiked(piece) {
+  return likedPieces.value[piece.id] === true
+}
+
 function formatDate(dateString) {
   if (!dateString) return ''
   return new Date(dateString).toLocaleDateString('it-IT')
 }
+
+function toSuperscript(number) {
+  const map = {
+    0: '⁰',
+    1: '¹',
+    2: '²',
+    3: '³',
+    4: '⁴',
+    5: '⁵',
+    6: '⁶',
+    7: '⁷',
+    8: '⁸',
+    9: '⁹',
+  }
+
+  return String(number)
+    .split('')
+    .map((char) => map[char] || char)
+    .join('')
+}
+
+async function loadLikes() {
+  const pieceIds = props.pieces.map((piece) => piece.id)
+
+  if (pieceIds.length === 0) return
+
+  const remoteLikes = await fetchLikes(pieceIds)
+
+  const loadedLikedPieces = {}
+
+  pieceIds.forEach((pieceId) => {
+    loadedLikedPieces[pieceId] = localStorage.getItem(localLikeKey(pieceId)) === 'true'
+  })
+
+  likes.value = remoteLikes
+  likedPieces.value = loadedLikedPieces
+}
+
+async function handleLike(piece) {
+  if (hasLiked(piece)) return
+
+  const newCount = await incrementLike(piece.id)
+
+  if (newCount === null) return
+
+  likes.value[piece.id] = newCount
+  likedPieces.value[piece.id] = true
+
+  localStorage.setItem(localLikeKey(piece.id), 'true')
+}
+
+onMounted(() => {
+  loadLikes()
+})
+
+watch(
+  () => props.pieces,
+  () => {
+    loadLikes()
+  },
+  { deep: true },
+)
 </script>
 
 <template>
@@ -47,6 +123,22 @@ function formatDate(dateString) {
     >
       <div class="piece-top">
         <div class="piece-title-area">
+          <span class="like-badge">
+            <button
+              class="like-button"
+              type="button"
+              :class="{ liked: hasLiked(piece) }"
+              :title="hasLiked(piece) ? 'Hai già messo Mi piace' : 'Mi piace'"
+              @click="handleLike(piece)"
+            >
+              👍︎
+            </button>
+
+            <span v-if="(likes[piece.id] || 0) > 0" class="like-count">
+              {{ toSuperscript(likes[piece.id]) }}
+            </span>
+          </span>
+
           <span class="piece-title">
             {{ piece.title }}
           </span>
@@ -78,21 +170,7 @@ function formatDate(dateString) {
             </button>
 
             <a class="icon-action download" :href="piece.midi.full" download title="Scarica MIDI">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="15"
-                height="15"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 3v12m0 0l4-4m-4 4l-4-4M5 21h14"
-                />
-              </svg>
+              ↓
             </a>
           </template>
 
@@ -110,23 +188,7 @@ function formatDate(dateString) {
               ▶
             </button>
 
-            <a class="icon-action download" :href="piece.mp3" download title="Scarica MP3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="15"
-                height="15"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 3v12m0 0l4-4m-4 4l-4-4M5 21h14"
-                />
-              </svg>
-            </a>
+            <a class="icon-action download" :href="piece.mp3" download title="Scarica MP3"> ↓ </a>
           </template>
 
           <span v-else class="muted">—</span>
@@ -161,7 +223,7 @@ function formatDate(dateString) {
 
 .piece-row {
   border-bottom: 1px solid #e5e5e5;
-  padding: 11px 0;
+  padding: 13px 0 11px;
 }
 
 .piece-row:hover {
@@ -180,10 +242,57 @@ function formatDate(dateString) {
 }
 
 .piece-title-area {
+  position: relative;
   display: flex;
   align-items: baseline;
   gap: 8px;
   min-width: 0;
+  padding-left: 24px;
+}
+
+.like-badge {
+  position: absolute;
+  left: 0;
+  top: -9px;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 1px;
+  white-space: nowrap;
+}
+
+.like-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.82rem;
+  line-height: 1;
+  opacity: 0.45;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.like-button:hover {
+  opacity: 0.85;
+  transform: scale(1.18);
+}
+
+.like-button.liked {
+  opacity: 1;
+  cursor: default;
+}
+
+.like-button.liked:hover {
+  transform: none;
+}
+
+.like-count {
+  font-size: 0.6rem;
+  color: #666;
+  line-height: 1;
+  font-weight: 700;
+  margin-left: 1px;
 }
 
 .piece-title {
@@ -262,6 +371,7 @@ function formatDate(dateString) {
 
 .download {
   color: #555;
+  font-size: 1rem;
 }
 
 .muted {
@@ -271,28 +381,35 @@ function formatDate(dateString) {
 @media (max-width: 768px) {
   .piece-list-head,
   .piece-top {
-    display: grid;
     grid-template-columns: minmax(0, 1fr) 72px 44px 44px;
     gap: 8px;
-    align-items: center;
   }
 
   .piece-list-head {
     padding: 8px 0;
-    border-bottom: 1px solid #d7d7d7;
-    color: #666;
     font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: 0.03em;
   }
 
   .piece-row {
-    padding: 12px 0;
+    padding: 14px 0 12px;
   }
 
   .piece-title-area {
-    min-width: 0;
+    padding-left: 23px;
+    gap: 6px;
+  }
+
+  .like-badge {
+    top: -8px;
+  }
+
+  .like-button {
+    font-size: 0.78rem;
+  }
+
+  .like-count {
+    font-size: 0.56rem;
   }
 
   .piece-title {
