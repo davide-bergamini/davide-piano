@@ -9,7 +9,11 @@ import MidiPlayer from './components/MidiPlayer.vue'
 const route = useRoute()
 
 const hideSidebar = computed(() => {
-  return route.path.startsWith('/discoteca') || route.path.startsWith('/jazz')
+  return (
+    route.path.startsWith('/discoteca') ||
+    route.path.startsWith('/jazz') ||
+    route.path.startsWith('/timeline')
+  )
 })
 
 const currentPiece = ref(null)

@@ -207,6 +207,8 @@ export const burgmullerSections = [
         id: 'op100-17',
         title: 'Op. 100 n. 17',
         subtitle: 'Chiacchierina',
+        description:
+          'Come suggerisce il titolo, questo studio ricorda una conversazione vivace e spensierata. Le frasi musicali sembrano rincorrersi come parole scambiate tra amici, alternando leggerezza e vivacità. Burgmüller trasforma un semplice dialogo quotidiano in una pagina piena di naturalezza e buon umore.',
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },
@@ -215,6 +217,8 @@ export const burgmullerSections = [
         id: 'op100-18',
         title: 'Op. 100 n. 18',
         subtitle: 'Inquietudine',
+        description:
+          "La musica esprime un senso di continua ricerca, come se qualcosa impedisse di trovare una completa serenità. Le frasi si susseguono con un lieve senso di tensione, senza mai perdere eleganza. Burgmüller descrive un'inquietudine delicata, più vicina al dubbio che alla paura.",
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },
@@ -223,6 +227,8 @@ export const burgmullerSections = [
         id: 'op100-19',
         title: 'Op. 100 n. 19',
         subtitle: 'Ave Maria',
+        description:
+          "Questo brano si ispira al raccoglimento e alla serenità della preghiera. La melodia procede con grande equilibrio, creando un'atmosfera di pace e contemplazione. Più che stupire, la musica invita ad ascoltare con calma, lasciando emergere tutta la sua semplice spiritualità.",
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },
@@ -231,6 +237,8 @@ export const burgmullerSections = [
         id: 'op100-20',
         title: 'Op. 100 n. 20',
         subtitle: 'Tarantella',
+        description:
+          'La celebre danza popolare italiana prende vita in uno studio ricco di energia e movimento. Il ritmo vivace suggerisce una festa animata, nella quale la musica sembra non fermarsi mai. Burgmüller conserva però la raffinatezza del suo stile, trasformando la danza in un brillante esercizio pianistico.',
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },
@@ -239,6 +247,8 @@ export const burgmullerSections = [
         id: 'op100-21',
         title: 'Op. 100 n. 21',
         subtitle: 'Armonia degli angeli',
+        description:
+          "Il titolo invita a immaginare una musica leggera e luminosa, quasi sospesa nell'aria. Le melodie sembrano intrecciarsi con naturalezza, creando un senso di pace e serenità. Burgmüller dipinge un'atmosfera delicata, nella quale ogni nota contribuisce a costruire un equilibrio di grande dolcezza.",
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },
@@ -247,6 +257,8 @@ export const burgmullerSections = [
         id: 'op100-22',
         title: 'Op. 100 n. 22',
         subtitle: 'Barcarola',
+        description:
+          "La barcarola richiama il lento ondeggiare di una barca che scivola sull'acqua. Il ritmo regolare accompagna una melodia distesa e cantabile, trasmettendo una piacevole sensazione di calma. La musica invita a lasciarsi trasportare con naturalezza, come durante una tranquilla navigazione.",
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },
@@ -255,6 +267,8 @@ export const burgmullerSections = [
         id: 'op100-23',
         title: 'Op. 100 n. 23',
         subtitle: 'Ritorno',
+        description:
+          'Questo studio suggerisce la gioia di ritrovare un luogo o una persona cara dopo un periodo di lontananza. La musica alterna slancio e serenità, come se ogni frase avvicinasse sempre di più alla meta. Burgmüller racconta il ritorno con semplicità e sincera partecipazione.',
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },
@@ -263,6 +277,8 @@ export const burgmullerSections = [
         id: 'op100-24',
         title: 'Op. 100 n. 24',
         subtitle: 'La rondine',
+        description:
+          "La leggerezza del volo di una rondine ispira questo elegante brano. Le linee melodiche sembrano disegnare piccoli archi nel cielo, alternando rapidità e grazia con assoluta naturalezza. Burgmüller riesce a evocare il movimento dell'uccello senza rinunciare alla chiarezza e all'equilibrio della scrittura.",
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },
@@ -271,6 +287,8 @@ export const burgmullerSections = [
         id: 'op100-25',
         title: 'Op. 100 n. 25',
         subtitle: 'La cavalcata',
+        description:
+          "L'ultimo studio della raccolta conclude il percorso con una pagina brillante e ricca di slancio. Il ritmo suggerisce il galoppo di un cavallo lanciato in una corsa sicura e decisa, simbolo del cammino compiuto dal giovane pianista. È un finale energico e ottimista, che chiude l'Op. 100 con entusiasmo e soddisfazione.",
         publishedAt: '',
         duration: '—',
         midi: { full: '', right: '', left: '' },

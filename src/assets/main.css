@@ -313,6 +313,43 @@ body {
 
 /* Timeline desktop */
 
+.gantt-text-link {
+  cursor: pointer;
+}
+
+.gantt-text-link:hover {
+  fill: #000;
+}
+
+.mobile-month-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mobile-month-link:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mobile-month-link:hover .mobile-month-title,
+.mobile-month-link:hover .mobile-month-composer,
+.mobile-month-link:hover .mobile-month-date {
+  color: inherit;
+}
+
+.gantt-dot-link {
+  cursor: pointer;
+}
+
+.gantt-dot-link:hover {
+  fill: #c1121f;
+}
+
+.mobile-month-dot-link {
+  display: inline-flex;
+  text-decoration: none;
+}
+
 .gantt-svg-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -366,6 +403,22 @@ body {
 .gantt-title-small {
   font-size: 12px;
   fill: #666;
+}
+
+.gantt-svg a {
+  text-decoration: none;
+}
+
+.gantt-svg a:hover {
+  text-decoration: none;
+}
+
+.gantt-svg a:visited {
+  text-decoration: none;
+}
+
+.gantt-svg a text {
+  text-decoration: none;
 }
 
 /* Timeline mobile */

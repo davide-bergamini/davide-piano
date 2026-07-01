@@ -44,13 +44,14 @@ const RIGHT_PAD = 80
 const TOP_PAD = 90
 const ROW_HEIGHT = 58
 
-function flattenPieces(sections, composer) {
+function flattenPieces(sections, composer, routePath) {
   return sections.flatMap((section) =>
     section.pieces
       .filter((piece) => piece.publishedAt)
       .map((piece) => ({
         ...piece,
         composer,
+        routePath,
         collection: section.title,
       })),
   )
@@ -58,10 +59,10 @@ function flattenPieces(sections, composer) {
 
 const pieces = computed(() => {
   return [
-    ...flattenPieces(mozartSections, 'Mozart'),
-    ...flattenPieces(burgmullerSections, 'Burgmüller'),
-    ...flattenPieces(schumannSections, 'Schumann'),
-    ...flattenPieces(tchaikovskySections, 'Tchaikovsky'),
+    ...flattenPieces(mozartSections, 'Mozart', '/mozart'),
+    ...flattenPieces(burgmullerSections, 'Burgmüller', '/burgmuller'),
+    ...flattenPieces(schumannSections, 'Schumann', '/schumann'),
+    ...flattenPieces(tchaikovskySections, 'Tchaikovsky', '/tchaikovsky'),
   ].sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt))
 })
 
@@ -111,6 +112,17 @@ function shortTitle(piece) {
 
   return piece.title
 }
+
+function pieceLink(piece) {
+  return {
+    path: piece.routePath,
+    query: {
+      play: piece.id,
+      type: piece.mp3 ? 'mp3' : 'midi',
+    },
+    hash: `#${piece.id}`,
+  }
+}
 </script>
 
 <template>
@@ -157,24 +169,34 @@ function shortTitle(piece) {
             class="gantt-guide"
           />
 
-          <circle
-            :cx="xFromDate(piece.publishedAt)"
-            :cy="rowY(index) + 12"
-            r="8"
-            class="gantt-dot"
-          />
+          <RouterLink :to="pieceLink(piece)">
+            <circle
+              :cx="xFromDate(piece.publishedAt)"
+              :cy="rowY(index) + 12"
+              r="8"
+              class="gantt-dot gantt-dot-link"
+            />
+          </RouterLink>
 
-          <text :x="xFromDate(piece.publishedAt) + 18" :y="rowY(index) + 10" class="gantt-composer">
-            {{ piece.composer }}
-          </text>
+          <RouterLink :to="pieceLink(piece)">
+            <text
+              :x="xFromDate(piece.publishedAt) + 18"
+              :y="rowY(index) + 10"
+              class="gantt-composer gantt-text-link"
+            >
+              {{ piece.composer }}
+            </text>
+          </RouterLink>
 
-          <text
-            :x="xFromDate(piece.publishedAt) + 18"
-            :y="rowY(index) + 28"
-            class="gantt-title-small"
-          >
-            {{ shortTitle(piece) }}
-          </text>
+          <RouterLink :to="pieceLink(piece)">
+            <text
+              :x="xFromDate(piece.publishedAt) + 18"
+              :y="rowY(index) + 28"
+              class="gantt-title-small gantt-text-link"
+            >
+              {{ shortTitle(piece) }}
+            </text>
+          </RouterLink>
         </g>
       </svg>
     </div>
@@ -197,9 +219,11 @@ function shortTitle(piece) {
             :key="`mobile-${piece.composer}-${piece.id}`"
             class="mobile-month-piece"
           >
-            <span class="mobile-month-dot"></span>
+            <RouterLink :to="pieceLink(piece)" class="mobile-month-dot-link">
+              <span class="mobile-month-dot"></span>
+            </RouterLink>
 
-            <div class="mobile-month-text">
+            <RouterLink :to="pieceLink(piece)" class="mobile-month-text mobile-month-link">
               <div class="mobile-month-date">
                 {{ formatDate(piece.publishedAt) }}
               </div>
@@ -211,7 +235,7 @@ function shortTitle(piece) {
               <div class="mobile-month-title">
                 {{ shortTitle(piece) }}
               </div>
-            </div>
+            </RouterLink>
           </div>
         </div>
       </div>
