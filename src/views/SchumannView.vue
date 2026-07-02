@@ -1,8 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-
 import PieceTable from '../components/PieceTable.vue'
-import { schumannSections as originalSchumannSections } from '../data/schumann'
+import { schumannSections } from '../data/schumann'
 
 defineProps({
   currentPiece: {
@@ -12,13 +10,6 @@ defineProps({
 })
 
 const emit = defineEmits(['select-piece', 'select-mp3'])
-
-const schumannSections = ref(
-  originalSchumannSections.map((section) => ({
-    ...section,
-    pieces: section.pieces.map((piece) => ({ ...piece })),
-  })),
-)
 </script>
 
 <template>
