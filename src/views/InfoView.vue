@@ -73,4 +73,11 @@
   color: #555;
   line-height: 1.75;
 }
+
+@media (max-width: 768px) {
+  .info-page {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
 </style>

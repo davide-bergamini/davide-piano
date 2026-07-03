@@ -5,6 +5,10 @@ body {
   color: #222;
 }
 
+:root {
+  --radius: 4px;
+}
+
 /* Header */
 
 .content-full {
@@ -54,7 +58,7 @@ body {
   text-decoration: none;
   font-size: 0.92rem;
   font-weight: 500;
-  border-radius: 999px;
+  border-radius: var(--radius);
 }
 
 .top-nav a:hover {
@@ -106,7 +110,7 @@ body {
   text-decoration: none;
   padding: 5px 12px;
   line-height: 1.2;
-  border-radius: 6px;
+  border-radius: var(--radius);
 }
 
 .sidebar-nav a:hover {
@@ -155,7 +159,7 @@ body {
 
 .card {
   border: 0;
-  border-radius: 0;
+  border-radius: var(--radius);
   box-shadow: none;
   background: transparent;
 }
@@ -169,7 +173,7 @@ body {
 }
 
 .badge {
-  border-radius: 0;
+  border-radius: var(--radius);
   font-weight: 600;
 }
 
@@ -191,6 +195,7 @@ body {
   color: #222;
   padding: 0;
   overflow: hidden;
+  border-radius: var(--radius);
 }
 
 .composer-photo {
@@ -236,6 +241,7 @@ body {
   background: #222;
   color: white;
   border: 1px solid #111;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   gap: 22px;
@@ -415,21 +421,13 @@ body {
   fill: #666;
 }
 
-.gantt-svg a {
-  text-decoration: none;
-}
-
-.gantt-svg a:hover {
-  text-decoration: none;
-}
-
-.gantt-svg a:visited {
-  text-decoration: none;
-}
-
+.gantt-svg a,
+.gantt-svg a:hover,
+.gantt-svg a:visited,
 .gantt-svg a text {
   text-decoration: none;
 }
+
 /* Admin */
 
 .admin-page {
@@ -465,6 +463,7 @@ body {
   box-sizing: border-box;
   padding: 9px 10px;
   border: 1px solid #ccc;
+  border-radius: var(--radius);
   font: inherit;
 }
 
@@ -474,6 +473,7 @@ body {
   margin-top: 4px;
   padding: 8px 14px;
   border: 0;
+  border-radius: var(--radius);
   background: #222;
   color: white;
   font: inherit;
@@ -511,9 +511,11 @@ body {
 }
 
 .admin-file-name {
-  margin: 0 0 10px;
+  flex: 1;
   color: #666;
   font-size: 0.92rem;
+  min-width: 220px;
+  margin: 0;
 }
 
 .admin-file-name:empty {
@@ -527,14 +529,6 @@ body {
   flex-wrap: wrap;
 }
 
-.admin-file-name {
-  flex: 1;
-  color: #666;
-  font-size: 0.92rem;
-  min-width: 220px;
-  margin: 0;
-}
-
 .nav-dropdown {
   position: relative;
 }
@@ -544,7 +538,7 @@ body {
   align-items: center;
   padding: 7px 14px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--radius);
   background: transparent;
   color: #ddd;
   font: inherit;
@@ -567,12 +561,13 @@ body {
   padding: 6px;
   background: #222;
   border: 1px solid #111;
+  border-radius: var(--radius);
 }
 
 .nav-dropdown-menu a {
   display: block;
   padding: 8px 10px;
-  border-radius: 6px;
+  border-radius: var(--radius);
   color: #ddd;
   text-decoration: none;
 }
@@ -586,21 +581,6 @@ body {
   max-width: 900px;
   margin: 0 auto;
   padding-top: 28px;
-}
-
-@media (max-width: 768px) {
-  .admin-page {
-    max-width: none;
-  }
-
-  .admin-header {
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .admin-section input {
-    max-width: none;
-  }
 }
 
 .admin-field {
@@ -626,7 +606,7 @@ body {
   display: none;
 }
 
-/* Responsive */
+/* Responsive player */
 
 @media (max-width: 900px) {
   .midi-player {
@@ -673,6 +653,8 @@ body {
     min-width: 0;
   }
 }
+
+/* Responsive layout */
 
 @media (max-width: 768px) {
   .site-header {
@@ -805,6 +787,8 @@ body {
     line-height: 1.3;
   }
 }
+
+/* Animazioni */
 
 .floating-notes text {
   font-size: 28px;

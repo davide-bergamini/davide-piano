@@ -83,7 +83,7 @@ function formatDate(dateString) {
             {{ formatDate(piece.publishedAt) }}
           </span>
 
-          <span v-else class="coming-soon-date"> Coming Soon </span>
+          <span v-else class="coming-soon-date">Coming Soon</span>
         </div>
 
         <div class="piece-actions">
@@ -252,6 +252,7 @@ function formatDate(dateString) {
   width: 22px;
   height: 22px;
   border: 0;
+  border-radius: var(--radius);
   background: transparent;
   color: #444;
   display: inline-flex;
@@ -265,6 +266,7 @@ function formatDate(dateString) {
 }
 
 .icon-action:hover {
+  background: #f1f1f1;
   color: #000;
 }
 
@@ -290,11 +292,11 @@ function formatDate(dateString) {
   padding: 12px 14px;
   background: #f8f9fa;
   border-left: 3px solid #1d4ed8;
+  border-radius: var(--radius);
   color: #495057;
   font-size: 0.92rem;
   line-height: 1.5;
   max-width: 720px;
-
   animation: description-slide 0.22s ease-out;
 }
 
