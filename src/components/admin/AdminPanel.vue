@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 import AdminDashboard from './AdminDashboard.vue'
-import AdminPieces from './AdminPieces.vue'
+import AdminPieces from '../../views/AdminPiecesView.vue'
 import AdminUpload from './AdminUpload.vue'
 import AdminGithub from './AdminGithub.vue'
 import AdminDiscogs from './AdminDiscogs.vue'

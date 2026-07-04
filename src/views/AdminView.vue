@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+
 import AdminLogin from '../components/admin/AdminLogin.vue'
 import AdminPanel from '../components/admin/AdminPanel.vue'
 
@@ -18,5 +19,6 @@ function handleLogout() {
 
 <template>
   <AdminLogin v-if="!logged" @login="handleLogin" />
+
   <AdminPanel v-else @logout="handleLogout" />
 </template>

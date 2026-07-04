@@ -1,35 +1,59 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { loadPieces } from '../../services/pieces'
+
+const pieces = ref([])
+
+const totalPieces = computed(() => pieces.value.length)
+
+const midiCount = computed(() =>
+  pieces.value.filter((piece) => piece.midi?.full).length,
+)
+
+const mp3Count = computed(() =>
+  pieces.value.filter((piece) => piece.mp3).length,
+)
+
+const publishedCount = computed(() =>
+  pieces.value.filter((piece) => piece.published || piece.status === 'published').length,
+)
+
+onMounted(() => {
+  pieces.value = loadPieces()
+})
+</script>
+
 <template>
   <section class="admin-page">
     <h2>Dashboard</h2>
 
     <p class="dashboard-intro">
-      Benvenuto nel CMS di Davide Piano. Da qui puoi gestire brani, file MIDI, file MP3 e contenuti
-      futuri della discoteca.
+      Benvenuto nel CMS di Davide Piano. Da qui puoi controllare lo stato generale del repertorio.
     </p>
 
     <div class="dashboard-grid">
       <article class="dashboard-card">
-        <span class="dashboard-number">0</span>
+        <span class="dashboard-number">{{ totalPieces }}</span>
         <strong>Brani</strong>
         <small>Gestione repertorio</small>
       </article>
 
       <article class="dashboard-card">
-        <span class="dashboard-number">0</span>
+        <span class="dashboard-number">{{ midiCount }}</span>
         <strong>File MIDI</strong>
-        <small>Caricati su GitHub</small>
+        <small>Collegati ai brani</small>
       </article>
 
       <article class="dashboard-card">
-        <span class="dashboard-number">0</span>
+        <span class="dashboard-number">{{ mp3Count }}</span>
         <strong>File MP3</strong>
         <small>Registrazioni audio</small>
       </article>
 
       <article class="dashboard-card">
-        <span class="dashboard-number">0</span>
-        <strong>Discoteca</strong>
-        <small>Import Discogs futuro</small>
+        <span class="dashboard-number">{{ publishedCount }}</span>
+        <strong>Pubblicati</strong>
+        <small>Visibili sul sito</small>
       </article>
     </div>
 
@@ -38,9 +62,9 @@
         <h3>Prossime attività</h3>
 
         <ul>
-          <li>Collegare la tabella brani a un file JSON.</li>
-          <li>Salvare le modifiche su GitHub.</li>
-          <li>Importare i dati della discoteca da Discogs.</li>
+          <li>Completare il collegamento tra Brani e Upload.</li>
+          <li>Aggiungere Čajkovskij e Schumann al tabellone.</li>
+          <li>Passare i dati da localStorage a Supabase.</li>
         </ul>
       </article>
 
@@ -48,8 +72,7 @@
         <h3>Stato CMS</h3>
 
         <p>
-          La struttura dell'Admin è pronta. Ora possiamo iniziare a rendere dinamiche le varie
-          sezioni.
+          Il CMS legge i brani da <strong>pieces.js</strong> e mostra dati reali del repertorio.
         </p>
       </article>
     </div>

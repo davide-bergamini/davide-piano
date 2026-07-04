@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 import {
   loadPieces,
@@ -68,10 +68,23 @@ const filteredPieces = computed(() => {
 })
 
 function editPiece(piece) {
+  const normalized = normalizePiece(piece)
+
   editingPiece.value = {
-    ...normalizePiece(piece),
-    tagsText: Array.isArray(piece.tags) ? piece.tags.join(', ') : '',
+    ...normalized,
+    midi: {
+      full: normalized.midi?.full || '',
+      left: normalized.midi?.left || '',
+      right: normalized.midi?.right || '',
+    },
+    tags: Array.isArray(normalized.tags) ? normalized.tags : [],
+    tagsText: Array.isArray(normalized.tags) ? normalized.tags.join(', ') : '',
   }
+
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth',
+  })
 }
 
 function newPiece() {
@@ -81,6 +94,11 @@ function newPiece() {
     ...piece,
     tagsText: '',
   }
+
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth',
+  })
 }
 
 function cancelEdit() {
@@ -155,8 +173,36 @@ function goToUpload(field, folder) {
   alert(`Ora vai nella sezione Upload e carica il file nella cartella ${folder}.`)
 }
 
+function applyLastUploadedFile() {
+  const saved = localStorage.getItem('last_uploaded_for_piece')
+
+  if (!saved || !editingPiece.value) return
+
+  const uploaded = JSON.parse(saved)
+
+  if (uploaded.pieceId !== editingPiece.value.id) return
+
+  if (uploaded.field === 'midi.full') editingPiece.value.midi.full = uploaded.publicPath
+  if (uploaded.field === 'midi.left') editingPiece.value.midi.left = uploaded.publicPath
+  if (uploaded.field === 'midi.right') editingPiece.value.midi.right = uploaded.publicPath
+  if (uploaded.field === 'mp3') editingPiece.value.mp3 = uploaded.publicPath
+  if (uploaded.field === 'pdf') editingPiece.value.pdf = uploaded.publicPath
+  if (uploaded.field === 'musicxml') editingPiece.value.musicxml = uploaded.publicPath
+  if (uploaded.field === 'image') editingPiece.value.image = uploaded.publicPath
+
+  localStorage.removeItem('last_uploaded_for_piece')
+}
+
 onMounted(() => {
   pieces.value = loadPieces()
+
+  window.addEventListener('focus', applyLastUploadedFile)
+
+  applyLastUploadedFile()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('focus', applyLastUploadedFile)
 })
 </script>
 
@@ -223,21 +269,17 @@ onMounted(() => {
                 Titolo {{ sortIcon('title') }}
               </button>
             </th>
-
             <th>Sottotitolo</th>
-
             <th>
               <button type="button" class="sort-button" @click="sortBy('composer')">
                 Compositore {{ sortIcon('composer') }}
               </button>
             </th>
-
             <th>
               <button type="button" class="sort-button" @click="sortBy('collection')">
                 Raccolta {{ sortIcon('collection') }}
               </button>
             </th>
-
             <th>Stato</th>
             <th>MIDI</th>
             <th>MP3</th>
@@ -508,8 +550,7 @@ onMounted(() => {
   font-weight: 600;
 }
 
-.admin-toolbar select,
-.edit-panel select {
+.admin-toolbar select {
   min-width: 180px;
   padding: 0.55rem;
   border: 1px solid #ccc;
@@ -527,11 +568,12 @@ onMounted(() => {
 .admin-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 0.82rem;
 }
 
 .admin-table th,
 .admin-table td {
-  padding: 0.8rem;
+  padding: 0.55rem 0.6rem;
   text-align: left;
   border-bottom: 1px solid #eee;
   white-space: nowrap;
@@ -549,18 +591,23 @@ onMounted(() => {
 
 .status-ok {
   color: #198754;
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .status-missing {
   color: #dc3545;
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .actions-cell {
   text-align: right;
+}
+
+.actions-cell button {
+  padding: 0.3rem 0.55rem;
+  font-size: 0.78rem;
 }
 
 button {
@@ -591,17 +638,20 @@ button {
 }
 
 .edit-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.5rem;
+  max-width: 70%;
   padding: 1.25rem;
   border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 0.82rem;
 }
 
 .edit-panel h2 {
+  grid-column: 1 / -1;
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .edit-panel label {
@@ -609,14 +659,27 @@ button {
   flex-direction: column;
   gap: 0.35rem;
   font-weight: 600;
+  font-size: 0.82rem;
 }
 
 .edit-panel input,
-.edit-panel textarea {
-  padding: 0.65rem;
+.edit-panel textarea,
+.edit-panel select {
+  padding: 0.45rem 0.55rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font: inherit;
+  font-size: 0.82rem;
+  font-family: inherit;
+}
+
+.edit-panel label:has(textarea) {
+  grid-column: 1 / -1;
+}
+
+.edit-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.75rem;
 }
 
 .field-with-button {
@@ -630,6 +693,8 @@ button {
 
 .field-with-button button {
   flex-shrink: 0;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.78rem;
 }
 
 @media (max-width: 700px) {
@@ -645,6 +710,17 @@ button {
 
   .admin-toolbar select {
     width: 100%;
+  }
+
+  .edit-panel {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .edit-panel h2,
+  .edit-actions,
+  .edit-panel label:has(textarea) {
+    grid-column: auto;
   }
 
   .field-with-button {
