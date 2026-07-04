@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { Midi } from '@tonejs/midi'
 
 import PieceTable from '../components/PieceTable.vue'
-import { mozartSections as originalMozartSections } from '../data/mozart'
+import repertoire from '../data/repertoire.json'
 
 defineProps({
   currentPiece: {
@@ -15,10 +15,12 @@ defineProps({
 const emit = defineEmits(['select-piece', 'select-mp3'])
 
 const mozartSections = ref(
-  originalMozartSections.map((section) => ({
-    ...section,
-    pieces: section.pieces.map((piece) => ({ ...piece })),
-  })),
+  repertoire
+    .filter((work) => work.composer === 'Wolfgang Amadeus Mozart')
+    .map((work) => ({
+      ...work,
+      pieces: work.pieces.map((piece) => ({ ...piece })),
+    })),
 )
 
 const allPieces = computed(() => mozartSections.value.flatMap((section) => section.pieces))

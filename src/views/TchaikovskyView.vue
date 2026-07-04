@@ -1,8 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-
 import PieceTable from '../components/PieceTable.vue'
-import { tchaikovskySections as originalTchaikovskySections } from '../data/tchaikovsky'
+import repertoire from '../data/repertoire.json'
 
 defineProps({
   currentPiece: {
@@ -13,11 +11,8 @@ defineProps({
 
 const emit = defineEmits(['select-piece', 'select-mp3'])
 
-const tchaikovskySections = ref(
-  originalTchaikovskySections.map((section) => ({
-    ...section,
-    pieces: section.pieces.map((piece) => ({ ...piece })),
-  })),
+const tchaikovskySections = repertoire.filter(
+  (work) => work.composer === 'Pëtr Il’ič Čajkovskij',
 )
 </script>
 

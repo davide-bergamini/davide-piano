@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { Midi } from '@tonejs/midi'
 
 import PieceTable from '../components/PieceTable.vue'
-import { burgmullerSections as originalBurgmullerSections } from '../data/burgmuller'
+import repertoire from '../data/repertoire.json'
 
 defineProps({
   currentPiece: {
@@ -15,10 +15,12 @@ defineProps({
 const emit = defineEmits(['select-piece', 'select-mp3'])
 
 const burgmullerSections = ref(
-  originalBurgmullerSections.map((section) => ({
-    ...section,
-    pieces: section.pieces.map((piece) => ({ ...piece })),
-  })),
+  repertoire
+    .filter((work) => work.composer === 'Friedrich Burgmüller')
+    .map((work) => ({
+      ...work,
+      pieces: work.pieces.map((piece) => ({ ...piece })),
+    })),
 )
 
 function formatDuration(seconds) {

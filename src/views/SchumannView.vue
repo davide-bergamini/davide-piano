@@ -1,6 +1,6 @@
 <script setup>
 import PieceTable from '../components/PieceTable.vue'
-import { schumannSections } from '../data/schumann'
+import repertoire from '../data/repertoire.json'
 
 defineProps({
   currentPiece: {
@@ -10,6 +10,10 @@ defineProps({
 })
 
 const emit = defineEmits(['select-piece', 'select-mp3'])
+
+const schumannSections = repertoire.filter(
+  (work) => work.composer === 'Robert Schumann',
+)
 </script>
 
 <template>
