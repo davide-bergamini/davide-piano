@@ -3,7 +3,7 @@ import { STORAGE_KEY } from './works'
 const owner = 'davide-bergamini'
 const repo = 'davide-piano'
 const branch = 'main'
-const path = 'src/data/repertoire.json'
+const path = 'public/data/repertoire.json'
 
 function getGithubToken() {
   return localStorage.getItem('github_token')
@@ -35,6 +35,25 @@ async function getExistingFileSha(token) {
   return data.sha
 }
 
+function normalizeRepertoire(works) {
+  return works.map((work) => ({
+    ...work,
+    pieces: (work.pieces || []).map((piece) => ({
+      ...piece,
+
+      midi: {
+        full: piece.midi?.full || '',
+        right: piece.midi?.right || '',
+        left: piece.midi?.left || '',
+      },
+
+      mp3: piece.mp3 || '',
+      pdf: piece.pdf || '',
+      musicxml: piece.musicxml || '',
+    })),
+  }))
+}
+
 export async function publishRepertoire() {
   const token = getGithubToken()
 
@@ -48,7 +67,10 @@ export async function publishRepertoire() {
     throw new Error('Nessun repertorio trovato nel browser.')
   }
 
-  const json = JSON.stringify(JSON.parse(savedWorks), null, 2)
+  const works = JSON.parse(savedWorks)
+  const repertoire = normalizeRepertoire(works)
+
+  const json = JSON.stringify(repertoire, null, 2)
   const content = toBase64(`${json}\n`)
   const sha = await getExistingFileSha(token)
 

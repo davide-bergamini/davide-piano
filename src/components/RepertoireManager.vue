@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import {
   loadWorks,
   saveWorks,
@@ -7,12 +7,26 @@ import {
   addPieceToWork,
 } from '../services/works'
 import { publishRepertoire } from '../services/repertoirePublisher'
+import { fetchAllUploadFiles } from '../services/githubFiles'
 
 const works = ref(loadWorks())
 
 const selectedType = ref('')
 const selectedWorkId = ref('')
 const selectedPieceId = ref('')
+
+const uploadFiles = ref({
+  midi: [],
+  mp3: [],
+  pdf: [],
+  musicxml: [],
+})
+
+const loadingUploadFiles = ref(false)
+
+onMounted(() => {
+  loadUploadFiles()
+})
 
 const composers = computed(() => {
   const grouped = {}
@@ -43,6 +57,35 @@ const selectedPiece = computed(() => {
   return selectedWork.value.pieces.find((piece) => piece.id === selectedPieceId.value) || null
 })
 
+async function loadUploadFiles() {
+  loadingUploadFiles.value = true
+
+  try {
+    uploadFiles.value = await fetchAllUploadFiles()
+  } catch (err) {
+    alert(`Errore caricamento file da GitHub: ${err.message}`)
+  } finally {
+    loadingUploadFiles.value = false
+  }
+}
+
+function ensurePieceFields(piece) {
+  if (!piece.midi) {
+    piece.midi = {
+      full: '',
+      right: '',
+      left: '',
+    }
+  }
+
+  if (!piece.midi.full) piece.midi.full = ''
+  if (!piece.midi.right) piece.midi.right = ''
+  if (!piece.midi.left) piece.midi.left = ''
+  if (!piece.mp3) piece.mp3 = ''
+  if (!piece.pdf) piece.pdf = ''
+  if (!piece.musicxml) piece.musicxml = ''
+}
+
 function persist() {
   saveWorks(works.value)
 }
@@ -54,6 +97,8 @@ function selectWork(work) {
 }
 
 function selectPiece(work, piece) {
+  ensurePieceFields(piece)
+
   selectedType.value = 'piece'
   selectedWorkId.value = work.id
   selectedPieceId.value = piece.id
@@ -102,6 +147,8 @@ function addPiece(work) {
   newPiece.collection = updatedWork.collection || updatedWork.title
   newPiece.sectionTitle = updatedWork.title
 
+  ensurePieceFields(newPiece)
+
   selectedType.value = 'piece'
   selectedWorkId.value = updatedWork.id
   selectedPieceId.value = newPiece.id
@@ -132,6 +179,8 @@ function saveCurrent() {
   }
 
   if (selectedType.value === 'piece' && selectedPiece.value && selectedWork.value) {
+    ensurePieceFields(selectedPiece.value)
+
     selectedPiece.value.composer =
       selectedPiece.value.composer || selectedWork.value.composer
 
@@ -166,9 +215,15 @@ async function publish() {
         <p>Compositori, opere e brani.</p>
       </div>
 
-      <button class="text-action" type="button" @click="publish">
-        Pubblica su GitHub
-      </button>
+      <div class="header-actions">
+        <button class="text-action" type="button" @click="loadUploadFiles">
+          {{ loadingUploadFiles ? 'Caricamento file...' : 'Aggiorna file' }}
+        </button>
+
+        <button class="text-action" type="button" @click="publish">
+          Pubblica su GitHub
+        </button>
+      </div>
     </header>
 
     <div class="repertoire-layout">
@@ -350,32 +405,132 @@ async function publish() {
 
           <label>
             MIDI completo
-            <input v-model="selectedPiece.midi.full" type="text" />
+            <select v-model="selectedPiece.midi.full">
+              <option value="">Nessun MIDI completo</option>
+
+              <option
+                v-if="
+                  selectedPiece.midi.full &&
+                  !uploadFiles.midi.some((file) => file.publicPath === selectedPiece.midi.full)
+                "
+                :value="selectedPiece.midi.full"
+              >
+                {{ selectedPiece.midi.full }}
+              </option>
+
+              <option v-for="file in uploadFiles.midi" :key="file.publicPath" :value="file.publicPath">
+                {{ file.name }}
+              </option>
+            </select>
           </label>
 
           <label>
             MIDI mano destra
-            <input v-model="selectedPiece.midi.right" type="text" />
+            <select v-model="selectedPiece.midi.right">
+              <option value="">Nessun MIDI mano destra</option>
+
+              <option
+                v-if="
+                  selectedPiece.midi.right &&
+                  !uploadFiles.midi.some((file) => file.publicPath === selectedPiece.midi.right)
+                "
+                :value="selectedPiece.midi.right"
+              >
+                {{ selectedPiece.midi.right }}
+              </option>
+
+              <option v-for="file in uploadFiles.midi" :key="file.publicPath" :value="file.publicPath">
+                {{ file.name }}
+              </option>
+            </select>
           </label>
 
           <label>
             MIDI mano sinistra
-            <input v-model="selectedPiece.midi.left" type="text" />
+            <select v-model="selectedPiece.midi.left">
+              <option value="">Nessun MIDI mano sinistra</option>
+
+              <option
+                v-if="
+                  selectedPiece.midi.left &&
+                  !uploadFiles.midi.some((file) => file.publicPath === selectedPiece.midi.left)
+                "
+                :value="selectedPiece.midi.left"
+              >
+                {{ selectedPiece.midi.left }}
+              </option>
+
+              <option v-for="file in uploadFiles.midi" :key="file.publicPath" :value="file.publicPath">
+                {{ file.name }}
+              </option>
+            </select>
           </label>
 
           <label>
             MP3
-            <input v-model="selectedPiece.mp3" type="text" />
+            <select v-model="selectedPiece.mp3">
+              <option value="">Nessun MP3</option>
+
+              <option
+                v-if="
+                  selectedPiece.mp3 &&
+                  !uploadFiles.mp3.some((file) => file.publicPath === selectedPiece.mp3)
+                "
+                :value="selectedPiece.mp3"
+              >
+                {{ selectedPiece.mp3 }}
+              </option>
+
+              <option v-for="file in uploadFiles.mp3" :key="file.publicPath" :value="file.publicPath">
+                {{ file.name }}
+              </option>
+            </select>
           </label>
 
           <label>
             PDF
-            <input v-model="selectedPiece.pdf" type="text" />
+            <select v-model="selectedPiece.pdf">
+              <option value="">Nessun PDF</option>
+
+              <option
+                v-if="
+                  selectedPiece.pdf &&
+                  !uploadFiles.pdf.some((file) => file.publicPath === selectedPiece.pdf)
+                "
+                :value="selectedPiece.pdf"
+              >
+                {{ selectedPiece.pdf }}
+              </option>
+
+              <option v-for="file in uploadFiles.pdf" :key="file.publicPath" :value="file.publicPath">
+                {{ file.name }}
+              </option>
+            </select>
           </label>
 
           <label>
             MusicXML
-            <input v-model="selectedPiece.musicxml" type="text" />
+            <select v-model="selectedPiece.musicxml">
+              <option value="">Nessun MusicXML</option>
+
+              <option
+                v-if="
+                  selectedPiece.musicxml &&
+                  !uploadFiles.musicxml.some((file) => file.publicPath === selectedPiece.musicxml)
+                "
+                :value="selectedPiece.musicxml"
+              >
+                {{ selectedPiece.musicxml }}
+              </option>
+
+              <option
+                v-for="file in uploadFiles.musicxml"
+                :key="file.publicPath"
+                :value="file.publicPath"
+              >
+                {{ file.name }}
+              </option>
+            </select>
           </label>
 
           <label>
@@ -421,6 +576,14 @@ async function publish() {
   margin-bottom: 1.6rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #111;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 h3,
@@ -684,6 +847,10 @@ textarea {
 @media (max-width: 700px) {
   .repertoire-header {
     flex-direction: column;
+  }
+
+  .header-actions {
+    justify-content: flex-start;
   }
 
   .composer-header {
