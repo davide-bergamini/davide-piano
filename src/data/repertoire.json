@@ -466,7 +466,7 @@
         "publishedAt": "",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Consolazione_13_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -480,7 +480,7 @@
         "startedAt": "",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Consolazione_13_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
@@ -1203,48 +1203,6 @@
         "status": "planned",
         "duration": "",
         "notes": "",
-        "pdf": "",
-        "musicxml": "",
-        "image": "",
-        "tags": [],
-        "published": false
-      }
-    ]
-  },
-  {
-    "id": "82991a26-6253-482b-a908-5cab9e61c3ea",
-    "title": "Sonata K331",
-    "composer": "Wolfgang Amadeus Mozart",
-    "collection": "Wolfgang Amadeus Mozart",
-    "image": "",
-    "year": "",
-    "description": "",
-    "notes": "",
-    "order": 5,
-    "pieces": [
-      {
-        "id": "7c07d00e-af25-4f29-a5b6-44c3683c5d2c",
-        "title": "K331 - I movimento",
-        "subtitle": "Allegro",
-        "composer": "Wolfgang Amadeus Mozart",
-        "collection": "Wolfgang Amadeus Mozart",
-        "sectionTitle": "Sonata K331",
-        "number": "",
-        "order": 1,
-        "key": "",
-        "difficulty": "",
-        "startedAt": "",
-        "publishedAt": "",
-        "status": "planned",
-        "duration": "",
-        "description": "",
-        "notes": "",
-        "midi": {
-          "full": "",
-          "right": "",
-          "left": ""
-        },
-        "mp3": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
