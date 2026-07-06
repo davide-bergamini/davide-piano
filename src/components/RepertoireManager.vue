@@ -181,16 +181,42 @@ function saveCurrent() {
   if (selectedType.value === 'piece' && selectedPiece.value && selectedWork.value) {
     ensurePieceFields(selectedPiece.value)
 
-    selectedPiece.value.composer =
-      selectedPiece.value.composer || selectedWork.value.composer
+    const workIndex = works.value.findIndex((work) => work.id === selectedWork.value.id)
 
-    selectedPiece.value.collection =
-      selectedPiece.value.collection ||
-      selectedWork.value.collection ||
-      selectedWork.value.title
+    if (workIndex === -1) return
 
-    selectedPiece.value.sectionTitle =
-      selectedPiece.value.sectionTitle || selectedWork.value.title
+    const pieceIndex = works.value[workIndex].pieces.findIndex(
+      (piece) => piece.id === selectedPiece.value.id,
+    )
+
+    if (pieceIndex === -1) return
+
+    const updatedPiece = {
+      ...selectedPiece.value,
+
+      composer: selectedPiece.value.composer || selectedWork.value.composer,
+
+      collection:
+        selectedPiece.value.collection ||
+        selectedWork.value.collection ||
+        selectedWork.value.title,
+
+      sectionTitle: selectedPiece.value.sectionTitle || selectedWork.value.title,
+
+      publishedAt: selectedPiece.value.publishedAt || '',
+
+      midi: {
+        full: selectedPiece.value.midi?.full || '',
+        right: selectedPiece.value.midi?.right || '',
+        left: selectedPiece.value.midi?.left || '',
+      },
+
+      mp3: selectedPiece.value.mp3 || '',
+      pdf: selectedPiece.value.pdf || '',
+      musicxml: selectedPiece.value.musicxml || '',
+    }
+
+    works.value[workIndex].pieces[pieceIndex] = updatedPiece
   }
 
   persist()

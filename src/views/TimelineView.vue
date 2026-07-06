@@ -1,10 +1,5 @@
 <script setup>
-import { computed } from 'vue'
-
-import { mozartSections } from '../data/mozart'
-import { burgmullerSections } from '../data/burgmuller'
-import { schumannSections } from '../data/schumann'
-import { tchaikovskySections } from '../data/tchaikovsky'
+import { computed, onMounted, ref } from 'vue'
 
 const YEAR = 2026
 
@@ -44,26 +39,37 @@ const RIGHT_PAD = 80
 const TOP_PAD = 90
 const ROW_HEIGHT = 58
 
-function flattenPieces(sections, composer, routePath) {
-  return sections.flatMap((section) =>
-    section.pieces
-      .filter((piece) => piece.publishedAt)
-      .map((piece) => ({
-        ...piece,
-        composer,
-        routePath,
-        collection: section.title,
-      })),
-  )
+const works = ref([])
+
+onMounted(async () => {
+  const response = await fetch(`${import.meta.env.BASE_URL}data/repertoire.json`)
+  works.value = await response.json()
+})
+
+function composerRoute(composer) {
+  const value = String(composer || '').toLowerCase()
+
+  if (value.includes('mozart')) return '/mozart'
+  if (value.includes('burgmüller') || value.includes('burgmuller')) return '/burgmuller'
+  if (value.includes('schumann')) return '/schumann'
+  if (value.includes('čajkovskij') || value.includes('tchaikovsky')) return '/tchaikovsky'
+
+  return '/'
 }
 
 const pieces = computed(() => {
-  return [
-    ...flattenPieces(mozartSections, 'Mozart', '/mozart'),
-    ...flattenPieces(burgmullerSections, 'Burgmüller', '/burgmuller'),
-    ...flattenPieces(schumannSections, 'Schumann', '/schumann'),
-    ...flattenPieces(tchaikovskySections, 'Tchaikovsky', '/tchaikovsky'),
-  ].sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt))
+  return works.value
+    .flatMap((work) =>
+      (work.pieces || [])
+        .filter((piece) => piece.publishedAt)
+        .map((piece) => ({
+          ...piece,
+          composer: piece.composer || work.composer || '',
+          routePath: composerRoute(piece.composer || work.composer),
+          collection: piece.collection || work.collection || work.title || '',
+        })),
+    )
+    .sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt))
 })
 
 const mobileMonths = computed(() => {
