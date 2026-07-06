@@ -1,28 +1,29 @@
 <script setup>
-const modules = import.meta.glob('../data/*.js', {
-  eager: true,
+import { computed, onMounted, ref } from 'vue'
+
+const works = ref([])
+
+onMounted(async () => {
+  const response = await fetch(`${import.meta.env.BASE_URL}data/repertoire.json`)
+  works.value = await response.json()
 })
 
-const allPieces = Object.values(modules).flatMap((module) =>
-  Object.values(module)
-    .filter(Array.isArray)
-    .flatMap((sections) =>
-      sections
-        .filter((section) => section && Array.isArray(section.pieces))
-        .flatMap((section) =>
-          section.pieces.map((piece) => ({
-            ...piece,
-            sectionTitle: section.title || '',
-            composerName: section.composer || '',
-            composerImage: section.image || '',
-          })),
-        ),
-    ),
-)
+const allPieces = computed(() => {
+  return works.value.flatMap((work) =>
+    (work.pieces || []).map((piece) => ({
+      ...piece,
+      sectionTitle: piece.sectionTitle || work.title || '',
+      composerName: piece.composer || work.composer || '',
+      composerImage: piece.image || work.image || '',
+    })),
+  )
+})
 
-const latestPiece = allPieces
-  .filter((piece) => piece.publishedAt && piece.mp3)
-  .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0]
+const latestPiece = computed(() => {
+  return allPieces.value
+    .filter((piece) => piece.publishedAt && piece.mp3)
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0]
+})
 </script>
 
 <template>
