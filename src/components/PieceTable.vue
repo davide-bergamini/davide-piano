@@ -79,12 +79,16 @@ function formatDate(dateString) {
         </div>
 
         <div class="piece-date">
-          <span v-if="piece.publishedAt">
-            {{ formatDate(piece.publishedAt) }}
-          </span>
+  <span v-if="piece.publishedAt">
+    {{ formatDate(piece.publishedAt) }}
+  </span>
 
-          <span v-else class="coming-soon-date">Coming Soon</span>
-        </div>
+  <span v-else-if="hasMidi(piece) || hasMp3(piece)" class="published-no-date">
+    Disponibile
+  </span>
+
+  <span v-else class="coming-soon-date">Coming Soon</span>
+</div>
 
         <div class="piece-actions">
           <template v-if="hasMidi(piece)">
@@ -207,6 +211,11 @@ function formatDate(dateString) {
   outline: none;
   color: #2563eb;
   text-decoration: underline;
+}
+
+.published-no-date {
+  color: #555;
+  font-size: 0.88rem;
 }
 
 .piece-subtitle {
