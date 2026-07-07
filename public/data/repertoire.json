@@ -838,7 +838,7 @@
     ]
   },
   {
-    "id": "schumann-album-gioventu-op68",
+    "id": "album-gioventu",
     "title": "Album per la gioventù Op. 68",
     "composer": "Robert Schumann",
     "collection": "Schumann",
@@ -1141,7 +1141,7 @@
     ]
   },
   {
-    "id": "tchaikosky-album-gioventu-op39",
+    "id": "petr-ilic-cajkovskij-album-per-la-gioventu-op-39",
     "title": "Album per la gioventù Op. 39",
     "composer": "Pëtr Il’ič Čajkovskij",
     "collection": "Album per la gioventù Op. 39",
@@ -1157,13 +1157,13 @@
         "title": "Op. 39 n. 6",
         "subtitle": "La bambola malata",
         "description": "Con grande delicatezza, Čajkovskij immagina la tristezza di un bambino davanti alla propria bambola ammalata. La melodia procede lentamente, con un carattere malinconico ma mai drammatico, lasciando spazio alla tenerezza e all’affetto. È una pagina semplice e profondamente espressiva, capace di raccontare un piccolo episodio della vita quotidiana con la sensibilità e la poesia tipiche del compositore russo.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-07",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Bambola_malata_6_Tchaikovsky.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Bambola_malata_6_Tchaikovsky.mp3",
         "composer": "Pëtr Il’ič Čajkovskij",
         "collection": "Album per la gioventù Op. 39",
         "sectionTitle": "Album per la gioventù Op. 39",
@@ -1171,14 +1171,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op39-2",
