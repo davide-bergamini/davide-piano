@@ -463,10 +463,10 @@
         "title": "Op. 100 n. 13",
         "subtitle": "Consolazione",
         "description": "Dopo la malinconia di Addio, Burgmüller offre una pagina che trasmette conforto e speranza. La melodia procede con calma, come le parole gentili di una persona che riesce a rassicurare chi soffre. L’atmosfera è raccolta e luminosa, invitando il pianista a cercare un’espressione sincera e pacata.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-03",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Consolazione_13_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -478,14 +478,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Consolazione_13_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-14",
