@@ -1,6 +1,7 @@
 <script setup>
+import { onMounted, ref } from 'vue'
+
 import PieceTable from '../components/PieceTable.vue'
-import repertoire from '../data/repertoire.json'
 
 defineProps({
   currentPiece: {
@@ -11,9 +12,23 @@ defineProps({
 
 const emit = defineEmits(['select-piece', 'select-mp3'])
 
-const tchaikovskySections = repertoire.filter(
-  (work) => work.composer === 'Pëtr Il’ič Čajkovskij',
-)
+const tchaikovskySections = ref([])
+
+async function loadRepertoire() {
+  const response = await fetch(`${import.meta.env.BASE_URL}data/repertoire.json`)
+  const repertoire = await response.json()
+
+  tchaikovskySections.value = repertoire
+    .filter((work) => work.composer === 'Pëtr Il’ič Čajkovskij')
+    .map((work) => ({
+      ...work,
+      pieces: work.pieces.map((piece) => ({ ...piece })),
+    }))
+}
+
+onMounted(() => {
+  loadRepertoire()
+})
 </script>
 
 <template>

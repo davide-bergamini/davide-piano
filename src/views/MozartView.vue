@@ -3,7 +3,6 @@ import { ref, onMounted, computed } from 'vue'
 import { Midi } from '@tonejs/midi'
 
 import PieceTable from '../components/PieceTable.vue'
-import repertoire from '../data/repertoire.json'
 
 defineProps({
   currentPiece: {
@@ -14,14 +13,7 @@ defineProps({
 
 const emit = defineEmits(['select-piece', 'select-mp3'])
 
-const mozartSections = ref(
-  repertoire
-    .filter((work) => work.composer === 'Wolfgang Amadeus Mozart')
-    .map((work) => ({
-      ...work,
-      pieces: work.pieces.map((piece) => ({ ...piece })),
-    })),
-)
+const mozartSections = ref([])
 
 const allPieces = computed(() => mozartSections.value.flatMap((section) => section.pieces))
 
@@ -42,6 +34,18 @@ function formatDuration(seconds) {
   return `${minutes}:${secs.toString().padStart(2, '0')}`
 }
 
+async function loadRepertoire() {
+  const response = await fetch(`${import.meta.env.BASE_URL}data/repertoire.json`)
+  const repertoire = await response.json()
+
+  mozartSections.value = repertoire
+    .filter((work) => work.composer === 'Wolfgang Amadeus Mozart')
+    .map((work) => ({
+      ...work,
+      pieces: work.pieces.map((piece) => ({ ...piece })),
+    }))
+}
+
 async function loadMidiDuration(piece) {
   if (!piece.midi?.full) return
 
@@ -60,6 +64,8 @@ async function loadMidiDuration(piece) {
 }
 
 onMounted(async () => {
+  await loadRepertoire()
+
   for (const section of mozartSections.value) {
     for (const piece of section.pieces) {
       await loadMidiDuration(piece)

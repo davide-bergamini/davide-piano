@@ -3,7 +3,6 @@ import { ref, onMounted } from 'vue'
 import { Midi } from '@tonejs/midi'
 
 import PieceTable from '../components/PieceTable.vue'
-import repertoire from '../data/repertoire.json'
 
 defineProps({
   currentPiece: {
@@ -14,20 +13,25 @@ defineProps({
 
 const emit = defineEmits(['select-piece', 'select-mp3'])
 
-const burgmullerSections = ref(
-  repertoire
-    .filter((work) => work.composer === 'Friedrich Burgmüller')
-    .map((work) => ({
-      ...work,
-      pieces: work.pieces.map((piece) => ({ ...piece })),
-    })),
-)
+const burgmullerSections = ref([])
 
 function formatDuration(seconds) {
   const minutes = Math.floor(seconds / 60)
   const secs = Math.round(seconds % 60)
 
   return `${minutes}:${secs.toString().padStart(2, '0')}`
+}
+
+async function loadRepertoire() {
+  const response = await fetch(`${import.meta.env.BASE_URL}data/repertoire.json`)
+  const repertoire = await response.json()
+
+  burgmullerSections.value = repertoire
+    .filter((work) => work.composer === 'Friedrich Burgmüller')
+    .map((work) => ({
+      ...work,
+      pieces: work.pieces.map((piece) => ({ ...piece })),
+    }))
 }
 
 async function loadMidiDuration(piece) {
@@ -48,6 +52,8 @@ async function loadMidiDuration(piece) {
 }
 
 onMounted(async () => {
+  await loadRepertoire()
+
   for (const section of burgmullerSections.value) {
     for (const piece of section.pieces) {
       await loadMidiDuration(piece)
