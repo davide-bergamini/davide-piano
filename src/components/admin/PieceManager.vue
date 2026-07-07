@@ -1,9 +1,8 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import composers from '../../data/composers'
 import { readGithubJson, writeGithubJson } from '../../services/githubFile'
 
-const filePath = 'public/data/repertoire.json'
+const filePath = 'src/data/repertoire.json'
 
 const repertoire = ref([])
 const fileSha = ref(null)
@@ -16,42 +15,33 @@ const loading = ref(false)
 const saving = ref(false)
 
 const form = ref({
-  composerSlug: '',
-  sectionId: '',
+  parentId: '',
   title: '',
   subtitle: '',
-  collection: '',
-  opus: '',
-  difficulty: 'Intermedio',
-  duration: '',
+  number: '',
   description: '',
-  tagsText: '',
+  publishedAt: '',
+  duration: '',
   midi: '',
   mp3: '',
-  publishedAt: '',
-  visible: true,
+  status: 'planned',
+  published: false,
 })
 
 const flatPieces = computed(() => {
-  return repertoire.value.flatMap((composer) =>
-    composer.sections.flatMap((section) =>
-      section.pieces.map((piece) => ({
-        ...piece,
-        composerId: composer.id,
-        composerName: composer.name,
-        sectionId: section.id,
-        sectionTitle: section.title,
-      })),
-    ),
+  return repertoire.value.flatMap((section) =>
+    section.pieces.map((piece) => ({
+      ...piece,
+      parentId: section.id,
+      parentTitle: section.title,
+      parentComposer: section.composer,
+      parentCollection: section.collection,
+    })),
   )
 })
 
-const selectedComposer = computed(() => {
-  return repertoire.value.find((composer) => composer.id === form.value.composerSlug)
-})
-
-const selectedSections = computed(() => {
-  return selectedComposer.value?.sections || []
+const selectedParent = computed(() => {
+  return repertoire.value.find((item) => item.id === form.value.parentId)
 })
 
 onMounted(() => {
@@ -62,20 +52,17 @@ function resetForm() {
   editingPieceId.value = null
 
   form.value = {
-    composerSlug: '',
-    sectionId: '',
+    parentId: '',
     title: '',
     subtitle: '',
-    collection: '',
-    opus: '',
-    difficulty: 'Intermedio',
-    duration: '',
+    number: '',
     description: '',
-    tagsText: '',
+    publishedAt: '',
+    duration: '',
     midi: '',
     mp3: '',
-    publishedAt: '',
-    visible: true,
+    status: 'planned',
+    published: false,
   }
 }
 
@@ -89,9 +76,22 @@ function cancelForm() {
   showForm.value = false
 }
 
-function selectComposer(event) {
-  form.value.composerSlug = event.target.value
-  form.value.sectionId = ''
+async function loadPieces() {
+  loading.value = true
+  status.value = 'Caricamento repertorio da GitHub...'
+
+  try {
+    const result = await readGithubJson(filePath)
+
+    repertoire.value = result.data
+    fileSha.value = result.sha
+
+    status.value = 'Repertorio caricato da GitHub.'
+  } catch (error) {
+    status.value = `Errore: ${error.message}`
+  } finally {
+    loading.value = false
+  }
 }
 
 function useLastUploadedMidi() {
@@ -118,68 +118,52 @@ function useLastUploadedMp3() {
   status.value = `MP3 inserito: ${lastMp3}`
 }
 
-async function loadPieces() {
-  loading.value = true
-  status.value = 'Caricamento repertorio da GitHub...'
-
-  try {
-    const result = await readGithubJson(filePath)
-
-    repertoire.value = result.data
-    fileSha.value = result.sha
-
-    status.value = 'Repertorio caricato da GitHub.'
-  } catch (error) {
-    status.value = `Errore: ${error.message}`
-  } finally {
-    loading.value = false
-  }
-}
-
 function createPieceFromForm() {
   return {
-    id: editingPieceId.value || Date.now(),
-
+    id: editingPieceId.value || `piece-${Date.now()}`,
+    number: form.value.number,
     title: form.value.title,
     subtitle: form.value.subtitle,
-    collection: form.value.collection,
-    opus: form.value.opus,
-
-    difficulty: form.value.difficulty,
-    duration: form.value.duration,
-
     description: form.value.description,
-
-    tags: form.value.tagsText
-      .split(',')
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0),
-
+    publishedAt: form.value.publishedAt,
+    duration: form.value.duration || '—',
     midi: {
       full: form.value.midi,
+      right: '',
+      left: '',
     },
-
     mp3: form.value.mp3,
-    publishedAt: form.value.publishedAt,
-    visible: form.value.visible,
+    composer: selectedParent.value?.composer || '',
+    collection: selectedParent.value?.collection || '',
+    sectionTitle: selectedParent.value?.title || '',
+    order: '',
+    key: '',
+    difficulty: '',
+    startedAt: '',
+    status: form.value.status,
+    notes: '',
+    pdf: '',
+    musicxml: '',
+    image: '',
+    tags: [],
+    published: form.value.published,
   }
 }
 
 function addPiece() {
-  if (!form.value.composerSlug || !form.value.sectionId || !form.value.title) {
-    status.value = 'Inserisci almeno compositore, sezione e titolo.'
+  if (!form.value.parentId || !form.value.title) {
+    status.value = 'Inserisci almeno raccolta/sezione e titolo.'
     return
   }
 
-  const composer = repertoire.value.find((item) => item.id === form.value.composerSlug)
-  const section = composer?.sections.find((item) => item.id === form.value.sectionId)
+  const parent = repertoire.value.find((item) => item.id === form.value.parentId)
 
-  if (!composer || !section) {
-    status.value = 'Compositore o sezione non trovati.'
+  if (!parent) {
+    status.value = 'Raccolta non trovata.'
     return
   }
 
-  section.pieces.push(createPieceFromForm())
+  parent.pieces.push(createPieceFromForm())
 
   resetForm()
   showForm.value = false
@@ -190,20 +174,17 @@ function editPiece(piece) {
   editingPieceId.value = piece.id
 
   form.value = {
-    composerSlug: piece.composerId,
-    sectionId: piece.sectionId,
+    parentId: piece.parentId,
     title: piece.title || '',
     subtitle: piece.subtitle || '',
-    collection: piece.collection || '',
-    opus: piece.opus || '',
-    difficulty: piece.difficulty || 'Intermedio',
-    duration: piece.duration || '',
+    number: piece.number || '',
     description: piece.description || '',
-    tagsText: Array.isArray(piece.tags) ? piece.tags.join(', ') : '',
+    publishedAt: piece.publishedAt || '',
+    duration: piece.duration || '',
     midi: piece.midi?.full || '',
     mp3: piece.mp3 || '',
-    publishedAt: piece.publishedAt || '',
-    visible: piece.visible !== false,
+    status: piece.status || 'planned',
+    published: piece.published === true,
   }
 
   showForm.value = true
@@ -213,22 +194,21 @@ function editPiece(piece) {
 function updatePiece() {
   if (!editingPieceId.value) return
 
-  if (!form.value.composerSlug || !form.value.sectionId || !form.value.title) {
-    status.value = 'Inserisci almeno compositore, sezione e titolo.'
+  if (!form.value.parentId || !form.value.title) {
+    status.value = 'Inserisci almeno raccolta/sezione e titolo.'
     return
   }
 
   removePiece(editingPieceId.value, false)
 
-  const composer = repertoire.value.find((item) => item.id === form.value.composerSlug)
-  const section = composer?.sections.find((item) => item.id === form.value.sectionId)
+  const parent = repertoire.value.find((item) => item.id === form.value.parentId)
 
-  if (!composer || !section) {
-    status.value = 'Compositore o sezione non trovati.'
+  if (!parent) {
+    status.value = 'Raccolta non trovata.'
     return
   }
 
-  section.pieces.push(createPieceFromForm())
+  parent.pieces.push(createPieceFromForm())
 
   resetForm()
   showForm.value = false
@@ -236,10 +216,8 @@ function updatePiece() {
 }
 
 function removePiece(id, showMessage = true) {
-  repertoire.value.forEach((composer) => {
-    composer.sections.forEach((section) => {
-      section.pieces = section.pieces.filter((piece) => piece.id !== id)
-    })
+  repertoire.value.forEach((section) => {
+    section.pieces = section.pieces.filter((piece) => piece.id !== id)
   })
 
   if (showMessage) {
@@ -281,114 +259,84 @@ async function savePieces() {
     </div>
 
     <div v-if="showForm" class="piece-form">
-      <h3>
-        {{ editingPieceId ? 'Modifica brano' : 'Nuovo brano' }}
-      </h3>
+      <h3>{{ editingPieceId ? 'Modifica brano' : 'Nuovo brano' }}</h3>
 
-      <select :value="form.composerSlug" @change="selectComposer">
-        <option value="">Scegli compositore</option>
+      <select v-model="form.parentId">
+        <option value="">Scegli raccolta/sezione</option>
 
-        <option v-for="composer in composers" :key="composer.slug" :value="composer.slug">
-          {{ composer.name }}
+        <option v-for="section in repertoire" :key="section.id" :value="section.id">
+          {{ section.composer }} — {{ section.title }}
         </option>
       </select>
 
-      <select v-model="form.sectionId">
-        <option value="">Scegli sezione</option>
-
-        <option v-for="section in selectedSections" :key="section.id" :value="section.id">
-          {{ section.title }}
-        </option>
-      </select>
-
+      <input v-model="form.number" placeholder="Numero" />
       <input v-model="form.title" placeholder="Titolo" />
       <input v-model="form.subtitle" placeholder="Sottotitolo" />
-      <input v-model="form.collection" placeholder="Raccolta" />
-      <input v-model="form.opus" placeholder="Opus" />
 
-      <select v-model="form.difficulty">
-        <option>Principiante</option>
-        <option>Elementare</option>
-        <option>Intermedio</option>
-        <option>Avanzato</option>
-        <option>Concertistico</option>
-      </select>
+      <textarea v-model="form.description" placeholder="Descrizione" rows="4"></textarea>
 
+      <input v-model="form.publishedAt" placeholder="Data pubblicazione es. 2026-07-07" />
       <input v-model="form.duration" placeholder="Durata es. 05:12" />
 
-      <textarea v-model="form.description" placeholder="Descrizione del brano" rows="4"></textarea>
-
-      <input
-        v-model="form.tagsText"
-        placeholder="Tag separati da virgola, es. Sonata, Studio, Mozart"
-      />
+      <select v-model="form.status">
+        <option value="planned">planned</option>
+        <option value="published">published</option>
+      </select>
 
       <div class="file-field">
         <input v-model="form.midi" placeholder="File MIDI" />
-
         <button type="button" @click="useLastUploadedMidi">Usa ultimo MIDI</button>
       </div>
 
       <div class="file-field">
         <input v-model="form.mp3" placeholder="File MP3" />
-
         <button type="button" @click="useLastUploadedMp3">Usa ultimo MP3</button>
       </div>
 
-      <input v-model="form.publishedAt" placeholder="Data pubblicazione es. 2026-07-07" />
-
       <label class="check-row">
-        <input v-model="form.visible" type="checkbox" />
-        Visibile sul sito
+        <input v-model="form.published" type="checkbox" />
+        Pubblicato sul sito
       </label>
 
-      <button v-if="editingPieceId" type="button" @click="updatePiece">Salva modifica</button>
+      <button v-if="editingPieceId" type="button" @click="updatePiece">
+        Salva modifica
+      </button>
 
-      <button v-else type="button" @click="addPiece">Aggiungi brano</button>
+      <button v-else type="button" @click="addPiece">
+        Aggiungi brano
+      </button>
     </div>
 
     <table class="piece-table">
       <thead>
         <tr>
           <th>Compositore</th>
-          <th>Sezione</th>
+          <th>Raccolta</th>
           <th>Brano</th>
-          <th>Difficoltà</th>
-          <th>Durata</th>
           <th>MIDI</th>
           <th>MP3</th>
-          <th>Visibile</th>
+          <th>Stato</th>
           <th></th>
         </tr>
       </thead>
 
       <tbody>
         <tr v-if="flatPieces.length === 0">
-          <td colspan="9" class="empty">Nessun brano inserito.</td>
+          <td colspan="7" class="empty">Nessun brano inserito.</td>
         </tr>
 
         <tr v-for="piece in flatPieces" :key="piece.id">
-          <td>{{ piece.composerName }}</td>
-          <td>{{ piece.sectionTitle }}</td>
+          <td>{{ piece.parentComposer }}</td>
+          <td>{{ piece.parentTitle }}</td>
 
           <td>
             <strong>{{ piece.title }}</strong>
-
-            <small v-if="piece.subtitle">
-              {{ piece.subtitle }}
-            </small>
-
-            <small v-if="piece.collection || piece.opus">
-              {{ piece.collection }} {{ piece.opus }}
-            </small>
+            <small v-if="piece.subtitle">{{ piece.subtitle }}</small>
           </td>
-
-          <td>{{ piece.difficulty || '—' }}</td>
-          <td>{{ piece.duration || '—' }}</td>
 
           <td>{{ piece.midi?.full ? '✔' : '—' }}</td>
           <td>{{ piece.mp3 ? '✔' : '—' }}</td>
-          <td>{{ piece.visible !== false ? '✔' : '—' }}</td>
+          <td>{{ piece.status || '—' }}</td>
 
           <td class="actions">
             <button type="button" title="Modifica" @click="editPiece(piece)">✏️</button>
