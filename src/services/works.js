@@ -56,9 +56,16 @@ function createSlug(text) {
     .replace(/^-+|-+$/g, '')
 }
 
+function createWorkId(work) {
+  const composer = createSlug(work.composer)
+  const title = createSlug(work.title || work.collection)
+
+  return `${composer}-${title}`
+}
+
 function normalizeWork(work) {
   return {
-    id: work.id || crypto.randomUUID(),
+    id: work.id || createWorkId(work) || crypto.randomUUID(),
 
     title: work.title || '',
     composer: work.composer || '',
@@ -85,10 +92,41 @@ function normalizeWork(work) {
   }
 }
 
+function ensureUniqueWorkIds(works) {
+  const usedIds = new Set()
+
+  return works.map((work) => {
+    let normalizedWork = normalizeWork(work)
+    let id = normalizedWork.id
+
+    if (!id || usedIds.has(id)) {
+      id = createWorkId(normalizedWork) || crypto.randomUUID()
+    }
+
+    let finalId = id
+    let counter = 2
+
+    while (usedIds.has(finalId)) {
+      finalId = `${id}-${counter}`
+      counter += 1
+    }
+
+    usedIds.add(finalId)
+
+    return {
+      ...normalizedWork,
+      id: finalId,
+    }
+  })
+}
+
 function sectionsToWorks(sections, defaults = {}) {
   return sections.map((section, index) =>
     normalizeWork({
-      id: section.id || `${createSlug(defaults.composer)}-${createSlug(section.title)}`,
+      id: section.id
+        ? `${defaults.libraryId}-${section.id}`
+        : `${defaults.libraryId}-${createSlug(section.title)}`,
+
       title: section.title || '',
       composer: section.composer || defaults.composer || '',
       collection: section.collection || defaults.collection || section.title || '',
@@ -105,6 +143,7 @@ function sectionsToWorks(sections, defaults = {}) {
 function getStaticWorks() {
   return libraries.flatMap((library) =>
     sectionsToWorks(library.sections, {
+      libraryId: library.id,
       composer: library.composer,
       collection: library.collection,
     }),
@@ -115,21 +154,28 @@ function loadWorks() {
   const savedWorks = localStorage.getItem(STORAGE_KEY)
 
   if (savedWorks) {
-    return JSON.parse(savedWorks).map(normalizeWork)
+    const parsedWorks = JSON.parse(savedWorks)
+    const fixedWorks = ensureUniqueWorkIds(parsedWorks)
+
+    saveWorks(fixedWorks)
+
+    return fixedWorks
   }
 
-  const initialWorks = getStaticWorks()
+  const initialWorks = ensureUniqueWorkIds(getStaticWorks())
+
   saveWorks(initialWorks)
 
   return initialWorks
 }
 
 function saveWorks(works) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(works.map(normalizeWork)))
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ensureUniqueWorkIds(works)))
 }
 
 function resetWorks() {
-  const initialWorks = getStaticWorks()
+  const initialWorks = ensureUniqueWorkIds(getStaticWorks())
+
   saveWorks(initialWorks)
 
   return initialWorks
