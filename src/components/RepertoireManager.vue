@@ -15,6 +15,9 @@ const selectedType = ref('')
 const selectedWorkId = ref('')
 const selectedPieceId = ref('')
 
+const publishStatus = ref('')
+const publishing = ref(false)
+
 const uploadFiles = ref({
   midi: [],
   mp3: [],
@@ -48,9 +51,7 @@ const composers = computed(() => {
 })
 
 const selectedWork = computed(() => {
-  return (
-    works.value.find((work) => String(work.id) === String(selectedWorkId.value)) || null
-  )
+  return works.value.find((work) => String(work.id) === String(selectedWorkId.value)) || null
 })
 
 const selectedPiece = computed(() => {
@@ -230,12 +231,113 @@ function saveCurrent() {
   alert('Salvato.')
 }
 
+function sleep(milliseconds) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, milliseconds)
+  })
+}
+
+function findPieceInOnlineRepertoire(onlineRepertoire, pieceToFind) {
+  if (!pieceToFind) return null
+
+  return onlineRepertoire.find((piece) => {
+    const sameId = piece.id && pieceToFind.id && String(piece.id) === String(pieceToFind.id)
+
+    const sameTitle =
+      piece.title &&
+      pieceToFind.title &&
+      piece.title.trim().toLowerCase() === pieceToFind.title.trim().toLowerCase()
+
+    const sameComposer =
+      !pieceToFind.composer ||
+      !piece.composer ||
+      piece.composer.trim().toLowerCase() === pieceToFind.composer.trim().toLowerCase()
+
+    return sameId || (sameTitle && sameComposer)
+  })
+}
+
+async function fetchOnlineRepertoire() {
+  const cacheBuster = Date.now()
+  const response = await fetch(`${import.meta.env.BASE_URL}data/repertoire.json?v=${cacheBuster}`)
+
+  if (!response.ok) {
+    throw new Error('repertoire.json online non raggiungibile')
+  }
+
+  return response.json()
+}
+
+async function verifyPublishedPiece(pieceToVerify) {
+  const maxAttempts = 6
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    publishStatus.value = `Verifica online in corso... tentativo ${attempt}/${maxAttempts}`
+
+    const onlineRepertoire = await fetchOnlineRepertoire()
+    const onlinePiece = findPieceInOnlineRepertoire(onlineRepertoire, pieceToVerify)
+
+    if (onlinePiece) {
+      return onlinePiece
+    }
+
+    await sleep(5000)
+  }
+
+  return null
+}
+
 async function publish() {
+  if (publishing.value) return
+
+  const pieceToVerify = selectedType.value === 'piece' && selectedPiece.value
+    ? {
+        ...selectedPiece.value,
+        composer: selectedPiece.value.composer || selectedWork.value?.composer || '',
+      }
+    : null
+
+  publishing.value = true
+  publishStatus.value = 'Pubblicazione su GitHub in corso...'
+
   try {
+    persist()
+
     await publishRepertoire()
-    alert('Repertorio pubblicato su GitHub.')
+
+    publishStatus.value = 'Pubblicato su GitHub. Attendo aggiornamento online...'
+
+    if (pieceToVerify) {
+      const onlinePiece = await verifyPublishedPiece(pieceToVerify)
+
+      if (!onlinePiece) {
+        publishStatus.value =
+          'Pubblicazione inviata, ma il brano non è ancora visibile nel repertoire.json online.'
+
+        alert(
+          'Pubblicazione inviata, ma il brano selezionato non è ancora visibile online. Probabilmente GitHub Pages sta ancora aggiornando.',
+        )
+
+        return
+      }
+
+      publishStatus.value = `Verifica completata: "${onlinePiece.title}" è presente online.`
+
+      alert(`Pubblicazione completata. "${onlinePiece.title}" è presente nel repertoire.json online.`)
+
+      return
+    }
+
+    const onlineRepertoire = await fetchOnlineRepertoire()
+
+    publishStatus.value = `Verifica completata: repertoire.json online raggiungibile (${onlineRepertoire.length} brani).`
+
+    alert('Pubblicazione completata. repertoire.json online raggiungibile.')
   } catch (err) {
-    alert(`Errore pubblicazione: ${err.message}`)
+    publishStatus.value = `Errore: ${err.message}`
+    alert(`Errore pubblicazione/verifica: ${err.message}`)
+  } finally {
+    publishing.value = false
   }
 }
 </script>
@@ -246,6 +348,10 @@ async function publish() {
       <div>
         <h3>Repertorio</h3>
         <p>Compositori, opere e brani.</p>
+
+        <p v-if="publishStatus" class="publish-status">
+          {{ publishStatus }}
+        </p>
       </div>
 
       <div class="header-actions">
@@ -253,8 +359,8 @@ async function publish() {
           {{ loadingUploadFiles ? 'Caricamento file...' : 'Aggiorna file' }}
         </button>
 
-        <button class="text-action" type="button" @click="publish">
-          Pubblica su GitHub
+        <button class="text-action" type="button" :disabled="publishing" @click="publish">
+          {{ publishing ? 'Pubblicazione...' : 'Pubblica su GitHub' }}
         </button>
       </div>
     </header>
@@ -641,6 +747,12 @@ async function publish() {
   border-bottom: 1px solid #111;
 }
 
+.publish-status {
+  margin-top: 0.7rem;
+  color: #333;
+  font-size: 0.9rem;
+}
+
 .header-actions {
   display: flex;
   gap: 1rem;
@@ -787,6 +899,12 @@ p {
   cursor: pointer;
 }
 
+.text-action:disabled {
+  color: #aaa;
+  cursor: default;
+  text-decoration: none;
+}
+
 .icon-action {
   width: 28px;
   height: 28px;
@@ -808,6 +926,11 @@ p {
   color: #000;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.text-action:disabled:hover {
+  color: #aaa;
+  text-decoration: none;
 }
 
 .editor-panel {
