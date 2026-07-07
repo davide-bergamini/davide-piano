@@ -1,40 +1,57 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import composers from '../../data/composers'
 import { readGithubJson, writeGithubJson } from '../../services/githubFile'
 
-const filePath = 'src/data/pieces.json'
+const filePath = 'public/data/repertoire.json'
 
-const pieces = ref([])
+const repertoire = ref([])
 const fileSha = ref(null)
 
 const showForm = ref(false)
+const editingPieceId = ref(null)
+
 const status = ref('')
 const loading = ref(false)
 const saving = ref(false)
 
 const form = ref({
-  category: 'Classica',
-
-  composer: '',
   composerSlug: '',
-  composerImage: '',
-
+  sectionId: '',
   title: '',
   subtitle: '',
   collection: '',
   opus: '',
-
   difficulty: 'Intermedio',
   duration: '',
-
   description: '',
   tagsText: '',
-
   midi: '',
   mp3: '',
-
+  publishedAt: '',
   visible: true,
+})
+
+const flatPieces = computed(() => {
+  return repertoire.value.flatMap((composer) =>
+    composer.sections.flatMap((section) =>
+      section.pieces.map((piece) => ({
+        ...piece,
+        composerId: composer.id,
+        composerName: composer.name,
+        sectionId: section.id,
+        sectionTitle: section.title,
+      })),
+    ),
+  )
+})
+
+const selectedComposer = computed(() => {
+  return repertoire.value.find((composer) => composer.id === form.value.composerSlug)
+})
+
+const selectedSections = computed(() => {
+  return selectedComposer.value?.sections || []
 })
 
 onMounted(() => {
@@ -42,41 +59,39 @@ onMounted(() => {
 })
 
 function resetForm() {
+  editingPieceId.value = null
+
   form.value = {
-    category: 'Classica',
-
-    composer: '',
     composerSlug: '',
-    composerImage: '',
-
+    sectionId: '',
     title: '',
     subtitle: '',
     collection: '',
     opus: '',
-
     difficulty: 'Intermedio',
     duration: '',
-
     description: '',
     tagsText: '',
-
     midi: '',
     mp3: '',
-
+    publishedAt: '',
     visible: true,
   }
 }
 
+function openNewForm() {
+  resetForm()
+  showForm.value = true
+}
+
+function cancelForm() {
+  resetForm()
+  showForm.value = false
+}
+
 function selectComposer(event) {
-  const selectedComposer = composers.find((composer) => {
-    return composer.slug === event.target.value
-  })
-
-  if (!selectedComposer) return
-
-  form.value.composer = selectedComposer.name
-  form.value.composerSlug = selectedComposer.slug
-  form.value.composerImage = selectedComposer.image
+  form.value.composerSlug = event.target.value
+  form.value.sectionId = ''
 }
 
 function useLastUploadedMidi() {
@@ -105,15 +120,15 @@ function useLastUploadedMp3() {
 
 async function loadPieces() {
   loading.value = true
-  status.value = 'Caricamento brani da GitHub...'
+  status.value = 'Caricamento repertorio da GitHub...'
 
   try {
     const result = await readGithubJson(filePath)
 
-    pieces.value = result.data
+    repertoire.value = result.data
     fileSha.value = result.sha
 
-    status.value = 'Brani caricati da GitHub.'
+    status.value = 'Repertorio caricato da GitHub.'
   } catch (error) {
     status.value = `Errore: ${error.message}`
   } finally {
@@ -121,20 +136,9 @@ async function loadPieces() {
   }
 }
 
-function addPiece() {
-  if (!form.value.composer || !form.value.title) {
-    status.value = 'Inserisci almeno compositore e titolo.'
-    return
-  }
-
-  pieces.value.push({
-    id: Date.now(),
-
-    category: form.value.category,
-
-    composer: form.value.composer,
-    composerSlug: form.value.composerSlug,
-    composerImage: form.value.composerImage,
+function createPieceFromForm() {
+  return {
+    id: editingPieceId.value || Date.now(),
 
     title: form.value.title,
     subtitle: form.value.subtitle,
@@ -146,26 +150,101 @@ function addPiece() {
 
     description: form.value.description,
 
-    tagsText: form.value.tagsText,
     tags: form.value.tagsText
       .split(',')
       .map((tag) => tag.trim())
       .filter((tag) => tag.length > 0),
 
-    midi: form.value.midi,
-    mp3: form.value.mp3,
+    midi: {
+      full: form.value.midi,
+    },
 
+    mp3: form.value.mp3,
+    publishedAt: form.value.publishedAt,
     visible: form.value.visible,
-  })
+  }
+}
+
+function addPiece() {
+  if (!form.value.composerSlug || !form.value.sectionId || !form.value.title) {
+    status.value = 'Inserisci almeno compositore, sezione e titolo.'
+    return
+  }
+
+  const composer = repertoire.value.find((item) => item.id === form.value.composerSlug)
+  const section = composer?.sections.find((item) => item.id === form.value.sectionId)
+
+  if (!composer || !section) {
+    status.value = 'Compositore o sezione non trovati.'
+    return
+  }
+
+  section.pieces.push(createPieceFromForm())
 
   resetForm()
   showForm.value = false
   status.value = 'Brano aggiunto. Ricordati di salvare su GitHub.'
 }
 
-function removePiece(id) {
-  pieces.value = pieces.value.filter((piece) => piece.id !== id)
-  status.value = 'Brano eliminato. Ricordati di salvare su GitHub.'
+function editPiece(piece) {
+  editingPieceId.value = piece.id
+
+  form.value = {
+    composerSlug: piece.composerId,
+    sectionId: piece.sectionId,
+    title: piece.title || '',
+    subtitle: piece.subtitle || '',
+    collection: piece.collection || '',
+    opus: piece.opus || '',
+    difficulty: piece.difficulty || 'Intermedio',
+    duration: piece.duration || '',
+    description: piece.description || '',
+    tagsText: Array.isArray(piece.tags) ? piece.tags.join(', ') : '',
+    midi: piece.midi?.full || '',
+    mp3: piece.mp3 || '',
+    publishedAt: piece.publishedAt || '',
+    visible: piece.visible !== false,
+  }
+
+  showForm.value = true
+  status.value = `Modifica brano: ${piece.title}`
+}
+
+function updatePiece() {
+  if (!editingPieceId.value) return
+
+  if (!form.value.composerSlug || !form.value.sectionId || !form.value.title) {
+    status.value = 'Inserisci almeno compositore, sezione e titolo.'
+    return
+  }
+
+  removePiece(editingPieceId.value, false)
+
+  const composer = repertoire.value.find((item) => item.id === form.value.composerSlug)
+  const section = composer?.sections.find((item) => item.id === form.value.sectionId)
+
+  if (!composer || !section) {
+    status.value = 'Compositore o sezione non trovati.'
+    return
+  }
+
+  section.pieces.push(createPieceFromForm())
+
+  resetForm()
+  showForm.value = false
+  status.value = 'Brano modificato. Ricordati di salvare su GitHub.'
+}
+
+function removePiece(id, showMessage = true) {
+  repertoire.value.forEach((composer) => {
+    composer.sections.forEach((section) => {
+      section.pieces = section.pieces.filter((piece) => piece.id !== id)
+    })
+  })
+
+  if (showMessage) {
+    status.value = 'Brano eliminato. Ricordati di salvare su GitHub.'
+  }
 }
 
 async function savePieces() {
@@ -173,10 +252,10 @@ async function savePieces() {
   status.value = 'Salvataggio su GitHub...'
 
   try {
-    const result = await writeGithubJson(filePath, pieces.value, fileSha.value)
+    const result = await writeGithubJson(filePath, repertoire.value, fileSha.value)
 
     fileSha.value = result.content.sha
-    status.value = 'Brani salvati su GitHub.'
+    status.value = 'Repertorio salvato su GitHub.'
   } catch (error) {
     status.value = `Errore: ${error.message}`
   } finally {
@@ -188,9 +267,9 @@ async function savePieces() {
 <template>
   <section class="piece-manager">
     <div class="toolbar">
-      <button type="button" @click="showForm = !showForm">
-        {{ showForm ? 'Chiudi' : '+ Nuovo brano' }}
-      </button>
+      <button type="button" @click="openNewForm">+ Nuovo brano</button>
+
+      <button v-if="showForm" type="button" @click="cancelForm">Chiudi</button>
 
       <button type="button" :disabled="loading" @click="loadPieces">
         {{ loading ? 'Caricamento...' : 'Carica da GitHub' }}
@@ -202,19 +281,23 @@ async function savePieces() {
     </div>
 
     <div v-if="showForm" class="piece-form">
-      <select v-model="form.category">
-        <option>Classica</option>
-        <option>Jazz</option>
-        <option>Ragtime</option>
-        <option>Colonne sonore</option>
-        <option>Altro</option>
-      </select>
+      <h3>
+        {{ editingPieceId ? 'Modifica brano' : 'Nuovo brano' }}
+      </h3>
 
       <select :value="form.composerSlug" @change="selectComposer">
         <option value="">Scegli compositore</option>
 
         <option v-for="composer in composers" :key="composer.slug" :value="composer.slug">
           {{ composer.name }}
+        </option>
+      </select>
+
+      <select v-model="form.sectionId">
+        <option value="">Scegli sezione</option>
+
+        <option v-for="section in selectedSections" :key="section.id" :value="section.id">
+          {{ section.title }}
         </option>
       </select>
 
@@ -252,19 +335,23 @@ async function savePieces() {
         <button type="button" @click="useLastUploadedMp3">Usa ultimo MP3</button>
       </div>
 
+      <input v-model="form.publishedAt" placeholder="Data pubblicazione es. 2026-07-07" />
+
       <label class="check-row">
         <input v-model="form.visible" type="checkbox" />
         Visibile sul sito
       </label>
 
-      <button type="button" @click="addPiece">Aggiungi brano</button>
+      <button v-if="editingPieceId" type="button" @click="updatePiece">Salva modifica</button>
+
+      <button v-else type="button" @click="addPiece">Aggiungi brano</button>
     </div>
 
     <table class="piece-table">
       <thead>
         <tr>
-          <th>Categoria</th>
           <th>Compositore</th>
+          <th>Sezione</th>
           <th>Brano</th>
           <th>Difficoltà</th>
           <th>Durata</th>
@@ -276,14 +363,13 @@ async function savePieces() {
       </thead>
 
       <tbody>
-        <tr v-if="pieces.length === 0">
+        <tr v-if="flatPieces.length === 0">
           <td colspan="9" class="empty">Nessun brano inserito.</td>
         </tr>
 
-        <tr v-for="piece in pieces" :key="piece.id">
-          <td>{{ piece.category }}</td>
-
-          <td>{{ piece.composer }}</td>
+        <tr v-for="piece in flatPieces" :key="piece.id">
+          <td>{{ piece.composerName }}</td>
+          <td>{{ piece.sectionTitle }}</td>
 
           <td>
             <strong>{{ piece.title }}</strong>
@@ -300,12 +386,13 @@ async function savePieces() {
           <td>{{ piece.difficulty || '—' }}</td>
           <td>{{ piece.duration || '—' }}</td>
 
-          <td>{{ piece.midi ? '✔' : '—' }}</td>
+          <td>{{ piece.midi?.full ? '✔' : '—' }}</td>
           <td>{{ piece.mp3 ? '✔' : '—' }}</td>
-          <td>{{ piece.visible ? '✔' : '—' }}</td>
+          <td>{{ piece.visible !== false ? '✔' : '—' }}</td>
 
           <td class="actions">
-            <button type="button" @click="removePiece(piece.id)">Elimina</button>
+            <button type="button" title="Modifica" @click="editPiece(piece)">✏️</button>
+            <button type="button" title="Elimina" @click="removePiece(piece.id)">Elimina</button>
           </td>
         </tr>
       </tbody>
@@ -357,6 +444,12 @@ button:disabled {
   padding: 18px;
   border: 1px solid #ddd;
   background: #f7f7f7;
+}
+
+.piece-form h3 {
+  grid-column: 1 / -1;
+  margin: 0 0 6px;
+  font-size: 1.1rem;
 }
 
 .piece-form input,
@@ -437,7 +530,9 @@ button:disabled {
 }
 
 .actions {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .actions button {
@@ -462,6 +557,10 @@ button:disabled {
 
   .piece-table {
     font-size: 0.9rem;
+  }
+
+  .actions {
+    flex-direction: column;
   }
 }
 </style>
