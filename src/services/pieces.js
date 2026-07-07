@@ -1,31 +1,6 @@
-import { mozartSections } from '../data/mozart'
-import { burgmullerSections } from '../data/burgmuller'
-import { schumannSections } from '../data/schumann'
-import { tchaikovskySections } from '../data/tchaikovsky'
+import repertoire from '../data/repertoire.json'
 
 const STORAGE_KEY = 'adminPieces'
-
-const libraries = [
-  {
-    composer: 'Mozart',
-    collection: 'Mozart',
-    sections: mozartSections,
-  },
-  {
-    composer: 'Friedrich Burgmüller',
-    collection: '25 Studi op. 100',
-    sections: burgmullerSections,
-  },
-  {
-  composer: 'Robert Schumann',
-  collection: 'Schumann',
-  sections: schumannSections,
-},{
-    composer: 'Pëtr Il’ič Čajkovskij',
-    collection: 'Album per la gioventù Op. 39',
-    sections: tchaikovskySections,
-  },
-]
 
 function normalizePiece(piece) {
   return {
@@ -73,15 +48,14 @@ function normalizePiece(piece) {
   }
 }
 
-function sectionsToPieces(sections, defaults = {}) {
+function sectionsToPieces(sections) {
   return sections.flatMap((section) =>
     section.pieces.map((piece, index) =>
       normalizePiece({
-        ...defaults,
         ...piece,
-        sectionTitle: piece.sectionTitle || piece.section || section.title || '',
-        collection: piece.collection || defaults.collection || section.collection || section.title || '',
-        composer: piece.composer || defaults.composer || section.composer || '',
+        composer: piece.composer || section.composer || '',
+        collection: piece.collection || section.collection || section.title || '',
+        sectionTitle: piece.sectionTitle || section.title || '',
         order: piece.order || piece.number || index + 1,
       }),
     ),
@@ -89,12 +63,7 @@ function sectionsToPieces(sections, defaults = {}) {
 }
 
 function getStaticPieces() {
-  return libraries.flatMap((library) =>
-    sectionsToPieces(library.sections, {
-      composer: library.composer,
-      collection: library.collection,
-    }),
-  )
+  return sectionsToPieces(repertoire)
 }
 
 function loadPieces() {
