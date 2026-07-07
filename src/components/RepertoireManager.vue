@@ -48,13 +48,18 @@ const composers = computed(() => {
 })
 
 const selectedWork = computed(() => {
-  return works.value.find((work) => work.id === selectedWorkId.value) || null
+  return (
+    works.value.find((work) => String(work.id) === String(selectedWorkId.value)) || null
+  )
 })
 
 const selectedPiece = computed(() => {
   if (!selectedWork.value) return null
 
-  return selectedWork.value.pieces.find((piece) => piece.id === selectedPieceId.value) || null
+  return (
+    selectedWork.value.pieces.find((piece) => String(piece.id) === String(selectedPieceId.value)) ||
+    null
+  )
 })
 
 async function loadUploadFiles() {
@@ -92,7 +97,7 @@ function persist() {
 
 function selectWork(work) {
   selectedType.value = 'work'
-  selectedWorkId.value = work.id
+  selectedWorkId.value = String(work.id)
   selectedPieceId.value = ''
 }
 
@@ -100,8 +105,8 @@ function selectPiece(work, piece) {
   ensurePieceFields(piece)
 
   selectedType.value = 'piece'
-  selectedWorkId.value = work.id
-  selectedPieceId.value = piece.id
+  selectedWorkId.value = String(work.id)
+  selectedPieceId.value = String(piece.id)
 }
 
 function addWork(composer) {
@@ -114,7 +119,7 @@ function addWork(composer) {
   works.value.push(newWork)
 
   selectedType.value = 'work'
-  selectedWorkId.value = newWork.id
+  selectedWorkId.value = String(newWork.id)
   selectedPieceId.value = ''
 
   persist()
@@ -123,7 +128,7 @@ function addWork(composer) {
 function removeWork(workId) {
   if (!window.confirm('Eliminare questa opera e tutti i suoi brani?')) return
 
-  works.value = works.value.filter((work) => work.id !== workId)
+  works.value = works.value.filter((work) => String(work.id) !== String(workId))
 
   selectedType.value = ''
   selectedWorkId.value = ''
@@ -134,7 +139,7 @@ function removeWork(workId) {
 
 function addPiece(work) {
   const updatedWork = addPieceToWork(work)
-  const index = works.value.findIndex((item) => item.id === work.id)
+  const index = works.value.findIndex((item) => String(item.id) === String(work.id))
 
   if (index === -1) return
 
@@ -150,8 +155,8 @@ function addPiece(work) {
   ensurePieceFields(newPiece)
 
   selectedType.value = 'piece'
-  selectedWorkId.value = updatedWork.id
-  selectedPieceId.value = newPiece.id
+  selectedWorkId.value = String(updatedWork.id)
+  selectedPieceId.value = String(newPiece.id)
 
   persist()
 }
@@ -159,10 +164,10 @@ function addPiece(work) {
 function removePiece(work, pieceId) {
   if (!window.confirm('Eliminare questo brano?')) return
 
-  work.pieces = work.pieces.filter((piece) => piece.id !== pieceId)
+  work.pieces = work.pieces.filter((piece) => String(piece.id) !== String(pieceId))
 
   selectedType.value = 'work'
-  selectedWorkId.value = work.id
+  selectedWorkId.value = String(work.id)
   selectedPieceId.value = ''
 
   persist()
@@ -181,12 +186,14 @@ function saveCurrent() {
   if (selectedType.value === 'piece' && selectedPiece.value && selectedWork.value) {
     ensurePieceFields(selectedPiece.value)
 
-    const workIndex = works.value.findIndex((work) => work.id === selectedWork.value.id)
+    const workIndex = works.value.findIndex(
+      (work) => String(work.id) === String(selectedWork.value.id),
+    )
 
     if (workIndex === -1) return
 
     const pieceIndex = works.value[workIndex].pieces.findIndex(
-      (piece) => piece.id === selectedPiece.value.id,
+      (piece) => String(piece.id) === String(selectedPiece.value.id),
     )
 
     if (pieceIndex === -1) return
@@ -266,22 +273,37 @@ async function publish() {
           <div v-for="work in group.works" :key="work.id" class="work-block">
             <div
               class="work-row"
-              :class="{ selected: selectedType === 'work' && selectedWorkId === work.id }"
+              :class="{ selected: selectedType === 'work' && selectedWorkId === String(work.id) }"
             >
               <button type="button" class="row-main work-main" @click="selectWork(work)">
                 {{ work.title }}
               </button>
 
               <div class="row-actions">
-                <button class="icon-action" type="button" title="Modifica opera" @click="selectWork(work)">
+                <button
+                  class="icon-action"
+                  type="button"
+                  title="Modifica opera"
+                  @click="selectWork(work)"
+                >
                   &#9998;
                 </button>
 
-                <button class="icon-action" type="button" title="Nuovo brano" @click="addPiece(work)">
+                <button
+                  class="icon-action"
+                  type="button"
+                  title="Nuovo brano"
+                  @click="addPiece(work)"
+                >
                   ＋
                 </button>
 
-                <button class="icon-action danger" type="button" title="Elimina opera" @click="removeWork(work.id)">
+                <button
+                  class="icon-action danger"
+                  type="button"
+                  title="Elimina opera"
+                  @click="removeWork(work.id)"
+                >
                   🗑
                 </button>
               </div>
@@ -292,7 +314,12 @@ async function publish() {
                 v-for="piece in work.pieces"
                 :key="piece.id"
                 class="piece-row"
-                :class="{ selected: selectedType === 'piece' && selectedPieceId === piece.id }"
+                :class="{
+                  selected:
+                    selectedType === 'piece' &&
+                    selectedWorkId === String(work.id) &&
+                    selectedPieceId === String(piece.id),
+                }"
               >
                 <button type="button" class="row-main piece-main" @click="selectPiece(work, piece)">
                   <span>{{ piece.title }}</span>
@@ -300,11 +327,21 @@ async function publish() {
                 </button>
 
                 <div class="row-actions">
-                  <button class="icon-action" type="button" title="Modifica brano" @click="selectPiece(work, piece)">
+                  <button
+                    class="icon-action"
+                    type="button"
+                    title="Modifica brano"
+                    @click="selectPiece(work, piece)"
+                  >
                     &#9998;
                   </button>
 
-                  <button class="icon-action danger" type="button" title="Elimina brano" @click="removePiece(work, piece.id)">
+                  <button
+                    class="icon-action danger"
+                    type="button"
+                    title="Elimina brano"
+                    @click="removePiece(work, piece.id)"
+                  >
                     🗑
                   </button>
                 </div>
