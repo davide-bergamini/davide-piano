@@ -67,35 +67,6 @@
         "image": "",
         "tags": [],
         "published": true
-      },
-      {
-        "id": "mozart-k545-3",
-        "title": "K545 — III movimento",
-        "subtitle": "Rondo",
-        "description": "Il Rondò conclude la sonata con un carattere brillante e gioioso. Il tema principale ritorna più volte, ogni volta con la stessa freschezza, intervallato da episodi che mantengono vivo l’interesse dell’ascoltatore. La musica trasmette leggerezza e spontaneità, lasciando l’impressione di un dialogo vivace che si conclude con naturalezza e ottimismo.",
-        "publishedAt": "",
-        "duration": "—",
-        "midi": {
-          "full": "",
-          "right": "",
-          "left": ""
-        },
-        "composer": "Wolfgang Amadeus Mozart",
-        "collection": "Mozart",
-        "sectionTitle": "Sonata facile K545",
-        "order": 3,
-        "number": "",
-        "key": "",
-        "difficulty": "",
-        "startedAt": "",
-        "status": "planned",
-        "notes": "",
-        "mp3": "",
-        "pdf": "",
-        "musicxml": "",
-        "image": "",
-        "tags": [],
-        "published": false
       }
     ]
   },
@@ -1188,18 +1159,18 @@
         "description": "Dopo la malinconia de La bambola malata, questo brano racconta la gioia di ricevere una nuova bambola. La musica è luminosa, vivace e piena di entusiasmo, come lo stupore di un bambino davanti a un regalo tanto desiderato. Čajkovskij descrive con semplicità un momento di felicità autentica, trasformando una piccola scena domestica in una pagina ricca di freschezza e spontaneità.",
         "publishedAt": "",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/La_nuova_bambola_9_Tchaikovsky.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/La_nuova_bambola_9_Tchaikovsky.mp3",
         "composer": "Pëtr Il’ič Čajkovskij",
         "collection": "Album per la gioventù Op. 39",
         "sectionTitle": "Album per la gioventù Op. 39",
         "order": "9",
         "key": "",
         "difficulty": "",
-        "startedAt": "",
+        "startedAt": "2026-07-10",
         "status": "planned",
         "duration": "",
         "notes": "",
@@ -1207,7 +1178,7 @@
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       }
     ]
   }
