@@ -175,7 +175,7 @@
         "description": "Questo studio descrive musicalmente l'allegria di un incontro tra amici, attraverso un dialogo vivace e ricco di piccoli contrasti. L'interpretazione deve mantenere un carattere brillante e spontaneo, valorizzando le diverse frasi senza perdere continuità. È un buon esercizio per sviluppare vivacità ritmica e precisione esecutiva.",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Piccola_riunione_04_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -187,15 +187,15 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "publishedAt": "",
-        "status": "planned",
+        "publishedAt": "2026-07-12",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Piccola_riunione_04_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-5",
