@@ -318,10 +318,10 @@
         "title": "Op. 100 n. 9",
         "subtitle": "La caccia",
         "description": "Il galoppo dei cavalli, l’abbaiare dei cani e il richiamo dei corni sembrano prendere vita in questo studio dal carattere vivace. Burgmüller non descrive una vera scena di caccia, ma ne suggerisce l’entusiasmo e il continuo senso di movimento. La musica deve conservare energia e slancio, come una corsa attraverso boschi e prati.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-12",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/La_caccia_09_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -333,14 +333,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/La_caccia_09_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-10",
