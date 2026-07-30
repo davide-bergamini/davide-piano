@@ -463,10 +463,10 @@
         "title": "Op. 100 n. 14",
         "subtitle": "Stiriana",
         "description": "Il titolo rimanda alle danze popolari della Stiria, regione dell’Austria ricca di tradizioni musicali. Il ritmo vivace e il carattere festoso fanno immaginare una danza eseguita in piazza durante una festa di paese. La musica conserva sempre un’eleganza raffinata, pur mantenendo tutta l’energia tipica della danza.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-31",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Stiriana_14_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -477,15 +477,15 @@
         "number": "",
         "key": "",
         "difficulty": "",
-        "startedAt": "",
-        "status": "planned",
+        "startedAt": "2026-07-30",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Stiriana_14_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-15",
