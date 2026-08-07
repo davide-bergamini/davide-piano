@@ -5,6 +5,7 @@ import AdminDashboard from './AdminDashboard.vue'
 import AdminUpload from './AdminUpload.vue'
 import AdminGithub from './AdminGithub.vue'
 import AdminDiscogs from './AdminDiscogs.vue'
+import AdminStats from './AdminStats.vue'
 import RepertoireManager from '../RepertoireManager.vue'
 
 const emit = defineEmits(['logout'])
@@ -17,6 +18,7 @@ const menuItems = [
   { id: 'upload', label: 'Upload' },
   { id: 'github', label: 'GitHub' },
   { id: 'discogs', label: 'Discoteca' },
+  { id: 'stats', label: 'Statistiche' },
 ]
 </script>
 
@@ -47,10 +49,11 @@ const menuItems = [
 
     <section class="admin-content">
       <AdminDashboard v-if="activeSection === 'dashboard'" />
-      <RepertoireManager v-if="activeSection === 'repertoire'" />
-      <AdminUpload v-if="activeSection === 'upload'" />
-      <AdminGithub v-if="activeSection === 'github'" />
-      <AdminDiscogs v-if="activeSection === 'discogs'" />
+      <RepertoireManager v-else-if="activeSection === 'repertoire'" />
+      <AdminUpload v-else-if="activeSection === 'upload'" />
+      <AdminGithub v-else-if="activeSection === 'github'" />
+      <AdminDiscogs v-else-if="activeSection === 'discogs'" />
+      <AdminStats v-else-if="activeSection === 'stats'" />
     </section>
   </main>
 </template>

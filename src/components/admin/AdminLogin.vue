@@ -9,7 +9,7 @@ const error = ref('')
 
 const ADMIN_USERNAME = 'davide'
 
-const ADMIN_PASSWORD_HASH = '1dc2c5ffa3fd93ca977343e71fe7d93401f4e4951d5584cbc0c57a4517e435eb'
+const ADMIN_PASSWORD_HASH = '4649d290ce8da5ee71e6962c85b24d7baa5465dcfbbc93c7ce403edb770ef93a'
 
 async function sha256(text) {
   const data = new TextEncoder().encode(text)
