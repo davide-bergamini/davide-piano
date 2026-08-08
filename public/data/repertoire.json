@@ -550,10 +550,10 @@
         "title": "Op. 100 n. 17",
         "subtitle": "Chiacchierina",
         "description": "Come suggerisce il titolo, questo studio ricorda una conversazione vivace e spensierata. Le frasi musicali sembrano rincorrersi come parole scambiate tra amici, alternando leggerezza e vivacità. Burgmüller trasforma un semplice dialogo quotidiano in una pagina piena di naturalezza e buon umore.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-08",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Chiaccherina_17_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -564,15 +564,15 @@
         "number": "",
         "key": "",
         "difficulty": "",
-        "startedAt": "",
+        "startedAt": "2026-08-08",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Chiacchierina_17_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-18",
