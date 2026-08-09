@@ -579,10 +579,10 @@
         "title": "Op. 100 n. 18",
         "subtitle": "Inquietudine",
         "description": "La musica esprime un senso di continua ricerca, come se qualcosa impedisse di trovare una completa serenità. Le frasi si susseguono con un lieve senso di tensione, senza mai perdere eleganza. Burgmüller descrive un'inquietudine delicata, più vicina al dubbio che alla paura.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-09",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Inquietudine_18_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -593,15 +593,15 @@
         "number": "",
         "key": "",
         "difficulty": "",
-        "startedAt": "",
+        "startedAt": "2026-08-09",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Inquietudine_18_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-19",
