@@ -608,10 +608,10 @@
         "title": "Op. 100 n. 19",
         "subtitle": "Ave Maria",
         "description": "Questo brano si ispira al raccoglimento e alla serenità della preghiera. La melodia procede con grande equilibrio, creando un'atmosfera di pace e contemplazione. Più che stupire, la musica invita ad ascoltare con calma, lasciando emergere tutta la sua semplice spiritualità.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-22",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Ave_Maria_19_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -625,12 +625,12 @@
         "startedAt": "",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Ave_Maria_19_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-20",
