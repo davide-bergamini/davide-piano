@@ -91,14 +91,7 @@ function formatDate(dateString) {
               ▶
             </button>
 
-            <a
-              class="icon-action download"
-              :href="piece.mp3"
-              download
-              title="Scarica MP3"
-            >
-              ↓
-            </a>
+
           </template>
 
           <span v-else class="muted">—</span>
@@ -355,3 +348,4 @@ function formatDate(dateString) {
     max-width: none;
   }
 }
+</style>
