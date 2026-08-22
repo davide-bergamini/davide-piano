@@ -15,7 +15,6 @@ const visiblePieces = pieces.filter((piece) => piece.visible)
         <tr>
           <th>Autore</th>
           <th>Titolo</th>
-          <th>MIDI</th>
           <th>MP3</th>
         </tr>
       </thead>
@@ -30,15 +29,11 @@ const visiblePieces = pieces.filter((piece) => piece.visible)
           </td>
 
           <td>
-            <button v-if="piece.midi" type="button" @click="$emit('select-piece', piece)">
-              Play MIDI
-            </button>
-
-            <span v-else>—</span>
-          </td>
-
-          <td>
-            <button v-if="piece.mp3" type="button" @click="$emit('select-mp3', piece)">
+            <button
+              v-if="piece.mp3"
+              type="button"
+              @click="$emit('select-mp3', piece)"
+            >
               Play MP3
             </button>
 

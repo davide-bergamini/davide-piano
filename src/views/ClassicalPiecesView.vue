@@ -23,7 +23,9 @@ const groupedByComposer = classicalPieces.reduce((groups, piece) => {
     <h6>Musica classica</h6>
     <h2>Catalogo brani</h2>
 
-    <p v-if="classicalPieces.length === 0" class="empty">Nessun brano classico disponibile.</p>
+    <p v-if="classicalPieces.length === 0" class="empty">
+      Nessun brano classico disponibile.
+    </p>
 
     <div
       v-for="(composerPieces, composer) in groupedByComposer"
@@ -36,7 +38,6 @@ const groupedByComposer = classicalPieces.reduce((groups, piece) => {
         <thead>
           <tr>
             <th>Brano</th>
-            <th>MIDI</th>
             <th>MP3</th>
           </tr>
         </thead>
@@ -49,15 +50,11 @@ const groupedByComposer = classicalPieces.reduce((groups, piece) => {
             </td>
 
             <td>
-              <button v-if="piece.midi" type="button" @click="$emit('select-piece', piece)">
-                Play MIDI
-              </button>
-
-              <span v-else>—</span>
-            </td>
-
-            <td>
-              <button v-if="piece.mp3" type="button" @click="$emit('select-mp3', piece)">
+              <button
+                v-if="piece.mp3"
+                type="button"
+                @click="$emit('select-mp3', piece)"
+              >
                 Play MP3
               </button>
 
