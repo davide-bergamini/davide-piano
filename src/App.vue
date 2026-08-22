@@ -18,21 +18,10 @@ const hideSidebar = computed(() => {
   )
 })
 
-const currentPiece = ref(null)
 const currentMp3 = ref(null)
-
-function setCurrentPiece(piece) {
-  currentPiece.value = piece
-  currentMp3.value = null
-}
 
 function setCurrentMp3(piece) {
   currentMp3.value = piece
-  currentPiece.value = null
-}
-
-function stopPiece() {
-  currentPiece.value = null
 }
 
 function stopMp3() {
@@ -48,18 +37,14 @@ function stopMp3() {
 
     <main :class="hideSidebar ? 'content-admin' : 'content'">
       <RouterView
-        :current-piece="currentPiece"
-        @select-piece="setCurrentPiece"
         @select-mp3="setCurrentMp3"
       />
     </main>
   </div>
 
   <MidiPlayer
-    v-if="currentPiece || currentMp3"
-    :current-piece="currentPiece"
+    v-if="currentMp3"
     :current-mp3="currentMp3"
-    @stop="stopPiece"
     @stop-mp3="stopMp3"
   />
 </template>

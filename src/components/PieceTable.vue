@@ -7,23 +7,15 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  currentPiece: {
-    type: Object,
-    default: null,
-  },
   subtitleColumn: {
     type: String,
     default: '',
   },
 })
 
-const emit = defineEmits(['select-piece', 'select-mp3'])
+const emit = defineEmits(['select-mp3'])
 
 const openedDescriptionId = ref(null)
-
-function hasMidi(piece) {
-  return Boolean(piece.midi?.full)
-}
 
 function hasMp3(piece) {
   return Boolean(piece.mp3)
@@ -50,7 +42,6 @@ function formatDate(dateString) {
     <div class="piece-list-head">
       <div>Brano</div>
       <div>Data</div>
-      <div>MIDI</div>
       <div>MP3</div>
     </div>
 
@@ -58,7 +49,6 @@ function formatDate(dateString) {
       v-for="piece in pieces"
       :key="piece.id"
       class="piece-row"
-      :class="{ 'is-playing': currentPiece?.id === piece.id }"
     >
       <div class="piece-top">
         <div class="piece-title-area">
@@ -74,39 +64,20 @@ function formatDate(dateString) {
           <span v-if="piece.subtitle" class="piece-subtitle desktop-subtitle">
             {{ piece.subtitle }}
           </span>
-
-          <span v-if="currentPiece?.id === piece.id" class="playing-label"> Now Playing </span>
         </div>
 
         <div class="piece-date">
-  <span v-if="piece.publishedAt">
-    {{ formatDate(piece.publishedAt) }}
-  </span>
+          <span v-if="piece.publishedAt">
+            {{ formatDate(piece.publishedAt) }}
+          </span>
 
-  <span v-else-if="hasMidi(piece) || hasMp3(piece)" class="published-no-date">
-    Disponibile
-  </span>
+          <span v-else-if="hasMp3(piece)" class="published-no-date">
+            Disponibile
+          </span>
 
-  <span v-else class="coming-soon-date">Coming Soon</span>
-</div>
-
-        <div class="piece-actions">
-          <template v-if="hasMidi(piece)">
-            <button
-              class="icon-action midi-play"
-              type="button"
-              title="Ascolta MIDI"
-              @click="emit('select-piece', piece)"
-            >
-              ▶
-            </button>
-
-            <a class="icon-action download" :href="piece.midi.full" download title="Scarica MIDI">
-              ↓
-            </a>
-          </template>
-
-          <span v-else class="muted">—</span>
+          <span v-else class="coming-soon-date">
+            Coming Soon
+          </span>
         </div>
 
         <div class="piece-actions">
@@ -120,7 +91,14 @@ function formatDate(dateString) {
               ▶
             </button>
 
-            <a class="icon-action download" :href="piece.mp3" download title="Scarica MP3"> ↓ </a>
+            <a
+              class="icon-action download"
+              :href="piece.mp3"
+              download
+              title="Scarica MP3"
+            >
+              ↓
+            </a>
           </template>
 
           <span v-else class="muted">—</span>
@@ -131,7 +109,10 @@ function formatDate(dateString) {
         {{ piece.subtitle }}
       </div>
 
-      <div v-if="openedDescriptionId === piece.id" class="piece-description-panel">
+      <div
+        v-if="openedDescriptionId === piece.id"
+        class="piece-description-panel"
+      >
         {{ piece.description }}
       </div>
     </div>
@@ -146,7 +127,7 @@ function formatDate(dateString) {
 
 .piece-list-head {
   display: grid;
-  grid-template-columns: 1fr 130px 90px 90px;
+  grid-template-columns: 1fr 130px 90px;
   gap: 16px;
   padding: 9px 0;
   border-bottom: 1px solid #d7d7d7;
@@ -166,13 +147,9 @@ function formatDate(dateString) {
   background: #fafafa;
 }
 
-.piece-row.is-playing {
-  background: #f7faff;
-}
-
 .piece-top {
   display: grid;
-  grid-template-columns: 1fr 130px 90px 90px;
+  grid-template-columns: 1fr 130px 90px;
   gap: 16px;
   align-items: center;
 }
@@ -231,13 +208,6 @@ function formatDate(dateString) {
   display: none;
 }
 
-.playing-label {
-  margin-left: 8px;
-  color: #2563eb;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
 .piece-date {
   color: #555;
   font-size: 0.9rem;
@@ -277,10 +247,6 @@ function formatDate(dateString) {
 .icon-action:hover {
   background: #f1f1f1;
   color: #000;
-}
-
-.midi-play {
-  color: #2563eb;
 }
 
 .mp3-play {
@@ -324,7 +290,7 @@ function formatDate(dateString) {
 @media (max-width: 768px) {
   .piece-list-head,
   .piece-top {
-    grid-template-columns: minmax(0, 1fr) 72px 44px 44px;
+    grid-template-columns: minmax(0, 1fr) 72px 44px;
     gap: 8px;
   }
 
@@ -382,10 +348,6 @@ function formatDate(dateString) {
     font-size: 0.78rem;
   }
 
-  .playing-label {
-    display: none;
-  }
-
   .piece-description-panel {
     margin-top: 10px;
     padding: 11px 12px;
@@ -393,4 +355,3 @@ function formatDate(dateString) {
     max-width: none;
   }
 }
-</style>
