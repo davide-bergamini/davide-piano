@@ -204,7 +204,7 @@
         "description": "Questo studio descrive musicalmente l'allegria di un incontro tra amici, attraverso un dialogo vivace e ricco di piccoli contrasti. L'interpretazione deve mantenere un carattere brillante e spontaneo, valorizzando le diverse frasi senza perdere continuità. È un buon esercizio per sviluppare vivacità ritmica e precisione esecutiva.",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Piccola_riunione_04_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -216,15 +216,15 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "publishedAt": "",
-        "status": "planned",
+        "publishedAt": "2026-07-12",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Piccola_riunione_04_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-5",
@@ -347,10 +347,10 @@
         "title": "Op. 100 n. 9",
         "subtitle": "La caccia",
         "description": "Il galoppo dei cavalli, l’abbaiare dei cani e il richiamo dei corni sembrano prendere vita in questo studio dal carattere vivace. Burgmüller non descrive una vera scena di caccia, ma ne suggerisce l’entusiasmo e il continuo senso di movimento. La musica deve conservare energia e slancio, come una corsa attraverso boschi e prati.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-12",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/La_caccia_09_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -362,14 +362,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/La_caccia_09_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-10",
@@ -463,7 +463,7 @@
         "title": "Op. 100 n. 13",
         "subtitle": "Consolazione",
         "description": "Dopo la malinconia di Addio, Burgmüller offre una pagina che trasmette conforto e speranza. La melodia procede con calma, come le parole gentili di una persona che riesce a rassicurare chi soffre. L’atmosfera è raccolta e luminosa, invitando il pianista a cercare un’espressione sincera e pacata.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-03",
         "duration": "—",
         "midi": {
           "full": "/davide-piano/midi/Consolazione_13_Burgmuller.mid",
@@ -478,24 +478,24 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
         "mp3": "/davide-piano/mp3/Consolazione_13_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-14",
         "title": "Op. 100 n. 14",
         "subtitle": "Stiriana",
         "description": "Il titolo rimanda alle danze popolari della Stiria, regione dell’Austria ricca di tradizioni musicali. Il ritmo vivace e il carattere festoso fanno immaginare una danza eseguita in piazza durante una festa di paese. La musica conserva sempre un’eleganza raffinata, pur mantenendo tutta l’energia tipica della danza.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-31",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Stiriana_14_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -507,14 +507,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Stiriana_14_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-15",
@@ -550,10 +550,10 @@
         "title": "Op. 100 n. 16",
         "subtitle": "Dolce lamento",
         "description": "Il titolo suggerisce una tristezza composta e mai disperata. La melodia sembra una voce che racconta con dolcezza un ricordo lontano, senza perdere la serenità. L’atmosfera è intima e riflessiva, e invita il pianista a lasciare che ogni frase si sviluppi con naturalezza, senza eccessi espressivi.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-07",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Dolce_lamento_16_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -565,24 +565,24 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Dolce_lamento_16_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-17",
         "title": "Op. 100 n. 17",
         "subtitle": "Chiacchierina",
         "description": "Come suggerisce il titolo, questo studio ricorda una conversazione vivace e spensierata. Le frasi musicali sembrano rincorrersi come parole scambiate tra amici, alternando leggerezza e vivacità. Burgmüller trasforma un semplice dialogo quotidiano in una pagina piena di naturalezza e buon umore.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-08",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Chiaccherina_17_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -596,22 +596,22 @@
         "startedAt": "",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Chiacchierina_17_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-18",
         "title": "Op. 100 n. 18",
         "subtitle": "Inquietudine",
         "description": "La musica esprime un senso di continua ricerca, come se qualcosa impedisse di trovare una completa serenità. Le frasi si susseguono con un lieve senso di tensione, senza mai perdere eleganza. Burgmüller descrive un'inquietudine delicata, più vicina al dubbio che alla paura.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-09",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Inquietudine_18_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -625,22 +625,22 @@
         "startedAt": "",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Inquietudine_18_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-19",
         "title": "Op. 100 n. 19",
         "subtitle": "Ave Maria",
         "description": "Questo brano si ispira al raccoglimento e alla serenità della preghiera. La melodia procede con grande equilibrio, creando un'atmosfera di pace e contemplazione. Più che stupire, la musica invita ad ascoltare con calma, lasciando emergere tutta la sua semplice spiritualità.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-22",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Ave_Maria_19_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -654,12 +654,12 @@
         "startedAt": "",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Ave_Maria_19_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-20",
@@ -1157,13 +1157,13 @@
         "title": "Op. 39 n. 6",
         "subtitle": "La bambola malata",
         "description": "Con grande delicatezza, Čajkovskij immagina la tristezza di un bambino davanti alla propria bambola ammalata. La melodia procede lentamente, con un carattere malinconico ma mai drammatico, lasciando spazio alla tenerezza e all’affetto. È una pagina semplice e profondamente espressiva, capace di raccontare un piccolo episodio della vita quotidiana con la sensibilità e la poesia tipiche del compositore russo.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-07",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Bambola_malata_6_Tchaikovsky.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Bambola_malata_6_Tchaikovsky.mp3",
         "composer": "Pëtr Il’ič Čajkovskij",
         "collection": "Album per la gioventù Op. 39",
         "sectionTitle": "Album per la gioventù Op. 39",
@@ -1171,14 +1171,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op39-2",
@@ -1186,13 +1186,13 @@
         "title": "Op. 39 n. 9",
         "subtitle": "La nuova bambola",
         "description": "Dopo la malinconia de La bambola malata, questo brano racconta la gioia di ricevere una nuova bambola. La musica è luminosa, vivace e piena di entusiasmo, come lo stupore di un bambino davanti a un regalo tanto desiderato. Čajkovskij descrive con semplicità un momento di felicità autentica, trasformando una piccola scena domestica in una pagina ricca di freschezza e spontaneità.",
-        "publishedAt": "",
+        "publishedAt": "2026-07-10",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/La_nuova_bambola_9_Tchaikovsky.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/La_nuova_bambola_9_Tchaikovsky.mp3",
         "composer": "Pëtr Il’ič Čajkovskij",
         "collection": "Album per la gioventù Op. 39",
         "sectionTitle": "Album per la gioventù Op. 39",
@@ -1200,14 +1200,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       }
     ]
   }
