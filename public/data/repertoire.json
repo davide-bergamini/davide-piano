@@ -67,35 +67,6 @@
         "image": "",
         "tags": [],
         "published": true
-      },
-      {
-        "id": "mozart-k545-3",
-        "title": "K545 — III movimento",
-        "subtitle": "Rondo",
-        "description": "Il Rondò conclude la sonata con un carattere brillante e gioioso. Il tema principale ritorna più volte, ogni volta con la stessa freschezza, intervallato da episodi che mantengono vivo l’interesse dell’ascoltatore. La musica trasmette leggerezza e spontaneità, lasciando l’impressione di un dialogo vivace che si conclude con naturalezza e ottimismo.",
-        "publishedAt": "",
-        "duration": "—",
-        "midi": {
-          "full": "",
-          "right": "",
-          "left": ""
-        },
-        "composer": "Wolfgang Amadeus Mozart",
-        "collection": "Mozart",
-        "sectionTitle": "Sonata facile K545",
-        "order": 3,
-        "number": "",
-        "key": "",
-        "difficulty": "",
-        "startedAt": "",
-        "status": "planned",
-        "notes": "",
-        "mp3": "",
-        "pdf": "",
-        "musicxml": "",
-        "image": "",
-        "tags": [],
-        "published": false
       }
     ]
   },
@@ -506,7 +477,7 @@
         "number": "",
         "key": "",
         "difficulty": "",
-        "startedAt": "",
+        "startedAt": "2026-07-30",
         "status": "published",
         "notes": "",
         "mp3": "/davide-piano/mp3/Stiriana_14_Burgmuller.mp3",
@@ -564,7 +535,7 @@
         "number": "",
         "key": "",
         "difficulty": "",
-        "startedAt": "",
+        "startedAt": "2026-08-07",
         "status": "published",
         "notes": "",
         "mp3": "/davide-piano/mp3/Dolce_lamento_16_Burgmuller.mp3",
@@ -593,7 +564,7 @@
         "number": "",
         "key": "",
         "difficulty": "",
-        "startedAt": "",
+        "startedAt": "2026-08-08",
         "status": "planned",
         "notes": "",
         "mp3": "/davide-piano/mp3/Chiacchierina_17_Burgmuller.mp3",
@@ -622,7 +593,7 @@
         "number": "",
         "key": "",
         "difficulty": "",
-        "startedAt": "",
+        "startedAt": "2026-08-09",
         "status": "planned",
         "notes": "",
         "mp3": "/davide-piano/mp3/Inquietudine_18_Burgmuller.mp3",
@@ -666,10 +637,10 @@
         "title": "Op. 100 n. 20",
         "subtitle": "Tarantella",
         "description": "La celebre danza popolare italiana prende vita in uno studio ricco di energia e movimento. Il ritmo vivace suggerisce una festa animata, nella quale la musica sembra non fermarsi mai. Burgmüller conserva però la raffinatezza del suo stile, trasformando la danza in un brillante esercizio pianistico.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-25",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Tarantella_20_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -683,12 +654,12 @@
         "startedAt": "",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Tarantella_20_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-21",
@@ -1141,7 +1112,7 @@
     ]
   },
   {
-    "id": "tchaikovsky-op39",
+    "id": "petr-ilic-cajkovskij-album-per-la-gioventu-op-39",
     "title": "Album per la gioventù Op. 39",
     "composer": "Pëtr Il’ič Čajkovskij",
     "collection": "Album per la gioventù Op. 39",
