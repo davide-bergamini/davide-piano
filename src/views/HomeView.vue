@@ -19,10 +19,11 @@ const allPieces = computed(() => {
   )
 })
 
-const latestPiece = computed(() => {
+const latestPieces = computed(() => {
   return allPieces.value
     .filter((piece) => piece.publishedAt && piece.mp3)
-    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0]
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    .slice(0, 3)
 })
 </script>
 
@@ -58,26 +59,30 @@ const latestPiece = computed(() => {
     <h2>Davide Piano</h2>
     <p>Brani per pianoforte.</p>
 
-    <section v-if="latestPiece" class="latest-piece">
-      <h3>Ultimo brano caricato</h3>
+    <section v-if="latestPieces.length" class="latest-piece">
+      <h3>Ultimi 3 brani caricati</h3>
 
-      <div class="latest-row">
-        <div v-if="latestPiece.composerImage" class="composer-portrait">
-          <img :src="latestPiece.composerImage" :alt="latestPiece.composerName" />
+      <div
+        v-for="piece in latestPieces"
+        :key="piece.id"
+        class="latest-row"
+      >
+        <div v-if="piece.composerImage" class="composer-portrait">
+          <img :src="piece.composerImage" :alt="piece.composerName" />
         </div>
 
         <div class="latest-info">
           <h4 class="composer-name">
-            {{ latestPiece.composerName }}
+            {{ piece.composerName }}
           </h4>
 
           <div class="piece-row">
             <p class="piece-title">
-              {{ latestPiece.title }}
-              <span v-if="latestPiece.subtitle"> — {{ latestPiece.subtitle }} </span>
+              {{ piece.title }}
+              <span v-if="piece.subtitle"> — {{ piece.subtitle }} </span>
             </p>
 
-            <audio controls class="mini-audio" :src="latestPiece.mp3">
+            <audio controls class="mini-audio" :src="piece.mp3">
               Il tuo browser non supporta l'audio.
             </audio>
           </div>
@@ -181,30 +186,39 @@ const latestPiece = computed(() => {
 .key-cs {
   left: 11px;
 }
+
 .key-ds {
   left: 27px;
 }
+
 .key-fs {
   left: 59px;
 }
+
 .key-gs {
   left: 75px;
 }
+
 .key-as {
   left: 91px;
 }
+
 .key-cs-2 {
   left: 124px;
 }
+
 .key-ds-2 {
   left: 140px;
 }
+
 .key-fs-2 {
   left: 172px;
 }
+
 .key-gs-2 {
   left: 188px;
 }
+
 .key-as-2 {
   left: 204px;
 }
@@ -238,6 +252,12 @@ const latestPiece = computed(() => {
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.latest-row + .latest-row {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #e5e7eb;
 }
 
 .composer-portrait {
