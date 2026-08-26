@@ -666,10 +666,10 @@
         "title": "Op. 100 n. 21",
         "subtitle": "Armonia degli angeli",
         "description": "Il titolo invita a immaginare una musica leggera e luminosa, quasi sospesa nell'aria. Le melodie sembrano intrecciarsi con naturalezza, creando un senso di pace e serenità. Burgmüller dipinge un'atmosfera delicata, nella quale ogni nota contribuisce a costruire un equilibrio di grande dolcezza.",
-        "publishedAt": "",
+        "publishedAt": "2026-08-26",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Armonia_angelica_21_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -681,14 +681,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Armonia_angelica_21_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-22",
