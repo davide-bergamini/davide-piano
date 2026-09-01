@@ -695,10 +695,10 @@
         "title": "Op. 100 n. 22",
         "subtitle": "Barcarola",
         "description": "La barcarola richiama il lento ondeggiare di una barca che scivola sull'acqua. Il ritmo regolare accompagna una melodia distesa e cantabile, trasmettendo una piacevole sensazione di calma. La musica invita a lasciarsi trasportare con naturalezza, come durante una tranquilla navigazione.",
-        "publishedAt": "",
+        "publishedAt": "2026-09-01",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Barcarola_22_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -710,14 +710,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Barcarola_22_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-23",
