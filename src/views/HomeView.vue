@@ -82,6 +82,10 @@ const latestPieces = computed(() => {
               <span v-if="piece.subtitle"> — {{ piece.subtitle }} </span>
             </p>
 
+            <span class="publication-date">
+              {{ new Date(piece.publishedAt).toLocaleDateString('it-IT') }}
+            </span>
+
             <audio controls class="mini-audio" :src="piece.mp3">
               Il tuo browser non supporta l'audio.
             </audio>
@@ -299,6 +303,12 @@ const latestPieces = computed(() => {
   margin: 3px 0 0;
   font-size: 1rem;
   color: #6c757d;
+}
+
+.publication-date {
+  font-size: 0.85rem;
+  color: #6c757d;
+  white-space: nowrap;
 }
 
 .mini-audio {
