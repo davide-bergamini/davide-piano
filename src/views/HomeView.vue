@@ -293,8 +293,8 @@ const latestPieces = computed(() => {
 }
 
 .piece-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 170px;
   align-items: center;
   gap: 14px;
 }
@@ -352,11 +352,13 @@ const latestPieces = computed(() => {
     flex-basis: 44px;
   }
 
-  .piece-row {
+ .piece-row {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
+
 
   .mini-audio {
     width: 100%;
