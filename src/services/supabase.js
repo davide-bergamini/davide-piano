@@ -1,9 +1,6 @@
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '../lib/supabase'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
-
-export const supabase = createClient(supabaseUrl, supabaseKey)
+export { supabase }
 
 export async function testSupabase() {
   const { data, error } = await supabase
