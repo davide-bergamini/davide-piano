@@ -1,12 +1,21 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppHeader from './components/AppHeader.vue'
 import Sidebar from './components/Sidebar.vue'
 import MidiPlayer from './components/MidiPlayer.vue'
+import { registerPageView } from './services/stats'
 
 const route = useRoute()
+
+watch(
+  () => route.path,
+  (path) => {
+    registerPageView(path)
+  },
+  { immediate: true },
+)
 
 const hideSidebar = computed(() => {
   return (
