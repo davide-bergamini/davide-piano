@@ -753,10 +753,10 @@
         "title": "Op. 100 n. 24",
         "subtitle": "La rondine",
         "description": "La leggerezza del volo di una rondine ispira questo elegante brano. Le linee melodiche sembrano disegnare piccoli archi nel cielo, alternando rapidità e grazia con assoluta naturalezza. Burgmüller riesce a evocare il movimento dell'uccello senza rinunciare alla chiarezza e all'equilibrio della scrittura.",
-        "publishedAt": "",
+        "publishedAt": "2026-09-16",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Larondine_24_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -770,12 +770,12 @@
         "startedAt": "",
         "status": "planned",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Larondine_24_Burgmuller.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-25",
