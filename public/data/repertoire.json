@@ -776,6 +776,35 @@
         "image": "",
         "tags": [],
         "published": false
+      },
+      {
+        "id": "bab9f376-14e0-441b-b2f3-a438570022a1",
+        "title": "Op. 100 n. 24",
+        "subtitle": "La rondine",
+        "composer": "Friedrich Burgmüller",
+        "collection": "25 Studi op. 100",
+        "sectionTitle": "25 Studi facili e progressivi Op. 100",
+        "number": "",
+        "order": 24,
+        "key": "",
+        "difficulty": "",
+        "startedAt": "",
+        "publishedAt": "2026-09-16",
+        "status": "planned",
+        "duration": "",
+        "description": "qeqweqweqweqwew",
+        "notes": "",
+        "midi": {
+          "full": "/davide-piano/midi/Larondine_24_Burgmuller.mid",
+          "right": "",
+          "left": ""
+        },
+        "mp3": "/davide-piano/mp3/Larondine_24_Burgmuller_2take.mp3",
+        "pdf": "",
+        "musicxml": "",
+        "image": "",
+        "tags": [],
+        "published": true
       }
     ]
   },
