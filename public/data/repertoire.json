@@ -813,7 +813,7 @@
     "title": "Album per la gioventù Op. 68",
     "composer": "Robert Schumann",
     "collection": "Schumann",
-    "image": "/davide-piano/img/composers/Schumann.webp",
+    "image": "",
     "year": "",
     "description": "",
     "notes": "",
@@ -883,13 +883,13 @@
         "title": "Op. 68 n. 3",
         "subtitle": "Canzoncina",
         "description": "Canzoncina è una piccola melodia che sembra nascere con naturalezza, come se fosse cantata spontaneamente da un bambino. La sua semplicità non è sinonimo di povertà espressiva: al contrario, Schumann riesce a creare un’atmosfera intima e serena con poche note, lasciando che la melodia scorra con dolcezza e continuità. Il brano invita ad ascoltare ogni frase come una breve storia raccontata con delicatezza, nella quale la bellezza risiede proprio nella sua apparente semplicità.",
-        "publishedAt": "",
+        "publishedAt": "2026-10-10",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Canzoncina_03_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Canzoncina_03_Schumann.mp3",
         "composer": "Robert Schumann",
         "collection": "Schumann",
         "sectionTitle": "Album per la gioventù Op. 68",
@@ -897,14 +897,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op68-5",
