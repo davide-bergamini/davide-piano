@@ -825,13 +825,13 @@
         "title": "Op. 68 n. 1",
         "subtitle": "Melodia",
         "description": "Schumann apre l’Album per la gioventù con una pagina di straordinaria semplicità. La melodia scorre con naturalezza, quasi come una voce che racconta una storia senza fretta. Dietro le poche note si nasconde tutta la capacità del compositore di trasformare la semplicità in poesia, invitando il pianista a cercare espressività più che effetti spettacolari.",
-        "publishedAt": "",
+        "publishedAt": "2026-10-10",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Melodia_01_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Melodia_01_Schumann.mp3",
         "composer": "Robert Schumann",
         "collection": "Schumann",
         "sectionTitle": "Album per la gioventù Op. 68",
@@ -839,14 +839,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op68-2",
