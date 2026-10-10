@@ -813,7 +813,7 @@
     "title": "Album per la gioventù Op. 68",
     "composer": "Robert Schumann",
     "collection": "Schumann",
-    "image": "/davide-piano/img/composers/Schumann.webp",
+    "image": "",
     "year": "",
     "description": "",
     "notes": "",
@@ -854,13 +854,13 @@
         "title": "Op. 68 n. 2",
         "subtitle": "Marcia di soldati",
         "description": "Marcia di soldati richiama l’immagine di un piccolo corteo militare che avanza con passo deciso e ordinato. Il ritmo regolare suggerisce il procedere compatto dei soldati, mentre la melodia mantiene un carattere vivace e sereno, lontano da qualsiasi atmosfera di guerra. Schumann trasforma una semplice marcia in una scena osservata con gli occhi di un bambino: un gioco fatto di disciplina, entusiasmo e immaginazione, nel quale ogni nota sembra seguire il cadenzato battere dei passi.",
-        "publishedAt": "",
+        "publishedAt": "2026-10-11",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Marcia_di_soldati_02_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Marcia_di_soldati_02_Schumann.mp3",
         "composer": "Robert Schumann",
         "collection": "Schumann",
         "sectionTitle": "Album per la gioventù Op. 68",
@@ -868,14 +868,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op68-3",
