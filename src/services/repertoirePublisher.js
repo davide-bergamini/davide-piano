@@ -86,8 +86,12 @@ export async function publishRepertoire() {
   // Preserva l'immagine online quando manca nei dati locali.
   const worksWithPreservedImages = works.map((work) => {
     const onlineWork = onlineWorks.find(
-      (item) => item.id === work.id,
-    )
+  (item) => item.id === work.id,
+) || onlineWorks.find(
+  (item) =>
+    item.composer === work.composer &&
+    item.title === work.title,
+)
 
     return {
       ...work,
