@@ -13,7 +13,7 @@ function toBase64(text) {
   return btoa(unescape(encodeURIComponent(text)))
 }
 
-async function getExistingFileSha(token) {
+async function getExistingFile(token) {
   const response = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,
     {
@@ -24,15 +24,25 @@ async function getExistingFileSha(token) {
     },
   )
 
-  if (response.status === 404) return null
-
   if (!response.ok) {
     const error = await response.json()
-    throw new Error(error.message)
+    throw new Error(
+      `Impossibile leggere il repertorio online: ${error.message}`,
+    )
   }
 
   const data = await response.json()
-  return data.sha
+
+  return {
+    sha: data.sha,
+    content: data.content,
+  }
+}
+
+function fromBase64(text) {
+  return decodeURIComponent(
+    escape(atob(text.replace(/\n/g, ''))),
+  )
 }
 
 function normalizeRepertoire(works) {
@@ -68,11 +78,27 @@ export async function publishRepertoire() {
   }
 
   const works = JSON.parse(savedWorks)
-  const repertoire = normalizeRepertoire(works)
+
+  // Legge il repertorio attualmente pubblicato su GitHub.
+  const onlineFile = await getExistingFile(token)
+  const onlineWorks = JSON.parse(fromBase64(onlineFile.content))
+
+  // Preserva l'immagine online quando manca nei dati locali.
+  const worksWithPreservedImages = works.map((work) => {
+    const onlineWork = onlineWorks.find(
+      (item) => item.id === work.id,
+    )
+
+    return {
+      ...work,
+      image: work.image || onlineWork?.image || '',
+    }
+  })
+
+  const repertoire = normalizeRepertoire(worksWithPreservedImages)
 
   const json = JSON.stringify(repertoire, null, 2)
   const content = toBase64(`${json}\n`)
-  const sha = await getExistingFileSha(token)
 
   const response = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
@@ -86,7 +112,7 @@ export async function publishRepertoire() {
         message: 'Update repertoire data',
         content,
         branch,
-        ...(sha ? { sha } : {}),
+        sha: onlineFile.sha,
       }),
     },
   )
