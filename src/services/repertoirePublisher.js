@@ -95,7 +95,7 @@ export async function publishRepertoire() {
 
     return {
       ...work,
-      image: work.image || onlineWork?.image || '',
+      image: onlineWork?.image || work.image || '',
     }
   })
 
