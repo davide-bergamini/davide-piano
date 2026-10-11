@@ -1,4 +1,3 @@
-
 const GITHUB_OWNER = 'davide-bergamini'
 const GITHUB_REPO = 'davide-piano'
 const GITHUB_BRANCH = 'main'
@@ -28,28 +27,14 @@ function toPublicPath(folder, filename) {
 
 async function fetchGithubFolder(folder) {
   const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${folder}?ref=${GITHUB_BRANCH}`
-  const token = localStorage.getItem('github_token')
 
-  const headers = {
-    Accept: 'application/vnd.github+json',
-  }
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-
-  const response = await fetch(url, { headers })
+  const response = await fetch(url)
 
   if (!response.ok) {
-    const detail = await response.text()
-    throw new Error(`GitHub (${response.status}): ${detail}`)
+    return []
   }
 
   const items = await response.json()
-
-  if (!Array.isArray(items)) {
-    throw new Error(`GitHub non ha restituito un elenco di file per ${folder}.`)
-  }
 
   return items
     .filter((item) => item.type === 'file')
@@ -66,9 +51,7 @@ export async function fetchFilesByType(type) {
   const folders = FILE_FOLDERS[type] || []
   const allowedExtensions = FILE_EXTENSIONS[type] || []
 
-  const results = await Promise.all(
-    folders.map((folder) => fetchGithubFolder(folder)),
-  )
+  const results = await Promise.all(folders.map((folder) => fetchGithubFolder(folder)))
 
   return results
     .flat()
