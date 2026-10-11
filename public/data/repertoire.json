@@ -912,13 +912,13 @@
         "title": "Op. 68 n. 5",
         "subtitle": "Piccolo pezzo",
         "description": "Piccolo pezzo è una pagina breve e raccolta, nella quale Schumann dimostra come anche poche battute possano racchiudere una grande espressività. La melodia procede con naturalezza, senza ricercare effetti spettacolari, invitando l’ascoltatore a soffermarsi sulla semplicità e sull’equilibrio del discorso musicale. È un brano che insegna a valorizzare ogni frase con sensibilità, mostrando come la bellezza possa nascere anche dalle idee più essenziali.",
-        "publishedAt": "",
+        "publishedAt": "2026-10-11",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Piccolo_Pezzo_05_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Piccolo_Pezzo_05_Schumann.mp3",
         "composer": "Robert Schumann",
         "collection": "Schumann",
         "sectionTitle": "Album per la gioventù Op. 68",
@@ -926,14 +926,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op68-6",
