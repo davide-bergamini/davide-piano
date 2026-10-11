@@ -67,6 +67,35 @@
         "image": "",
         "tags": [],
         "published": true
+      },
+      {
+        "id": "mozart-k545-3",
+        "title": "K545 — III movimento",
+        "subtitle": "Rondo",
+        "description": "Il Rondò conclude la sonata con un carattere brillante e gioioso. Il tema principale ritorna più volte, ogni volta con la stessa freschezza, intervallato da episodi che mantengono vivo l’interesse dell’ascoltatore. La musica trasmette leggerezza e spontaneità, lasciando l’impressione di un dialogo vivace che si conclude con naturalezza e ottimismo.",
+        "publishedAt": "",
+        "duration": "—",
+        "midi": {
+          "full": "",
+          "right": "",
+          "left": ""
+        },
+        "composer": "Wolfgang Amadeus Mozart",
+        "collection": "Mozart",
+        "sectionTitle": "Sonata facile K545",
+        "order": 3,
+        "number": "",
+        "key": "",
+        "difficulty": "",
+        "startedAt": "",
+        "status": "planned",
+        "notes": "",
+        "mp3": "",
+        "pdf": "",
+        "musicxml": "",
+        "image": "",
+        "tags": [],
+        "published": false
       }
     ]
   },
