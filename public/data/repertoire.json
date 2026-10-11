@@ -67,35 +67,6 @@
         "image": "",
         "tags": [],
         "published": true
-      },
-      {
-        "id": "mozart-k545-3",
-        "title": "K545 — III movimento",
-        "subtitle": "Rondo",
-        "description": "Il Rondò conclude la sonata con un carattere brillante e gioioso. Il tema principale ritorna più volte, ogni volta con la stessa freschezza, intervallato da episodi che mantengono vivo l’interesse dell’ascoltatore. La musica trasmette leggerezza e spontaneità, lasciando l’impressione di un dialogo vivace che si conclude con naturalezza e ottimismo.",
-        "publishedAt": "",
-        "duration": "—",
-        "midi": {
-          "full": "",
-          "right": "",
-          "left": ""
-        },
-        "composer": "Wolfgang Amadeus Mozart",
-        "collection": "Mozart",
-        "sectionTitle": "Sonata facile K545",
-        "order": 3,
-        "number": "",
-        "key": "",
-        "difficulty": "",
-        "startedAt": "",
-        "status": "planned",
-        "notes": "",
-        "mp3": "",
-        "pdf": "",
-        "musicxml": "",
-        "image": "",
-        "tags": [],
-        "published": false
       }
     ]
   },
@@ -753,10 +724,10 @@
         "title": "Op. 100 n. 23",
         "subtitle": "Ritorno",
         "description": "Questo studio suggerisce la gioia di ritrovare un luogo o una persona cara dopo un periodo di lontananza. La musica alterna slancio e serenità, come se ogni frase avvicinasse sempre di più alla meta. Burgmüller racconta il ritorno con semplicità e sincera partecipazione.",
-        "publishedAt": "",
+        "publishedAt": "2026-09-16",
         "duration": "—",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Ritorno_23_Burgmuller.mid",
           "right": "",
           "left": ""
         },
@@ -768,14 +739,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "notes": "",
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Ritorno_23_Burgmuller_web4.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op100-25",
@@ -819,16 +790,16 @@
         "difficulty": "",
         "startedAt": "",
         "publishedAt": "2026-09-16",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "description": "qeqweqweqweqwew",
         "notes": "",
         "midi": {
-          "full": "/davide-piano/midi/Larondine_24_Burgmuller.mid",
+          "full": "/davide-piano/midi/Larondine_24_Burgmuller_web.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "/davide-piano/mp3/Larondine_24_Burgmuller_2take.mp3",
+        "mp3": "/davide-piano/mp3/Larondine_24_Burgmuller_web.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
@@ -842,7 +813,7 @@
     "title": "Album per la gioventù Op. 68",
     "composer": "Robert Schumann",
     "collection": "Schumann",
-    "image": "/davide-piano/img/composers/Schumann.webp",
+    "image": "",
     "year": "",
     "description": "",
     "notes": "",
@@ -854,13 +825,13 @@
         "title": "Op. 68 n. 1",
         "subtitle": "Melodia",
         "description": "Schumann apre l’Album per la gioventù con una pagina di straordinaria semplicità. La melodia scorre con naturalezza, quasi come una voce che racconta una storia senza fretta. Dietro le poche note si nasconde tutta la capacità del compositore di trasformare la semplicità in poesia, invitando il pianista a cercare espressività più che effetti spettacolari.",
-        "publishedAt": "",
+        "publishedAt": "2026-10-10",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Melodia_01_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Melodia_01_Schumann.mp3",
         "composer": "Robert Schumann",
         "collection": "Schumann",
         "sectionTitle": "Album per la gioventù Op. 68",
@@ -868,14 +839,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op68-2",
@@ -883,13 +854,13 @@
         "title": "Op. 68 n. 2",
         "subtitle": "Marcia di soldati",
         "description": "Marcia di soldati richiama l’immagine di un piccolo corteo militare che avanza con passo deciso e ordinato. Il ritmo regolare suggerisce il procedere compatto dei soldati, mentre la melodia mantiene un carattere vivace e sereno, lontano da qualsiasi atmosfera di guerra. Schumann trasforma una semplice marcia in una scena osservata con gli occhi di un bambino: un gioco fatto di disciplina, entusiasmo e immaginazione, nel quale ogni nota sembra seguire il cadenzato battere dei passi.",
-        "publishedAt": "",
+        "publishedAt": "2026-10-11",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Marcia_di_soldati_02_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Marcia_di_soldati_02_Schumann.mp3",
         "composer": "Robert Schumann",
         "collection": "Schumann",
         "sectionTitle": "Album per la gioventù Op. 68",
@@ -897,14 +868,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op68-3",
@@ -912,13 +883,13 @@
         "title": "Op. 68 n. 3",
         "subtitle": "Canzoncina",
         "description": "Canzoncina è una piccola melodia che sembra nascere con naturalezza, come se fosse cantata spontaneamente da un bambino. La sua semplicità non è sinonimo di povertà espressiva: al contrario, Schumann riesce a creare un’atmosfera intima e serena con poche note, lasciando che la melodia scorra con dolcezza e continuità. Il brano invita ad ascoltare ogni frase come una breve storia raccontata con delicatezza, nella quale la bellezza risiede proprio nella sua apparente semplicità.",
-        "publishedAt": "",
+        "publishedAt": "2026-10-10",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Canzoncina_03_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Canzoncina_03_Schumann.mp3",
         "composer": "Robert Schumann",
         "collection": "Schumann",
         "sectionTitle": "Album per la gioventù Op. 68",
@@ -926,14 +897,14 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "status": "planned",
+        "status": "published",
         "duration": "",
         "notes": "",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "op68-5",
