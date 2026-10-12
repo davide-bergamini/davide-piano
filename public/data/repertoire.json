@@ -953,11 +953,11 @@
         "description": "",
         "notes": "",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Corale_04_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Corale_04_Schumann.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
