@@ -1021,6 +1021,35 @@
         "image": "",
         "tags": [],
         "published": false
+      },
+      {
+        "id": "a792bf27-3673-433c-b907-21246e86a20b",
+        "title": "Op. 68 n. 8",
+        "subtitle": "Cavaliere selvaggio",
+        "composer": "Robert Schumann",
+        "collection": "Schumann",
+        "sectionTitle": "Album per la gioventù Op. 68",
+        "number": "",
+        "order": 8,
+        "key": "",
+        "difficulty": "",
+        "startedAt": "",
+        "publishedAt": "",
+        "status": "planned",
+        "duration": "",
+        "description": "Cavaliere selvaggio è un brano nel quale Schumann evoca l’immagine di un cavallo lanciato al galoppo, con il suo cavaliere che corre impetuosamente. Il ritmo incalzante e gli accenti decisi richiamano il battito degli zoccoli sul terreno, trasmettendo una sensazione di energia e movimento continuo. La musica, vivace e irruenta, sembra raccontare una corsa sfrenata, nella quale il cavaliere si abbandona al piacere dell’avventura. Schumann trasforma così un semplice pezzo pianistico in una piccola scena ricca di fantasia, entusiasmo e spirito giocoso.",
+        "notes": "",
+        "midi": {
+          "full": "",
+          "right": "",
+          "left": ""
+        },
+        "mp3": "",
+        "pdf": "",
+        "musicxml": "",
+        "image": "",
+        "tags": [],
+        "published": false
       }
     ]
   },
