@@ -976,22 +976,22 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "publishedAt": "",
-        "status": "planned",
+        "publishedAt": "2026-10-15",
+        "status": "published",
         "duration": "",
         "description": "Povera orfanella è un brano nel quale Schumann esprime con semplicità e delicatezza un sentimento di malinconia e solitudine. La melodia cantabile, accompagnata da un andamento pacato, suggerisce la tristezza e la fragilità di una bambina che sembra raccontare silenziosamente la propria condizione. Senza ricorrere a effetti drammatici, Schumann crea un’atmosfera intima e raccolta, trasformando un piccolo pezzo pianistico in una scena poetica, capace di suscitare tenerezza e partecipazione.",
         "notes": "",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Povera_orfanella_06_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Povera_orfanella_06_Schumann.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "ae6d1af7-9860-4beb-8e3e-ae036398d798",
