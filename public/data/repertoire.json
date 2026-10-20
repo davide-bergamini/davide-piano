@@ -1092,22 +1092,22 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "publishedAt": "",
+        "publishedAt": "2026-10-20",
         "status": "planned",
         "duration": "",
         "description": "Contadino allegro, il cui titolo originale significa «Il contadino felice che torna dal lavoro», richiama l’immagine di un uomo che, terminata la giornata nei campi, si avvia verso casa di buon umore. La melodia, inizialmente affidata alla mano sinistra, procede con passo deciso e vivace, mentre la mano destra interviene con accordi brevi e ritmati. Le due mani sembrano poi unirsi in un canto più pieno, come se il contadino fosse accompagnato nel cammino dal figlio. Schumann trasforma così una scena di vita quotidiana in una piccola pagina musicale piena di energia, semplicità e soddisfazione.",
         "notes": "",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Contadino_allegro_10_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Contadino_allegro_10_Schumann.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       }
     ]
   },
