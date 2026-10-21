@@ -1034,22 +1034,22 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "publishedAt": "",
+        "publishedAt": "2026-10-21",
         "status": "planned",
         "duration": "",
         "description": "Cavaliere selvaggio è un brano nel quale Schumann evoca l’immagine di un cavallo lanciato al galoppo, con il suo cavaliere che corre impetuosamente. Il ritmo incalzante e gli accenti decisi richiamano il battito degli zoccoli sul terreno, trasmettendo una sensazione di energia e movimento continuo. La musica, vivace e irruenta, sembra raccontare una corsa sfrenata, nella quale il cavaliere si abbandona al piacere dell’avventura. Schumann trasforma così un semplice pezzo pianistico in una piccola scena ricca di fantasia, entusiasmo e spirito giocoso.",
         "notes": "",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Cavaliere_selvaggio_8_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Cavaliere_selvaggio_8_Schumann.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "956adb09-3627-4ae0-bdf1-e70bc3e30c6a",
