@@ -1005,22 +1005,22 @@
         "key": "",
         "difficulty": "",
         "startedAt": "",
-        "publishedAt": "",
-        "status": "planned",
+        "publishedAt": "2026-10-23",
+        "status": "published",
         "duration": "",
         "description": "Canzonetta del cacciatore è un brano nel quale Schumann dipinge una piccola scena di caccia attraverso immagini musicali vivaci e suggestive. L’inizio richiama il suono dei corni da caccia, con un carattere deciso e solenne, come un richiamo che risuona nel bosco. Subito dopo, la musica sembra animarsi con la fuga improvvisa di un animale, evocata da un andamento più agile e movimentato. Schumann trasforma così pochi elementi musicali in una scena ricca di immaginazione, nella quale si alternano il richiamo dei cacciatori e il rapido movimento della preda.",
         "notes": "",
         "midi": {
-          "full": "",
+          "full": "/davide-piano/midi/Canzonetta_del_cacciatore_07_Schumann.mid",
           "right": "",
           "left": ""
         },
-        "mp3": "",
+        "mp3": "/davide-piano/mp3/Canzonetta_del_cacciatore_07_Schumann.mp3",
         "pdf": "",
         "musicxml": "",
         "image": "",
         "tags": [],
-        "published": false
+        "published": true
       },
       {
         "id": "a792bf27-3673-433c-b907-21246e86a20b",
