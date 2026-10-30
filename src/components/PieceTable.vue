@@ -1,6 +1,7 @@
+
 <script setup>
-import { ref } from 'vue'
-// import { fetchLikes, incrementLike } from '../services/likes'
+import { ref, watch } from 'vue'
+import { fetchLikes, incrementLike } from '../services/likes'
 
 const props = defineProps({
   pieces: {
@@ -16,6 +17,73 @@ const props = defineProps({
 const emit = defineEmits(['select-mp3'])
 
 const openedDescriptionId = ref(null)
+const likes = ref({})
+const likedIds = ref(new Set())
+const pendingIds = ref(new Set())
+
+const LIKED_KEY = 'davide-piano-liked-pieces'
+
+function loadLocalLikes() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LIKED_KEY) || '[]')
+    likedIds.value = new Set(saved)
+  } catch {
+    likedIds.value = new Set()
+  }
+}
+
+function saveLocalLikes() {
+  localStorage.setItem(
+    LIKED_KEY,
+    JSON.stringify([...likedIds.value])
+  )
+}
+
+async function loadLikes() {
+  const ids = props.pieces.map(piece => piece.id)
+
+  if (!ids.length) return
+
+  loadLocalLikes()
+  likes.value = await fetchLikes(ids)
+}
+
+async function likePiece(piece) {
+  if (
+    likedIds.value.has(piece.id) ||
+    pendingIds.value.has(piece.id)
+  ) {
+    return
+  }
+
+  pendingIds.value.add(piece.id)
+
+  try {
+    const total = await incrementLike(piece.id)
+
+    if (total === null) return
+
+    likes.value = {
+      ...likes.value,
+      [piece.id]: total,
+    }
+
+    likedIds.value = new Set([
+      ...likedIds.value,
+      piece.id,
+    ])
+
+    saveLocalLikes()
+  } finally {
+    pendingIds.value.delete(piece.id)
+  }
+}
+
+watch(
+  () => props.pieces.map(piece => piece.id),
+  loadLikes,
+  { immediate: true }
+)
 
 function hasMp3(piece) {
   return Boolean(piece.mp3)
@@ -28,7 +96,8 @@ function hasDescription(piece) {
 function toggleDescription(piece) {
   if (!hasDescription(piece)) return
 
-  openedDescriptionId.value = openedDescriptionId.value === piece.id ? null : piece.id
+  openedDescriptionId.value =
+    openedDescriptionId.value === piece.id ? null : piece.id
 }
 
 function formatDate(dateString) {
@@ -42,7 +111,7 @@ function formatDate(dateString) {
     <div class="piece-list-head">
       <div>Brano</div>
       <div>Data</div>
-      <div>MP3</div>
+      <div>Azioni</div>
     </div>
 
     <div
@@ -61,7 +130,10 @@ function formatDate(dateString) {
             {{ piece.title }}
           </button>
 
-          <span v-if="piece.subtitle" class="piece-subtitle desktop-subtitle">
+          <span
+            v-if="piece.subtitle"
+            class="piece-subtitle desktop-subtitle"
+          >
             {{ piece.subtitle }}
           </span>
         </div>
@@ -81,24 +153,38 @@ function formatDate(dateString) {
         </div>
 
         <div class="piece-actions">
-          <template v-if="hasMp3(piece)">
-            <button
-              class="icon-action mp3-play"
-              type="button"
-              title="Ascolta MP3"
-              @click="emit('select-mp3', piece)"
-            >
-              ▶
-            </button>
+          <button
+            v-if="hasMp3(piece)"
+            class="icon-action mp3-play"
+            type="button"
+            title="Ascolta MP3"
+            aria-label="Ascolta MP3"
+            @click="emit('select-mp3', piece)"
+          >
+            ▶
+          </button>
 
-
-          </template>
-
-          <span v-else class="muted">—</span>
+          <button
+            class="like-button"
+            :class="{ liked: likedIds.has(piece.id) }"
+            type="button"
+            :disabled="likedIds.has(piece.id) || pendingIds.has(piece.id)"
+            :title="likedIds.has(piece.id) ? 'Hai già messo Mi piace' : 'Mi piace'"
+            :aria-label="`Mi piace: ${likes[piece.id] ?? 0}`"
+            @click="likePiece(piece)"
+          >
+            <span>👍</span>
+            <span class="like-count">
+              {{ likes[piece.id] ?? 0 }}
+            </span>
+          </button>
         </div>
       </div>
 
-      <div v-if="piece.subtitle" class="piece-subtitle mobile-subtitle">
+      <div
+        v-if="piece.subtitle"
+        class="piece-subtitle mobile-subtitle"
+      >
         {{ piece.subtitle }}
       </div>
 
@@ -120,7 +206,7 @@ function formatDate(dateString) {
 
 .piece-list-head {
   display: grid;
-  grid-template-columns: 1fr 130px 90px;
+  grid-template-columns: 1fr 130px 110px;
   gap: 16px;
   padding: 9px 0;
   border-bottom: 1px solid #d7d7d7;
@@ -142,7 +228,7 @@ function formatDate(dateString) {
 
 .piece-top {
   display: grid;
-  grid-template-columns: 1fr 130px 90px;
+  grid-template-columns: 1fr 130px 110px;
   gap: 16px;
   align-items: center;
 }
@@ -216,7 +302,7 @@ function formatDate(dateString) {
 .piece-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   white-space: nowrap;
 }
 
@@ -232,9 +318,6 @@ function formatDate(dateString) {
   justify-content: center;
   cursor: pointer;
   padding: 0;
-  text-decoration: none;
-  appearance: none;
-  -webkit-appearance: none;
 }
 
 .icon-action:hover {
@@ -246,13 +329,36 @@ function formatDate(dateString) {
   color: #198754;
 }
 
-.download {
+.like-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
   color: #555;
-  font-size: 1rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
 }
 
-.muted {
-  color: #aaa;
+.like-button:hover:not(:disabled) {
+  background: #f1f1f1;
+}
+
+.like-button.liked {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.like-button:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.like-count {
+  font-size: 0.82rem;
 }
 
 .piece-description-panel {
@@ -283,7 +389,7 @@ function formatDate(dateString) {
 @media (max-width: 768px) {
   .piece-list-head,
   .piece-top {
-    grid-template-columns: minmax(0, 1fr) 72px 44px;
+    grid-template-columns: minmax(0, 1fr) 72px 76px;
     gap: 8px;
   }
 
@@ -330,15 +436,25 @@ function formatDate(dateString) {
   }
 
   .piece-actions {
-    width: 44px;
+    width: 76px;
     justify-self: start;
-    gap: 4px;
+    gap: 5px;
   }
 
   .icon-action {
     width: 20px;
     height: 20px;
     font-size: 0.78rem;
+  }
+
+  .like-button {
+    gap: 2px;
+    padding: 2px;
+    font-size: 0.76rem;
+  }
+
+  .like-count {
+    font-size: 0.75rem;
   }
 
   .piece-description-panel {

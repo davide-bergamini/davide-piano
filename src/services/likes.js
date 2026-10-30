@@ -1,6 +1,22 @@
-import { supabase } from '../lib/supabase'
+
+import { supabase } from './supabase'
+
+const VISITOR_KEY = 'davide-piano-visitor-id'
+
+function getVisitorId() {
+  let visitorId = localStorage.getItem(VISITOR_KEY)
+
+  if (!visitorId) {
+    visitorId = crypto.randomUUID()
+    localStorage.setItem(VISITOR_KEY, visitorId)
+  }
+
+  return visitorId
+}
 
 export async function fetchLikes(pieceIds) {
+  if (!pieceIds.length) return {}
+
   const { data, error } = await supabase
     .from('piece_likes')
     .select('piece_id, likes')
@@ -24,51 +40,37 @@ export async function fetchLikes(pieceIds) {
   return result
 }
 
-export async function incrementLike(pieceId) {
-  const { data: existingRow, error: selectError } = await supabase
-    .from('piece_likes')
-    .select('piece_id, likes')
-    .eq('piece_id', pieceId)
-    .maybeSingle()
+export async function fetchVisitorLikes(pieceIds) {
+  if (!pieceIds.length) return []
 
-  if (selectError) {
-    console.error('Errore lettura like:', selectError)
-    return null
-  }
-
-  if (!existingRow) {
-    const { data, error } = await supabase
-      .from('piece_likes')
-      .insert({
-        piece_id: pieceId,
-        likes: 1,
-      })
-      .select()
-      .single()
-
-    if (error) {
-      console.error('Errore creazione like:', error)
-      return null
-    }
-
-    return data.likes
-  }
-
-  const newLikes = existingRow.likes + 1
+  const visitorId = getVisitorId()
 
   const { data, error } = await supabase
-    .from('piece_likes')
-    .update({
-      likes: newLikes,
-    })
-    .eq('piece_id', pieceId)
-    .select()
-    .single()
+    .from('piece_liked_visitors')
+    .select('piece_id')
+    .eq('visitor_id', visitorId)
+    .in('piece_id', pieceIds)
 
   if (error) {
-    console.error('Errore aggiornamento like:', error)
+    console.error('Errore caricamento like personali:', error)
+    return []
+  }
+
+  return data.map((row) => row.piece_id)
+}
+
+export async function incrementLike(pieceId) {
+  const visitorId = getVisitorId()
+
+  const { data, error } = await supabase.rpc('register_piece_like', {
+    p_piece_id: pieceId,
+    p_visitor_id: visitorId,
+  })
+
+  if (error) {
+    console.error('Errore registrazione like:', error)
     return null
   }
 
-  return data.likes
+  return data
 }
