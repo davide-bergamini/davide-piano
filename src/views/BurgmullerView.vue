@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Midi } from '@tonejs/midi'
@@ -94,6 +95,7 @@ onMounted(async () => {
 
       <PieceTable
         :pieces="section.pieces"
+        :work-id="section.id"
         :current-piece="currentPiece"
         subtitle-column=""
         @select-piece="emit('select-piece', $event)"

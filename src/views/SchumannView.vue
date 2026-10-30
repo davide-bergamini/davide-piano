@@ -1,3 +1,4 @@
+
 <script setup>
 import { onMounted, ref } from 'vue'
 
@@ -60,6 +61,7 @@ onMounted(() => {
 
       <PieceTable
         :pieces="section.pieces"
+        :work-id="section.id"
         :current-piece="currentPiece"
         subtitle-column=""
         @select-piece="emit('select-piece', $event)"

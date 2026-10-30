@@ -2,10 +2,15 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { fetchLikes, incrementLike } from '../services/likes'
+import { fetchComments, addComment } from '../services/comments'
 
 const props = defineProps({
   pieces: {
     type: Array,
+    required: true,
+  },
+  workId: {
+    type: String,
     required: true,
   },
   subtitleColumn: {
@@ -20,6 +25,11 @@ const openedDescriptionId = ref(null)
 const likes = ref({})
 const likedIds = ref(new Set())
 const pendingIds = ref(new Set())
+
+const comments = ref([])
+const commentDraft = ref('')
+const submittingComment = ref(false)
+const commentsError = ref('')
 
 const LIKED_KEY = 'davide-piano-liked-pieces'
 
@@ -79,9 +89,57 @@ async function likePiece(piece) {
   }
 }
 
+async function loadComments() {
+  commentsError.value = ''
+  comments.value = await fetchComments(props.workId)
+}
+
+async function publishComment() {
+  const text = commentDraft.value.trim()
+
+  if (text.length < 2 || text.length > 1000) return
+  if (submittingComment.value) return
+
+  submittingComment.value = true
+  commentsError.value = ''
+
+  try {
+    const newComment = await addComment(props.workId, text)
+
+    if (!newComment) {
+      commentsError.value = 'Non è stato possibile pubblicare il commento. Riprova.'
+      return
+    }
+
+    comments.value = [...comments.value, newComment]
+    commentDraft.value = ''
+  } catch (error) {
+    console.error('Errore pubblicazione commento:', error)
+    commentsError.value = 'Errore durante la pubblicazione. Riprova.'
+  } finally {
+    submittingComment.value = false
+  }
+}
+
+function formatCommentDate(dateString) {
+  return new Date(dateString).toLocaleString('it-IT', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 watch(
   () => props.pieces.map(piece => piece.id),
   loadLikes,
+  { immediate: true }
+)
+
+watch(
+  () => props.workId,
+  loadComments,
   { immediate: true }
 )
 
@@ -194,6 +252,58 @@ function formatDate(dateString) {
       >
         {{ piece.description }}
       </div>
+    </div>
+
+    <!-- Commenti dell'intera opera -->
+    <div class="work-comments">
+
+      <div v-if="comments.length" class="comments-list">
+        <div
+          v-for="comment in comments"
+          :key="comment.id"
+          class="comment-item"
+        >
+          <div class="comment-header">
+            <strong>{{ comment.author_name }}</strong>
+            <span>{{ formatCommentDate(comment.created_at) }}</span>
+          </div>
+
+          <p class="comment-text">{{ comment.comment }}</p>
+        </div>
+      </div>
+
+      <form class="comment-form" @submit.prevent="publishComment">
+        <label for="work-comment">Lascia un commento</label>
+
+        <textarea
+          id="work-comment"
+          v-model="commentDraft"
+          placeholder="Scrivi le tue impressioni dopo aver ascoltato l'opera..."
+          maxlength="1000"
+          rows="3"
+          required
+        ></textarea>
+
+        <div class="comment-form-footer">
+          <span class="comment-anonymous">Pubblicherai come Anonimo</span>
+
+          <span class="comment-counter">
+            {{ commentDraft.length }}/1000
+          </span>
+        </div>
+
+        <button
+          type="submit"
+          class="comment-submit"
+          :disabled="commentDraft.trim().length < 2 || submittingComment"
+        >
+          {{ submittingComment ? 'Pubblicazione...' : 'Pubblica commento' }}
+        </button>
+
+        <p v-if="commentsError" class="comment-error">
+          {{ commentsError }}
+        </p>
+      </form>
     </div>
   </div>
 </template>
@@ -386,6 +496,130 @@ function formatDate(dateString) {
   }
 }
 
+/* Commenti dell'opera */
+
+.work-comments {
+  margin-top: 24px;
+  padding: 20px 0 8px;
+}
+
+.comments-title {
+  margin: 0 0 18px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.comment-item {
+  padding: 12px 14px;
+  background: #f8f9fa;
+  border-radius: var(--radius);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+  font-size: 0.85rem;
+}
+
+.comment-header strong {
+  color: #333;
+}
+
+.comment-header span {
+  color: #888;
+  font-size: 0.78rem;
+}
+
+.comment-text {
+  margin: 0;
+  color: #444;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.no-comments {
+  margin: 0 0 20px;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  max-width: 720px;
+}
+
+.comment-form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #d7d7d7;
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.comment-form textarea:focus {
+  outline: none;
+  border-color: #1d4ed8;
+}
+
+.comment-form-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: #888;
+  font-size: 0.78rem;
+}
+
+.comment-submit {
+  padding: 8px 15px;
+  border: 0;
+  border-radius: var(--radius);
+  background: #000;
+  color: #fff;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.comment-submit:hover:not(:disabled) {
+  background: #333;
+}
+
+.comment-submit:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.comment-error {
+  margin: 3px 0 0;
+  color: #b42318;
+  font-size: 0.85rem;
+}
+
 @media (max-width: 768px) {
   .piece-list-head,
   .piece-top {
@@ -462,6 +696,25 @@ function formatDate(dateString) {
     padding: 11px 12px;
     font-size: 0.9rem;
     max-width: none;
+  }
+
+  .work-comments {
+    margin-top: 20px;
+    padding-top: 17px;
+  }
+
+  .comment-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .comment-form {
+    max-width: none;
+  }
+
+  .comment-submit {
+    width: 100%;
   }
 }
 </style>
